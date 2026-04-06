@@ -77,6 +77,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
     <input type="text" id="search-input" placeholder="搜索入口方法..." onkeydown="if(event.key==='Enter')searchNode()">
     <button onclick="searchNode()">聚焦</button>
     <button onclick="resetHighlight()">重置</button>
+    <span id="api-status" style="margin-left:8px;font-size:11px;color:#8b949e"></span>
   </div>
 </div>
 <div id="main">
@@ -286,7 +287,38 @@ function doInit() {{
     window.toggleNodeType = function(cb) {{
         nodeVisibility[cb.dataset.nodeType] = cb.checked;
         if (window._focusedTarget) {{
-            applyFocusFilter(window._focusedTarget);
+            // 有聚焦时，重新调用搜索 API
+            var q = document.getElementById('search-input').value.trim().toLowerCase();
+            var edgeTypes = Object.keys(edgeVisibility).filter(function(k) {{ return edgeVisibility[k]; }}).join(',');
+            var nodeTypes = Object.keys(nodeVisibility).filter(function(k) {{ return nodeVisibility[k]; }}).join(',');
+            
+            fetch('/search?q=' + encodeURIComponent(q) + '&nodeTypes=' + nodeTypes + '&edgeTypes=' + edgeTypes)
+                .then(function(r) {{ return r.json(); }})
+                .then(function(data) {{
+                    if (data.error) return;
+                    var nodes = data.nodes.map(function(n) {{
+                        return {{
+                            id: n.id,
+                            name: n.className ? (n.methodName ? n.className + '#' + n.methodName : n.className) : n.id,
+                            _kind: n.kind,
+                            _data: n
+                        }};
+                    }});
+                    var edges = data.edges.map(function(e) {{
+                        return {{
+                            source: e.from,
+                            target: e.to,
+                            _type: e.type,
+                            _data: e
+                        }};
+                    }});
+                    window._currentFocusNodes = nodes;
+                    window._currentFocusEdges = edges;
+                    document.getElementById('stats').innerHTML =
+                        '节点: <span>' + nodes.length + '</span> &nbsp; 边: <span>' + edges.length +
+                        '</span> &nbsp; <span style="color:#484f58">(入口: ' + data.target.className + '#' + data.target.methodName + ')</span>';
+                    renderChart(nodes, edges);
+                }});
         }} else {{
             applyFilters();
         }}
@@ -294,7 +326,38 @@ function doInit() {{
     window.toggleEdgeType = function(cb) {{
         edgeVisibility[cb.dataset.edgeType] = cb.checked;
         if (window._focusedTarget) {{
-            applyFocusFilter(window._focusedTarget);
+            // 有聚焦时，重新调用搜索 API
+            var q = document.getElementById('search-input').value.trim().toLowerCase();
+            var edgeTypes = Object.keys(edgeVisibility).filter(function(k) {{ return edgeVisibility[k]; }}).join(',');
+            var nodeTypes = Object.keys(nodeVisibility).filter(function(k) {{ return nodeVisibility[k]; }}).join(',');
+            
+            fetch('/search?q=' + encodeURIComponent(q) + '&nodeTypes=' + nodeTypes + '&edgeTypes=' + edgeTypes)
+                .then(function(r) {{ return r.json(); }})
+                .then(function(data) {{
+                    if (data.error) return;
+                    var nodes = data.nodes.map(function(n) {{
+                        return {{
+                            id: n.id,
+                            name: n.className ? (n.methodName ? n.className + '#' + n.methodName : n.className) : n.id,
+                            _kind: n.kind,
+                            _data: n
+                        }};
+                    }});
+                    var edges = data.edges.map(function(e) {{
+                        return {{
+                            source: e.from,
+                            target: e.to,
+                            _type: e.type,
+                            _data: e
+                        }};
+                    }});
+                    window._currentFocusNodes = nodes;
+                    window._currentFocusEdges = edges;
+                    document.getElementById('stats').innerHTML =
+                        '节点: <span>' + nodes.length + '</span> &nbsp; 边: <span>' + edges.length +
+                        '</span> &nbsp; <span style="color:#484f58">(入口: ' + data.target.className + '#' + data.target.methodName + ')</span>';
+                    renderChart(nodes, edges);
+                }});
         }} else {{
             applyFilters();
         }}
@@ -413,36 +476,60 @@ function doInit() {{
         var q = document.getElementById('search-input').value.trim().toLowerCase();
         if (!q) {{ showAllNodes(); return; }}
         
-        // 优先搜索入口方法 (isEntry=true)
-        var entryMatched = allNodes.filter(function(n) {{
-            return n._data.isEntry && (n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q));
-        }});
+        var nodeTypes = Object.keys(nodeVisibility).filter(function(k) {{ return nodeVisibility[k]; }}).join(',');
+        var edgeTypes = Object.keys(edgeVisibility).filter(function(k) {{ return edgeVisibility[k]; }}).join(',');
         
-        var matched;
-        if (entryMatched.length) {{
-            matched = entryMatched;
-        }} else {{
-            matched = allNodes.filter(function(n) {{
-                return n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q);
+        document.getElementById('api-status').textContent = '搜索中...';
+        
+        fetch('/search?q=' + encodeURIComponent(q) + '&nodeTypes=' + nodeTypes + '&edgeTypes=' + edgeTypes)
+            .then(function(r) {{ return r.json(); }})
+            .then(function(data) {{
+                document.getElementById('api-status').textContent = '';
+                if (data.error) {{
+                    alert(data.error);
+                    return;
+                }}
+                
+                // 转换 API 返回的数据格式
+                var nodes = data.nodes.map(function(n) {{
+                    return {{
+                        id: n.id,
+                        name: n.className ? (n.methodName ? n.className + '#' + n.methodName : n.className) : n.id,
+                        _kind: n.kind,
+                        _data: n
+                    }};
+                }});
+                
+                var edges = data.edges.map(function(e) {{
+                    return {{
+                        source: e.from,
+                        target: e.to,
+                        _type: e.type,
+                        _data: e
+                    }};
+                }});
+                
+                window._focusedTarget = nodes.find(function(n) {{ return n.id === data.target.id; }});
+                window._currentFocusNodes = nodes;
+                window._currentFocusEdges = edges;
+                
+                document.getElementById('stats').innerHTML =
+                    '节点: <span>' + nodes.length + '</span> &nbsp; 边: <span>' + edges.length +
+                    '</span> &nbsp; <span style="color:#484f58">(入口: ' + data.target.className + '#' + data.target.methodName + ')</span>';
+                
+                renderChart(nodes, edges);
+            }})
+            .catch(function(err) {{
+                document.getElementById('api-status').textContent = 'API 连接失败';
+                console.error(err);
             }});
-        }}
-        
-        if (!matched.length) {{
-            alert('未找到入口方法: ' + q);
-            return;
-        }}
-        var target = matched[0];
-        showNodeDetail(target);
-        
-        // 保存聚焦目标，供开关回调使用
-        window._focusedTarget = target;
-        
-        applyFocusFilter(target);
     }};
     
     window.showAllNodes = function() {{
         document.getElementById('search-input').value = '';
         window._focusedTarget = null;
+        window._currentFocusNodes = null;
+        window._currentFocusEdges = null;
         applyFilters();
     }};
     
