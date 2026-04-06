@@ -1,0 +1,13 @@
+# Java Code Graph - Configuration
+# Target Java project root directory (absolute or relative to this file)
+target_project: "F:/code/java/roncoo-pay"
+
+# Package prefixes to include in the graph
+# Only classes/methods matching these prefixes will appear in the output
+scan_packages:
+  - "com.roncoo.pay"
+
+# Entry points for BFS traversal
+# Format: fully.qualified.ClassName#methodName
+entry_points:
+  - "com.roncoo.pay.controller.F2FPayController#initPay"
