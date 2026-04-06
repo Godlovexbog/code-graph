@@ -5,4 +5,4 @@ output/
 *.egg-info/
 dist/
 build/
-!src/output/
+!output/

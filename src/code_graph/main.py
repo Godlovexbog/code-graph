@@ -17,7 +17,7 @@ import sys
 import time
 
 # 确保 src 模块可导入
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../..")
 
 from src.code_graph.scanner.config_loader import ConfigLoader
 from src.code_graph.scanner.file_scanner import FileScanner
@@ -40,7 +40,7 @@ def main():
     parser_arg = argparse.ArgumentParser(description="Java Code Graph Generator")
     parser_arg.add_argument(
         "--config",
-        default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml"),
+        default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../config.yaml"),
         help="Path to config.yaml (default: ./config.yaml)",
     )
     args = parser_arg.parse_args()
@@ -105,7 +105,7 @@ def main():
     logger.info("图构建完成: %d 个节点, %d 条边", stats["totalNodes"], stats["totalEdges"])
 
     # 5. 输出
-    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../output")
     logger.info("输出到: %s", output_dir)
 
     json_path = JsonExporter(output_dir).export(graph_data)
