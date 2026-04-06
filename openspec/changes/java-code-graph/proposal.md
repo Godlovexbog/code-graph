@@ -5,11 +5,13 @@ Java 项目代码量大、调用链路复杂，开发者难以快速理解一个
 ## What Changes
 
 - 新增 Python 脚本，扫描指定 Java 项目源码，从给定入口方法出发通过 BFS 构建调用图
-- 输出标准 JSON 格式的图数据（包含 METHOD 和 CLASS 节点，以及 CALL / CONTAINS / EXTENDS / IMPLEMENTS / REFERENCES 五种边）
-- 生成基于 Cytoscape.js 的单文件 HTML 可视化页面，支持交互式浏览调用图
-- 支持 YAML 配置入口方法、扫描包范围、目标项目路径
+- 输出标准 JSON 格式的图数据（包含 METHOD 和 CLASS 节点，以及 CALL / CONTAINS / EXTENDS / IMPLEMENTS / REFERENCES / OVERRIDE 六种边）
+- 生成基于 ECharts 的单文件 HTML 可视化页面，支持交互式浏览调用图
+- 支持 YAML 配置入口包、扫描包范围、目标项目路径
+- 支持入口方法自动发现：从 entry_packages 下自动扫描所有带 @Controller/@RestController 注解的类及其 Web 注解方法
 - 支持接口→实现类的自动解析与展开（保守策略：展开所有实现类）
 - 严格限定扫描范围在 `scan_packages` 内，外部库（JDK、第三方）不出现在图中
+- 支持搜索入口方法并聚焦显示相关节点，同时应用侧边栏开关过滤
 
 ## Capabilities
 

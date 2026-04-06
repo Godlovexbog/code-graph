@@ -43,3 +43,14 @@
 #### Scenario: 多入口扫描
 - **WHEN** entry_points 包含多个方法
 - **THEN** 系统从每个入口方法分别开始 BFS 遍历，合并到同一张图中
+
+### Requirement: 入口包自动发现配置
+系统 SHALL 通过 `entry_packages` 配置项（字符串列表）指定要自动发现入口方法的包路径，系统将自动扫描这些包下所有带 @Controller/@RestController 注解的类及其 Web 注解方法（@RequestMapping/@GetMapping/@PostMapping 等）。
+
+#### Scenario: 使用入口包自动发现
+- **WHEN** entry_packages 为 `["com.roncoo.pay.controller"]`
+- **THEN** 系统自动发现该包下所有 Controller 的 HTTP 入口方法
+
+#### Scenario: 同时配置入口包和入口方法
+- **WHEN** 同时配置 entry_packages 和 entry_points
+- **THEN** 系统合并两种方式的入口方法

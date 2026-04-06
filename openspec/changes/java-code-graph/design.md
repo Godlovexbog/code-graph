@@ -4,16 +4,18 @@
 
 **约束条件：**
 - 使用 Python 编写，解析库选择 `javalang`（纯 Python，pip 安装即用）
-- 前端使用 Cytoscape.js，单文件 HTML，无需构建工具
+- 前端使用 ECharts，单文件 HTML，无需构建工具
 - 仅分析目标项目自身代码（由 `scan_packages` 限定），不追踪 JDK 和第三方库
 - 接口→实现类采用保守策略：展开所有实现类
+- 支持通过 entry_packages 自动发现入口方法
 
 ## Goals / Non-Goals
 
 **Goals:**
 - 从给定入口方法（FQN#method）出发，完整追踪项目内的方法调用链
-- 输出包含 CLASS 和 METHOD 两种节点、五种边类型（CALL / CONTAINS / EXTENDS / IMPLEMENTS / REFERENCES）的图数据
-- 生成可交互的 HTML 可视化页面
+- 支持从入口包自动发现所有 Controller 的 Web 入口方法
+- 输出包含 CLASS 和 METHOD 两种节点、六种边类型（CALL / CONTAINS / EXTENDS / IMPLEMENTS / REFERENCES / OVERRIDE）的图数据
+- 生成可交互的 HTML 可视化页面，支持搜索聚焦和过滤
 - 架构可扩展，Phase 2 可轻松加入新边类型和提取器
 
 **Non-Goals:**
@@ -21,7 +23,6 @@
 - 不处理反射调用（静态分析无法可靠追踪）
 - 不区分静态调用/实例调用/接口调用（统一为 CALL 边）
 - 不做运行时分析或性能 profiling
-- 不支持批量扫描 Controller 包（Phase 1 仅支持精确指定入口方法）
 
 ## Decisions
 
