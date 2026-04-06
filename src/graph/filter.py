@@ -25,12 +25,12 @@ class GraphFilter:
         
         Args:
             nodes: 节点列表，每个节点包含 id, kind 等属性
-            edges: 边列表，每条边包含 source, target, type 等属性
+            edges: 边列表，每条边包含 from, to, type 等属性
         """
         self.all_nodes = nodes
         self.all_edges = edges
         self.node_index = {n["id"]: n for n in nodes}
-        self.edge_index = {(e["source"], e["target"]): e for e in edges}
+        self.edge_index = {(e["from"], e["to"]): e for e in edges}
         
     def build_adjacency(self, edge_types: Optional[Set[str]] = None) -> Dict[str, Set[str]]:
         """
@@ -46,8 +46,8 @@ class GraphFilter:
         for edge in self.all_edges:
             if edge_types and edge.get("type") not in edge_types:
                 continue
-            source = edge["source"]
-            target = edge["target"]
+            source = edge["from"]
+            target = edge["to"]
             if source not in adj:
                 adj[source] = set()
             adj[source].add(target)
@@ -123,7 +123,7 @@ class GraphFilter:
             visible_ids = {n["id"] for n in visible_nodes}
             visible_edges = [
                 e for e in self.all_edges
-                if e["source"] in visible_ids and e["target"] in visible_ids
+                if e["from"] in visible_ids and e["to"] in visible_ids
             ]
             return visible_nodes, visible_edges
         
@@ -134,10 +134,10 @@ class GraphFilter:
         for edge in self.all_edges:
             if edge.get("type") not in connection_types:
                 continue
-            if edge["source"] in visible_ids:
-                connected_ids.add(edge["source"])
-            if edge["target"] in visible_ids:
-                connected_ids.add(edge["target"])
+            if edge["from"] in visible_ids:
+                connected_ids.add(edge["from"])
+            if edge["to"] in visible_ids:
+                connected_ids.add(edge["to"])
         
         # 确保入口节点被保留
         if entry_ids:
@@ -150,7 +150,7 @@ class GraphFilter:
         # 过滤边
         final_edges = [
             e for e in self.all_edges
-            if e["source"] in final_ids and e["target"] in final_ids
+            if e["from"] in final_ids and e["to"] in final_ids
         ]
         
         return final_nodes, final_edges
@@ -199,8 +199,8 @@ class GraphFilter:
         focus_edges = [
             e for e in self.all_edges
             if e.get("type") in edge_types and 
-            e["source"] in focus_ids and 
-            e["target"] in focus_ids
+            e["from"] in focus_ids and 
+            e["to"] in focus_ids
         ]
         
         return focus_nodes, focus_edges
