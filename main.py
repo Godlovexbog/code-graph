@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.scanner.config_loader import ConfigLoader
 from src.scanner.file_scanner import FileScanner
+from src.scanner.entry_discovery import discover_from_source
 from src.parser.java_parser import JavaParser
 from src.graph.builder import GraphBuilder
 from src.output.json_exporter import JsonExporter
@@ -51,7 +52,19 @@ def main():
     config = ConfigLoader(args.config).load()
     logger.info("目标项目: %s", config.target_project)
     logger.info("扫描包: %s", config.scan_packages)
+    logger.info("入口包: %s", config.entry_packages)
     logger.info("入口方法: %s", config.entry_points)
+
+    # Discover entry points from entry_packages
+    if config.entry_packages:
+        logger.info("自动发现入口方法...")
+        discovered = discover_from_source(
+            config.entry_packages,
+            config.scan_packages,
+            config.target_project
+        )
+        logger.info("发现 %d 个入口方法", len(discovered))
+        config.entry_points.extend(discovered)
 
     # 2. 扫描 Java 文件
     logger.info("开始扫描 Java 文件...")

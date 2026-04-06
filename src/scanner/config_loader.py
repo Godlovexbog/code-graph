@@ -8,13 +8,14 @@ from typing import List
 class Config:
     target_project: str
     scan_packages: List[str] = field(default_factory=list)
+    entry_packages: List[str] = field(default_factory=list)
     entry_points: List[str] = field(default_factory=list)
 
 
 class ConfigLoader:
     """Loads and validates configuration from a YAML file."""
 
-    REQUIRED_FIELDS = ["target_project", "scan_packages", "entry_points"]
+    REQUIRED_FIELDS = ["target_project", "scan_packages"]
 
     def __init__(self, config_path: str):
         self.config_path = config_path
@@ -37,10 +38,21 @@ class ConfigLoader:
         if not os.path.isabs(target_project):
             target_project = os.path.normpath(os.path.join(config_dir, target_project))
 
+        entry_packages = raw.get("entry_packages", [])
+        entry_points = raw.get("entry_points", [])
+
+        # entry_packages requires scan_packages to include the entry package
+        for ep in entry_packages:
+            if not any(ep.startswith(sp) for sp in raw.get("scan_packages", [])):
+                raise ValueError(
+                    f"entry_package '{ep}' must be within one of scan_packages"
+                )
+
         return Config(
             target_project=target_project,
             scan_packages=raw.get("scan_packages", []),
-            entry_points=raw.get("entry_points", []),
+            entry_packages=entry_packages,
+            entry_points=entry_points,
         )
 
     def _validate(self, raw: dict):
@@ -54,11 +66,18 @@ class ConfigLoader:
         if not isinstance(raw["scan_packages"], list) or len(raw["scan_packages"]) == 0:
             raise ValueError("scan_packages must be a non-empty list")
 
-        if not isinstance(raw["entry_points"], list) or len(raw["entry_points"]) == 0:
-            raise ValueError("entry_points must be a non-empty list")
+        # Must have either entry_packages or entry_points
+        has_entry_packages = bool(raw.get("entry_packages"))
+        has_entry_points = bool(raw.get("entry_points"))
+        if not has_entry_packages and not has_entry_points:
+            raise ValueError("Must have either entry_packages or entry_points")
 
-        for entry in raw["entry_points"]:
-            if "#" not in entry:
-                raise ValueError(
-                    f"Invalid entry_point format (expected FQN#method): {entry}"
-                )
+        # Validate entry_points format if present
+        if has_entry_points:
+            if not isinstance(raw["entry_points"], list):
+                raise ValueError("entry_points must be a list")
+            for entry in raw["entry_points"]:
+                if "#" not in entry:
+                    raise ValueError(
+                        f"Invalid entry_point format (expected FQN#method): {entry}"
+                    )

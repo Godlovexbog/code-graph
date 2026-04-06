@@ -233,7 +233,7 @@ function doInit() {{
             return edgeVisibility[e._type] && typeVisibleIds.has(e.source) && typeVisibleIds.has(e.target);
         }});
 
-        var connectionTypes = new Set(['CALL', 'REFERENCES', 'IMPLEMENTS', 'OVERRIDE', 'EXTENDS']);
+        var connectionTypes = new Set(['CALL', 'REFERENCES', 'IMPLEMENTS', 'OVERRIDE', 'EXTENDS', 'CONTAINS']);
         var connectedIds = new Set();
         typeVisibleEdges.forEach(function(e) {{
             if (connectionTypes.has(e._type)) {{

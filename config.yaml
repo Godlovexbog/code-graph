@@ -1,28 +1,14 @@
 # Java Code Graph - Configuration
-# Target Java project root directory (absolute or relative to this file)
 target_project: "F:/code/java/roncoo-pay"
 
 # Package prefixes to include in the graph
-# Only classes/methods matching these prefixes will appear in the output
 scan_packages:
   - "com.roncoo.pay"
 
-# Entry points for BFS traversal
+# Entry packages - auto-discover all Controller methods in these packages
+entry_packages:
+  - "com.roncoo.pay"
+
+# Entry points (optional, can be auto-discovered from entry_packages)
 # Format: fully.qualified.ClassName#methodName
-entry_points:
-  - "com.roncoo.pay.controller.F2FPayController#initPay"
-  - "com.roncoo.pay.controller.F2FPayController#orderQuery"
-  - "com.roncoo.pay.controller.IndexController#index"
-  - "com.roncoo.pay.controller.MerchantOrderQueryController#singleOrderQuery"
-  - "com.roncoo.pay.controller.ProgramPayController#initPay"
-  - "com.roncoo.pay.controller.ProgramPayController#wxAuthorize"
-  - "com.roncoo.pay.controller.ScanPayController#initPay"
-  - "com.roncoo.pay.controller.ScanPayController#toPay"
-  - "com.roncoo.pay.controller.ScanPayController#orderQuery"
-  - "com.roncoo.pay.controller.ScanPayNotifyController#notify"
-  - "com.roncoo.pay.controller.ScanPayNotifyController#result"
-  - "com.roncoo.pay.controller.auth.AuthController#initPay"
-  - "com.roncoo.pay.controller.auth.AuthController#initProgramAuth"
-  - "com.roncoo.pay.controller.auth.AuthController#doAuth"
-  - "com.roncoo.pay.controller.auth.AuthController#doProgramAuth"
-  - "com.roncoo.pay.controller.auth.AuthController#orderQuery"
+# entry_points: []
