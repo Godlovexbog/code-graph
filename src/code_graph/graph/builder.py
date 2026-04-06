@@ -2,8 +2,8 @@ import logging
 from collections import deque
 from typing import List, Dict, Set, Optional, Tuple
 
-from src.parser.java_parser import JavaParser, ClassInfo, MethodInfo
-from src.graph.extractors import (
+from src.code_graph.parser.java_parser import JavaParser, ClassInfo, MethodInfo
+from src.code_graph.graph.extractors import (
     CallExtractor, ReferenceExtractor, ContainsExtractor,
     ExtendsExtractor, ImplementsExtractor, OverrideExtractor,
     InterfaceResolver

@@ -101,7 +101,7 @@ def discover_from_source(entry_packages: List[str], scan_packages: List[str], ta
     """Discover entry points directly from source files."""
     import os
     import javalang
-    from src.scanner.file_scanner import FileScanner
+    from src.code_graph.scanner.file_scanner import FileScanner
     
     # Scan all files in scan_packages
     scanner = FileScanner(target_project, scan_packages)

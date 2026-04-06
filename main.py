@@ -19,13 +19,13 @@ import time
 # 确保 src 模块可导入
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from src.scanner.config_loader import ConfigLoader
-from src.scanner.file_scanner import FileScanner
-from src.scanner.entry_discovery import discover_from_source
-from src.parser.java_parser import JavaParser
-from src.graph.builder import GraphBuilder
-from src.output.json_exporter import JsonExporter
-from src.output.html_generator import HtmlGenerator
+from src.code_graph.scanner.config_loader import ConfigLoader
+from src.code_graph.scanner.file_scanner import FileScanner
+from src.code_graph.scanner.entry_discovery import discover_from_source
+from src.code_graph.parser.java_parser import JavaParser
+from src.code_graph.graph.builder import GraphBuilder
+from src.code_graph.output.json_exporter import JsonExporter
+from src.code_graph.output.html_generator import HtmlGenerator
 
 # 配置日志
 logging.basicConfig(

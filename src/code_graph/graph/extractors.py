@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from src.parser.java_parser import ClassInfo, MethodInfo, JavaParser
+from src.code_graph.parser.java_parser import ClassInfo, MethodInfo, JavaParser
 
 
 class CallExtractor:

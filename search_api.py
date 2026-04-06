@@ -14,7 +14,7 @@ from urllib.parse import urlparse, parse_qs
 import os
 import logging
 
-from src.graph.filter import GraphFilter, load_graph_from_json
+from src.code_graph.graph.filter import GraphFilter, load_graph_from_json
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
