@@ -359,13 +359,59 @@ function doInit() {{
 
     window.searchNode = function() {{
         var q = document.getElementById('search-input').value.trim().toLowerCase();
-        if (!q) {{ resetHighlight(); return; }}
+        if (!q) {{ showAllNodes(); return; }}
+        
+        // 先在当前可见节点中搜索
         var matched = currentNodes.filter(function(n) {{
             return n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q);
         }});
-        if (!matched.length) return;
-        showNodeDetail(matched[0]);
-        highlightNode(matched[0].id);
+        
+        // 如果没找到，尝试在所有节点中搜索
+        if (!matched.length) {{
+            matched = allNodes.filter(function(n) {{
+                return n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q);
+            }});
+        }}
+        
+        if (!matched.length) {{
+            alert('未找到节点: ' + q);
+            return;
+        }}
+        var target = matched[0];
+        showNodeDetail(target);
+        
+        // BFS 查找所有连通节点（不限深度）- 使用所有边，不受过滤影响
+        var visited = new Set();
+        var queue = [target.id];
+        visited.add(target.id);
+        while (queue.length > 0) {{
+            var curr = queue.shift();
+            var neighbors = adjacency[curr] || new Set();
+            neighbors.forEach(function(n) {{
+                if (!visited.has(n)) {{
+                    visited.add(n);
+                    queue.push(n);
+                }}
+            }});
+        }}
+        
+        // 使用所有节点进行过滤，而不是仅 currentNodes
+        var focusNodes = allNodes.filter(function(n) {{ return visited.has(n.id); }});
+        var focusNodeIds = new Set(focusNodes.map(function(n) {{ return n.id; }}));
+        var focusEdges = allEdges.filter(function(e) {{
+            return focusNodeIds.has(e.source) && focusNodeIds.has(e.target);
+        }});
+        
+        document.getElementById('stats').innerHTML =
+            '节点: <span>' + focusNodes.length + '</span> &nbsp; 边: <span>' + focusEdges.length +
+            '</span> &nbsp; <span style="color:#484f58">(聚焦: ' + target.name + ')</span>';
+        
+        renderChart(focusNodes, focusEdges);
+    }};
+    
+    window.showAllNodes = function() {{
+        document.getElementById('search-input').value = '';
+        applyFilters();
     }};
 
     window.addEventListener('resize', function() {{ chart.resize(); }});
