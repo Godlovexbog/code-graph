@@ -11,7 +11,7 @@ class HtmlGenerator:
 
     def generate(self, graph_data: Dict) -> str:
         os.makedirs(self.output_dir, exist_ok=True)
-        output_path = os.path.join(self.output_dir, "graph.html")
+        output_path = os.path.join(self.output_dir, "code-graph.html")
         graph_json = json.dumps(graph_data, ensure_ascii=False)
         html_content = self._build_html(graph_json)
         with open(output_path, "w", encoding="utf-8") as f:
@@ -74,8 +74,8 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
     <div class="stats" id="stats"></div>
   </div>
   <div id="search-box">
-    <input type="text" id="search-input" placeholder="搜索节点..." onkeydown="if(event.key==='Enter')searchNode()">
-    <button onclick="searchNode()">搜索</button>
+    <input type="text" id="search-input" placeholder="搜索入口方法..." onkeydown="if(event.key==='Enter')searchNode()">
+    <button onclick="searchNode()">聚焦</button>
     <button onclick="resetHighlight()">重置</button>
   </div>
 </div>
@@ -285,12 +285,64 @@ function doInit() {{
 
     window.toggleNodeType = function(cb) {{
         nodeVisibility[cb.dataset.nodeType] = cb.checked;
-        applyFilters();
+        if (window._focusedTarget) {{
+            applyFocusFilter(window._focusedTarget);
+        }} else {{
+            applyFilters();
+        }}
     }};
     window.toggleEdgeType = function(cb) {{
         edgeVisibility[cb.dataset.edgeType] = cb.checked;
-        applyFilters();
+        if (window._focusedTarget) {{
+            applyFocusFilter(window._focusedTarget);
+        }} else {{
+            applyFilters();
+        }}
     }};
+    
+    // 聚焦搜索时应用的过滤
+    function applyFocusFilter(target) {{
+        // 使用当前开启的边类型构建邻接表
+        var activeAdj = {{}};
+        allEdges.forEach(function(e) {{
+            if (edgeVisibility[e._type]) {{
+                if (!activeAdj[e.source]) activeAdj[e.source] = new Set();
+                activeAdj[e.source].add(e.target);
+            }}
+        }});
+        
+        var visited = new Set();
+        var queue = [target.id];
+        visited.add(target.id);
+        while (queue.length > 0) {{
+            var curr = queue.shift();
+            var neighbors = activeAdj[curr] || new Set();
+            neighbors.forEach(function(n) {{
+                if (!visited.has(n)) {{
+                    visited.add(n);
+                    queue.push(n);
+                }}
+            }});
+        }}
+        
+        var classId = target.id.split('#')[0];
+        visited.add(classId);
+        
+        var focusNodes = allNodes.filter(function(n) {{ 
+            return visited.has(n.id) && nodeVisibility[n._kind]; 
+        }});
+        var focusNodeIds = new Set(focusNodes.map(function(n) {{ return n.id; }}));
+        
+        var focusEdges = allEdges.filter(function(e) {{
+            return edgeVisibility[e._type] && focusNodeIds.has(e.source) && focusNodeIds.has(e.target);
+        }});
+        
+        document.getElementById('stats').innerHTML =
+            '节点: <span>' + focusNodes.length + '</span> &nbsp; 边: <span>' + focusEdges.length +
+            '</span> &nbsp; <span style="color:#484f58">(入口: ' + target.name + ')</span>';
+        
+        renderChart(focusNodes, focusEdges);
+    }}
 
     window.resetHighlight = function() {{
         document.getElementById('detail').classList.remove('visible');
@@ -361,59 +413,39 @@ function doInit() {{
         var q = document.getElementById('search-input').value.trim().toLowerCase();
         if (!q) {{ showAllNodes(); return; }}
         
-        // 先在当前可见节点中搜索
-        var matched = currentNodes.filter(function(n) {{
-            return n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q);
+        // 优先搜索入口方法 (isEntry=true)
+        var entryMatched = allNodes.filter(function(n) {{
+            return n._data.isEntry && (n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q));
         }});
         
-        // 如果没找到，尝试在所有节点中搜索
-        if (!matched.length) {{
+        var matched;
+        if (entryMatched.length) {{
+            matched = entryMatched;
+        }} else {{
             matched = allNodes.filter(function(n) {{
                 return n.name.toLowerCase().includes(q) || n.id.toLowerCase().includes(q);
             }});
         }}
         
         if (!matched.length) {{
-            alert('未找到节点: ' + q);
+            alert('未找到入口方法: ' + q);
             return;
         }}
         var target = matched[0];
         showNodeDetail(target);
         
-        // BFS 查找所有连通节点（不限深度）- 使用所有边，不受过滤影响
-        var visited = new Set();
-        var queue = [target.id];
-        visited.add(target.id);
-        while (queue.length > 0) {{
-            var curr = queue.shift();
-            var neighbors = adjacency[curr] || new Set();
-            neighbors.forEach(function(n) {{
-                if (!visited.has(n)) {{
-                    visited.add(n);
-                    queue.push(n);
-                }}
-            }});
-        }}
+        // 保存聚焦目标，供开关回调使用
+        window._focusedTarget = target;
         
-        // 使用所有节点进行过滤，而不是仅 currentNodes
-        var focusNodes = allNodes.filter(function(n) {{ return visited.has(n.id); }});
-        var focusNodeIds = new Set(focusNodes.map(function(n) {{ return n.id; }}));
-        var focusEdges = allEdges.filter(function(e) {{
-            return focusNodeIds.has(e.source) && focusNodeIds.has(e.target);
-        }});
-        
-        document.getElementById('stats').innerHTML =
-            '节点: <span>' + focusNodes.length + '</span> &nbsp; 边: <span>' + focusEdges.length +
-            '</span> &nbsp; <span style="color:#484f58">(聚焦: ' + target.name + ')</span>';
-        
-        renderChart(focusNodes, focusEdges);
+        applyFocusFilter(target);
     }};
     
     window.showAllNodes = function() {{
         document.getElementById('search-input').value = '';
+        window._focusedTarget = null;
         applyFilters();
     }};
-
+    
     window.addEventListener('resize', function() {{ chart.resize(); }});
     applyFilters();
 }}

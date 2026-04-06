@@ -12,7 +12,7 @@ class JsonExporter:
     def export(self, graph_data: Dict) -> str:
         """导出 JSON 文件，返回文件路径。"""
         os.makedirs(self.output_dir, exist_ok=True)
-        output_path = os.path.join(self.output_dir, "graph.json")
+        output_path = os.path.join(self.output_dir, "code-graph.json")
 
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(graph_data, f, indent=2, ensure_ascii=False)
