@@ -212,7 +212,7 @@ function doInit() {{
             }},
             categories: categories,
             series: [{{
-                type: 'graph', layout: 'force', roam: true,
+                type: 'graph', layout: 'force', roam: true, draggable: true,
                 data: nodes, links: edges, categories: categories,
                 label: {{ show: true, position: 'bottom', formatter: '{{b}}', fontSize: 9, color: '#c9d1d9', overflow: 'break' }},
                 force: {{ repulsion: 2000, gravity: 0.02, edgeLength: [120, 400], layoutAnimation: true, friction: 0.4 }},
@@ -222,7 +222,7 @@ function doInit() {{
                 emphasis: {{ focus: 'adjacency', lineStyle: {{ width: 3 }}, label: {{ fontSize: 11, fontWeight: 'bold' }}, itemStyle: {{ borderColor: '#fff', borderWidth: 2 }} }},
                 select: {{ itemStyle: {{ borderWidth: 3, borderColor: '#fff' }}, label: {{ fontSize: 12, fontWeight: 'bold' }} }}
             }}]
-        }}, true);
+        }}, false);
     }}
 
     function applyFilters() {{
