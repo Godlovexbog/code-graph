@@ -39,14 +39,24 @@ class CapabilityNode:
 class L3Process(CapabilityNode):
     """L3: 业务流程"""
     flow_chart: str = ""
+    rules: List[str] = field(default_factory=list)
+    activities: List[str] = field(default_factory=list)
+    entities: List[str] = field(default_factory=list)
     
-    def __init__(self, id: str, name: str, description: str = "", flow_chart: str = ""):
+    def __init__(self, id: str, name: str, description: str = "", flow_chart: str = "", 
+                 rules: List = None, activities: List = None, entities: List = None):
         super().__init__(id, name, 3, "process", description)
         self.flow_chart = flow_chart
+        self.rules = rules or []
+        self.activities = activities or []
+        self.entities = entities or []
     
     def to_dict(self) -> Dict:
         base = super().to_dict()
         base["flow_chart"] = self.flow_chart
+        base["rules"] = self.rules
+        base["activities"] = self.activities
+        base["entities"] = self.entities
         return base
 
 

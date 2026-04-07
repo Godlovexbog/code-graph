@@ -414,9 +414,7 @@ class BizGraphBuilder:
                         all_l5_ids.update(node.contains)
                         all_l6_ids.update(node.references)
             
-            l3_contains = all_l4_in_bfs
-            
-            # 使用 LLM 生成流程图 - 传入完整的方法列表
+            # 生成流程图
             print(f"调用 LLM 生成 L3 流程图 (共 {len(all_reachable_methods)} 个方法)...")
             flow_chart = self._generate_l3_flowchart_llm(entry_method, all_reachable_methods)
             
@@ -424,19 +422,31 @@ class BizGraphBuilder:
                 # 回退到简单版本
                 flow_chart = self._generate_l3_flowchart_simple(all_l4_ids)
             
+            # L3 新字段
+            # activities: 只有入口 L4
+            # rules: 所有 BFS 可达 L4 包含的 L5
+            # entities: 所有 BFS 可达的 L6
+            entry_l4_id = self.method_to_l4.get(entry_method, '')
+            activities_list = [entry_l4_id] if entry_l4_id else []
+            
             l3 = L3Process(
                 id=l3_id,
                 name="L3-" + entry_l4.name,
                 description=f"入口方法 {entry_l4.name} 的完整业务流程",
-                flow_chart=flow_chart
+                flow_chart=flow_chart,
+                rules=list(all_l5_ids),
+                activities=activities_list,
+                entities=list(all_l6_ids)
             )
-            l3.contains = l3_contains
-            l3.references = list(all_l6_ids)
+            
+            # 兼容旧字段：contains 只包含入口 L4
+            l3.contains = activities_list
+            l3.references = []  # 旧字段留空
             
             self.biz_graph.add_node(l3)
             
-            # 建立 L3 contains L4 边
-            for lid in l3_contains:
+            # 建立 L3 contains L4 边（只对入口 L4）
+            for lid in activities_list:
                 self.biz_graph.add_edge(l3_id, lid, "contains")
     
     def _build_single_l3_process(self, entry_method: str, adj: Dict):
