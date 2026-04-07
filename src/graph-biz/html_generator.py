@@ -106,6 +106,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 #detail .mermaid-render svg{max-width:100%;height:auto}
 #detail .fullscreen-btn{float:right;background:none;border:none;font-size:14px;cursor:pointer;color:#8b949e;margin-right:4px}
 #detail .fullscreen-btn:hover{color:#58a6ff}
+#detail .copy-btn{float:right;background:none;border:none;font-size:14px;cursor:pointer;color:#8b949e;margin-right:8px}
+#detail .copy-btn:hover{color:#4ecca3}
+#detail .copy-btn:active{color:#f0883e}
 #fullscreen-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column}
 #fullscreen-modal.visible{display:flex}
 #fullscreen-modal .modal-content{background:#161b22;padding:20px;border-radius:8px;max-width:95%;max-height:90%;overflow:auto}
@@ -329,6 +332,16 @@ function doInit() {
         });
     });
 
+    document.querySelectorAll('.copy-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var text = decodeURIComponent(this.dataset.copy || '');
+            navigator.clipboard.writeText(text).then(function() {
+                btn.textContent = '✓ 已复制';
+                setTimeout(function() { btn.textContent = '📋 复制'; }, 2000);
+            });
+        });
+    });
+
     function updateChart() {
         var visibleLevels = Object.keys(levelConfig).filter(function(k) { return levelVisibility[k]; });
         var visibleEdges = Object.keys(edgeTypeConfig).filter(function(k) { return edgeVisibility[k]; });
@@ -399,7 +412,8 @@ function doInit() {
         if (node.flow_chart) {
             var flowChartTitle = (node.name || 'Flow Chart').replace(/"/g, '&quot;');
             var flowChartContent = '<pre class="mermaid">' + node.flow_chart.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
-            html += '<div class="detail-section"><h4>流程图 <button class="fullscreen-btn" data-title="' + flowChartTitle + '" data-content="' + encodeURIComponent(flowChartContent) + '">⛶ 全屏</button></h4><pre class="mermaid">' + node.flow_chart + '</pre></div>';
+            var flowChartRaw = node.flow_chart.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            html += '<div class="detail-section"><h4>流程图 <button class="fullscreen-btn" data-title="' + flowChartTitle + '" data-content="' + encodeURIComponent(flowChartContent) + '">⛶ 全屏</button><button class="copy-btn" data-copy="' + encodeURIComponent(flowChartRaw) + '">📋 复制</button></h4><pre class="mermaid">' + node.flow_chart + '</pre></div>';
         }
         if (node.contains && node.contains.length > 0) {
             html += '<div class="detail-section"><h4>包含</h4>';
