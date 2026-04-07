@@ -1,1 +1,1 @@
-# Semantic Graph package
+# semantic_graph package

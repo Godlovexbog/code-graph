@@ -1,0 +1,5179 @@
+{
+  "meta": {
+    "target": "com.roncoo.pay.controller.F2FPayController#initPay",
+    "depth": 5,
+    "total_nodes": 27,
+    "total_edges": 609
+  },
+  "nodes": [
+    {
+      "id": "com.roncoo.pay.account.service.RpAccountTransactionService#creditToAccount",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.account.service.RpAccountTransactionService#creditToAccount",
+        "kind": "METHOD",
+        "className": "RpAccountTransactionService",
+        "methodName": "creditToAccount",
+        "returnType": "RpAccount",
+        "parameters": [
+          {
+            "name": "userNo",
+            "type": "String"
+          },
+          {
+            "name": "amount",
+            "type": "BigDecimal"
+          },
+          {
+            "name": "requestNo",
+            "type": "String"
+          },
+          {
+            "name": "trxType",
+            "type": "String"
+          },
+          {
+            "name": "remark",
+            "type": "String"
+          }
+        ],
+        "modifiers": [],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\account\\service\\RpAccountTransactionService.java",
+        "lineStart": 37,
+        "lineEnd": 37,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "向指定用户账户进行贷方入账操作，将指定金额添加到用户账户余额中，并记录相应的交易流水",
+        "input": [
+          {
+            "param": "userNo",
+            "type": "String",
+            "meaning": "用户编号，标识需要进行入账操作的目标用户账户"
+          },
+          {
+            "param": "amount",
+            "type": "BigDecimal",
+            "meaning": "入账金额，需要添加到用户账户的金额数值"
+          },
+          {
+            "param": "requestNo",
+            "type": "String",
+            "meaning": "请求流水号，用于标识本次入账操作的唯一性标识"
+          },
+          {
+            "param": "trxType",
+            "type": "String",
+            "meaning": "交易类型，标识本次入账操作的具体业务类型"
+          },
+          {
+            "param": "remark",
+            "type": "String",
+            "meaning": "备注信息，记录入账操作的相关说明或原因"
+          }
+        ],
+        "output": {
+          "type": "RpAccount",
+          "meaning": "更新后的账户对象，包含入账操作完成后用户的最新账户信息"
+        },
+        "flow": "接收用户编号、入账金额、请求流水号、交易类型和备注信息等参数，执行账户贷方入账逻辑，更新账户余额并记录交易流水，返回更新后的账户信息，若操作失败则抛出业务异常",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收参数: userNo, amount, requestNo, trxType, remark]\n    B --> C[执行账户贷方入账操作]\n    C --> D[更新账户余额]\n    D --> E[记录交易流水]\n    E --> F{操作是否成功}\n    F -->|是| G[返回更新后的RpAccount对象]\n    F -->|否| H[抛出BizException异常]\n    G --> I[结束]\n    H --> J[结束]",
+        "business_rules": [
+          "入账金额必须为正数且符合账户系统金额精度要求",
+          "用户账户必须存在且状态正常才能执行入账操作",
+          "相同请求流水号不允许重复入账以防止重复操作",
+          "入账操作需要同时更新账户余额和交易流水记录保证数据一致性"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.notify.service.RpNotifyService#notifySend",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.notify.service.RpNotifyService#notifySend",
+        "kind": "METHOD",
+        "className": "RpNotifyService",
+        "methodName": "notifySend",
+        "returnType": "",
+        "parameters": [
+          {
+            "name": "notifyUrl",
+            "type": "String"
+          },
+          {
+            "name": "merchantOrderNo",
+            "type": "String"
+          },
+          {
+            "name": "merchantNo",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\RpNotifyService.java",
+        "lineStart": 30,
+        "lineEnd": 30,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "向指定的商户通知URL发送异步通知消息，用于支付系统中订单状态变更后的回调通知",
+        "input": [
+          {
+            "param": "notifyUrl",
+            "type": "String",
+            "meaning": "商户接收通知的回调地址URL"
+          },
+          {
+            "param": "merchantOrderNo",
+            "type": "String",
+            "meaning": "商户系统的订单号，用于标识具体订单"
+          },
+          {
+            "param": "merchantNo",
+            "type": "String",
+            "meaning": "商户编号，用于标识具体商户"
+          }
+        ],
+        "output": {
+          "type": "void",
+          "meaning": "无返回值，执行通知发送操作"
+        },
+        "flow": "接收商户通知URL、订单号和商户号三个参数，构建通知内容并发送HTTP请求到指定的回调地址，完成订单状态变更的通知推送",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收参数: notifyUrl, merchantOrderNo, merchantNo]\n    B --> C[构建通知内容]\n    C --> D[发送HTTP请求到notifyUrl]\n    D --> E[完成通知发送]\n    E --> F[结束]",
+        "business_rules": [
+          "必须提供有效的通知URL地址",
+          "商户订单号和商户号不能为空",
+          "通知发送失败时需要进行重试机制"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+        "kind": "METHOD",
+        "className": "RpNotifyService",
+        "methodName": "orderSend",
+        "returnType": "",
+        "parameters": [
+          {
+            "name": "bankOrderNo",
+            "type": "String"
+          }
+        ],
+        "modifiers": [],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\RpNotifyService.java",
+        "lineStart": 38,
+        "lineEnd": 38,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据银行订单号发送通知消息",
+        "input": [
+          {
+            "param": "bankOrderNo",
+            "type": "String",
+            "meaning": "银行订单编号，用于标识需要发送通知的具体银行交易订单"
+          }
+        ],
+        "output": {
+          "type": "void",
+          "meaning": "无返回值，执行通知发送操作"
+        },
+        "flow": "接收银行订单号参数，根据该订单号查询相关订单信息，然后触发通知发送机制，将订单状态或相关信息推送给相关系统或用户",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收bankOrderNo参数]\n    B --> C[根据订单号查询订单信息]\n    C --> D[准备通知内容]\n    D --> E[发送通知消息]\n    E --> F[结束]",
+        "business_rules": [
+          "必须提供有效的银行订单号才能执行通知发送",
+          "通知发送过程中需要确保消息的可靠性和完整性"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.notify.service.impl.RpNotifyServiceImpl#orderSend",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.notify.service.impl.RpNotifyServiceImpl#orderSend",
+        "kind": "METHOD",
+        "className": "RpNotifyServiceImpl",
+        "methodName": "orderSend",
+        "returnType": "",
+        "parameters": [
+          {
+            "name": "bankOrderNo",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [
+          "@Override"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\impl\\RpNotifyServiceImpl.java",
+        "lineStart": 86,
+        "lineEnd": 92,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "通过消息队列发送订单通知，将银行订单号作为消息内容发送到订单通知队列中",
+        "input": [
+          {
+            "param": "bankOrderNo",
+            "type": "String",
+            "meaning": "银行订单号，用于标识需要通知的订单"
+          }
+        ],
+        "output": {
+          "type": "void",
+          "meaning": "无返回值，异步发送消息到队列"
+        },
+        "flow": "接收银行订单号参数 -> 设置JMS模板的目标队列为订单通知队列 -> 创建消息创建器 -> 通过Session创建文本消息 -> 将订单号作为消息内容发送到消息队列",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收bankOrderNo参数]\n    B --> C[设置JMS目标队列为ORDER_NOTIFY_QUEUE]\n    C --> D[创建MessageCreator匿名内部类]\n    D --> E[通过Session创建文本消息]\n    E --> F[将orderNo作为消息内容]\n    F --> G[发送消息到队列]\n    G --> H[结束]",
+        "business_rules": [
+          "必须先设置JMS模板的默认目标队列为订单通知队列",
+          "消息内容必须为订单号字符串格式",
+          "使用JMS的MessageCreator模式创建消息"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+        "kind": "METHOD",
+        "className": "RpTradePaymentOrderDao",
+        "methodName": "selectByMerchantNoAndMerchantOrderNo",
+        "returnType": "RpTradePaymentOrder",
+        "parameters": [
+          {
+            "name": "merchantNo",
+            "type": "String"
+          },
+          {
+            "name": "merchantOrderNo",
+            "type": "String"
+          }
+        ],
+        "modifiers": [],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\dao\\RpTradePaymentOrderDao.java",
+        "lineStart": 34,
+        "lineEnd": 34,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据商户编号和商户订单号查询交易支付订单信息",
+        "input": [
+          {
+            "param": "merchantNo",
+            "type": "String",
+            "meaning": "商户编号，用于标识具体的商户"
+          },
+          {
+            "param": "merchantOrderNo",
+            "type": "String",
+            "meaning": "商户订单号，商户系统中的唯一订单标识"
+          }
+        ],
+        "output": {
+          "type": "RpTradePaymentOrder",
+          "meaning": "交易支付订单实体对象，包含订单的详细支付信息"
+        },
+        "flow": "接收商户编号和商户订单号作为查询条件，在数据库中查找对应的交易支付订单记录并返回",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收商户编号和商户订单号]\n    B --> C[构建查询条件]\n    C --> D[执行数据库查询]\n    D --> E[返回交易支付订单信息]\n    E --> F[结束]",
+        "business_rules": [
+          "商户编号不能为空",
+          "商户订单号不能为空",
+          "必须存在对应的交易支付订单记录"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.dao.impl.RpTradePaymentOrderDaoImpl#selectByMerchantNoAndMerchantOrderNo",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.dao.impl.RpTradePaymentOrderDaoImpl#selectByMerchantNoAndMerchantOrderNo",
+        "kind": "METHOD",
+        "className": "RpTradePaymentOrderDaoImpl",
+        "methodName": "selectByMerchantNoAndMerchantOrderNo",
+        "returnType": "RpTradePaymentOrder",
+        "parameters": [
+          {
+            "name": "merchantNo",
+            "type": "String"
+          },
+          {
+            "name": "merchantOrderNo",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [
+          "@Override"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\dao\\impl\\RpTradePaymentOrderDaoImpl.java",
+        "lineStart": 42,
+        "lineEnd": 46,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据商户编号和商户订单号查询交易支付订单信息",
+        "input": [
+          {
+            "param": "merchantNo",
+            "type": "String",
+            "meaning": "商户编号，用于标识特定的商户"
+          },
+          {
+            "param": "merchantOrderNo",
+            "type": "String",
+            "meaning": "商户订单号，商户系统内的唯一订单标识"
+          }
+        ],
+        "output": {
+          "type": "RpTradePaymentOrder",
+          "meaning": "交易支付订单对象，包含订单的详细支付信息"
+        },
+        "flow": "接收商户编号和商户订单号两个参数，构建参数映射表，调用父类的getBy方法执行数据库查询操作，返回对应的交易支付订单记录",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收merchantNo和merchantOrderNo参数]\n    B --> C[创建paramMap参数映射表]\n    C --> D[将merchantNo存入paramMap]\n    D --> E[将merchantOrderNo存入paramMap]\n    E --> F[调用super.getBy(paramMap)查询]\n    F --> G[返回RpTradePaymentOrder对象]\n    G --> H[结束]",
+        "business_rules": [
+          "商户编号不能为空",
+          "商户订单号不能为空",
+          "必须确保商户编号和订单号的组合能够唯一确定一个支付订单"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerService",
+        "methodName": "f2fPay",
+        "returnType": "F2FPayResultVo",
+        "parameters": [
+          {
+            "name": "rpUserPayConfig",
+            "type": "RpUserPayConfig"
+          },
+          {
+            "name": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\RpTradePaymentManagerService.java",
+        "lineStart": 53,
+        "lineEnd": 53,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "面对面支付处理方法，用于处理用户通过扫码等方式进行的面对面支付交易",
+        "input": [
+          {
+            "param": "rpUserPayConfig",
+            "type": "RpUserPayConfig",
+            "meaning": "用户支付配置信息，包含用户的支付渠道配置和商户信息"
+          },
+          {
+            "param": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo",
+            "meaning": "面对面支付请求业务对象，包含支付金额、商品信息、订单号等支付请求参数"
+          }
+        ],
+        "output": {
+          "type": "F2FPayResultVo",
+          "meaning": "面对面支付结果值对象，包含支付状态、交易流水号、支付结果等信息"
+        },
+        "flow": "接收用户支付配置和支付请求参数，执行面对面支付处理逻辑，返回支付结果",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收支付配置和支付请求]\n    B --> C[执行面对面支付处理]\n    C --> D[返回支付结果]\n    D --> E[结束]",
+        "business_rules": [
+          "需要验证用户支付配置的有效性",
+          "必须确保支付请求参数的完整性和正确性",
+          "需要记录支付交易日志便于后续对账"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "f2fPay",
+        "returnType": "F2FPayResultVo",
+        "parameters": [
+          {
+            "name": "rpUserPayConfig",
+            "type": "RpUserPayConfig"
+          },
+          {
+            "name": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [
+          "@Override"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 165,
+        "lineEnd": 213,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "面对面支付处理方法，用于处理扫码支付或刷卡支付等面对面支付场景，包括订单验证、费率获取、订单创建和支付结果返回等功能",
+        "input": [
+          {
+            "param": "rpUserPayConfig",
+            "type": "RpUserPayConfig",
+            "meaning": "用户支付配置信息，包含商户号、支付密钥等配置"
+          },
+          {
+            "param": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo",
+            "meaning": "面对面支付请求对象，包含支付类型、订单号、订单价格、授权码等支付信息"
+          }
+        ],
+        "output": {
+          "type": "F2FPayResultVo",
+          "meaning": "面对面支付结果对象，封装支付处理结果和相关信息"
+        },
+        "flow": "验证支付类型是否为面对面支付或刷卡支付 -> 获取支付费率配置 -> 验证商户信息 -> 检查订单是否存在 -> 不存在则创建新订单，存在则验证订单金额和状态 -> 返回支付结果",
+        "flow_chart": "graph TD\n    A[开始] --> B[验证支付类型]\n    B --> C{支付类型是否为F2F或MICRO_PAY}\n    C -->|否| D[抛出参数异常]\n    C -->|是| E[获取支付费率配置]\n    E --> F[验证商户信息]\n    F --> G[检查订单是否存在]\n    G -->|不存在| H[创建新订单并保存]\n    G -->|存在| I{订单金额是否一致}\n    I -->|否| J[抛出订单错误异常]\n    I -->|是| K{订单是否已支付成功}\n    K -->|是| L[抛出重复支付异常]\n    K -->|否| M[调用支付结果处理]\n    H --> M\n    M --> N[返回支付结果]\n    D --> O[结束]\n    L --> O\n    J --> O\n    N --> O",
+        "business_rules": [
+          "仅支持面对面支付(F2F_PAY)和刷卡支付(MICRO_PAY)两种交易类型",
+          "必须验证商户支付配置的有效性",
+          "订单号对应的订单如果不存在则需要创建新的支付订单",
+          "已存在的订单金额必须与请求中的订单价格一致",
+          "已支付成功的订单不允许重复支付",
+          "需要根据支付产品和支付方式获取相应的费率配置"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "getF2FPayResultVo",
+        "returnType": "F2FPayResultVo",
+        "parameters": [
+          {
+            "name": "rpTradePaymentOrder",
+            "type": "RpTradePaymentOrder"
+          },
+          {
+            "name": "payWay",
+            "type": "RpPayWay"
+          },
+          {
+            "name": "payKey",
+            "type": "String"
+          },
+          {
+            "name": "merchantPaySecret",
+            "type": "String"
+          },
+          {
+            "name": "authCode",
+            "type": "String"
+          },
+          {
+            "name": "roncooPayGoodsDetailses",
+            "type": "List"
+          }
+        ],
+        "modifiers": [
+          "private"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 223,
+        "lineEnd": 309,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "获取面对面支付结果对象，处理微信和支付宝的扫码支付业务，生成支付流水并完成支付操作后返回支付结果信息",
+        "input": [
+          {
+            "param": "rpTradePaymentOrder",
+            "type": "RpTradePaymentOrder",
+            "meaning": "交易支付订单信息"
+          },
+          {
+            "param": "payWay",
+            "type": "RpPayWay",
+            "meaning": "支付方式配置信息"
+          },
+          {
+            "param": "payKey",
+            "type": "String",
+            "meaning": "支付密钥"
+          },
+          {
+            "param": "merchantPaySecret",
+            "type": "String",
+            "meaning": "商户支付密钥"
+          },
+          {
+            "param": "authCode",
+            "type": "String",
+            "meaning": "授权码/支付码"
+          },
+          {
+            "param": "roncooPayGoodsDetailses",
+            "type": "List",
+            "meaning": "商品详情列表"
+          }
+        ],
+        "output": {
+          "type": "F2FPayResultVo",
+          "meaning": "面对面支付结果视图对象，包含支付状态、订单信息、签名等"
+        },
+        "flow": "根据支付方式设置支付类型，生成支付流水记录，调用微信或支付宝API进行支付，处理支付结果，封装返回结果对象并生成签名",
+        "flow_chart": "graph TD\n    A[开始] --> B[初始化F2FPayResultVo]\n    B --> C[根据支付方式设置PayType]\n    C --> D[更新支付订单信息]\n    D --> E[生成支付流水记录]\n    E --> F{判断支付方式}\n    F -->|微信支付| G[获取微信支付配置]\n    G --> H[调用微信micropay接口]\n    H --> I[处理微信支付结果]\n    I --> J[完成支付记录]\n    F -->|支付宝支付| K[获取支付宝支付配置]\n    K --> L[调用支付宝tradePay接口]\n    L --> M[发送订单通知轮询]\n    J --> N[封装返回参数]\n    M --> N\n    N --> O[生成签名]\n    O --> P[返回F2FPayResultVo]",
+        "business_rules": [
+          "支持微信刷卡支付和支付宝当面付两种支付方式",
+          "需要验证商户支付配置信息是否完整",
+          "支付完成后需要生成支付流水记录并存储到数据库",
+          "微信支付需要进行验签处理，失败时标记订单为失败状态",
+          "支付结果未知时需要启动轮询机制确认最终结果",
+          "返回结果需要使用商户密钥进行签名验证"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "completeSuccessOrder",
+        "returnType": "",
+        "parameters": [
+          {
+            "name": "rpTradePaymentRecord",
+            "type": "RpTradePaymentRecord"
+          },
+          {
+            "name": "bankTrxNo",
+            "type": "String"
+          },
+          {
+            "name": "timeEnd",
+            "type": "Date"
+          },
+          {
+            "name": "bankReturnMsg",
+            "type": "String"
+          }
+        ],
+        "modifiers": [],
+        "annotations": [
+          "@Transactional([ElementValuePair(name=rollbackFor, value=ClassReference(postfix_operators=[], prefix_operators=[], qualifier=, selectors=[], type=ReferenceType(arguments=None, dimensions=None, name=Exception, sub_type=None)))])"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 318,
+        "lineEnd": 342,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "完成支付成功的订单处理，包括更新支付记录和订单状态、处理资金到账、发送商户通知等操作",
+        "input": [
+          {
+            "param": "rpTradePaymentRecord",
+            "type": "RpTradePaymentRecord",
+            "meaning": "支付记录实体，包含交易相关信息"
+          },
+          {
+            "param": "bankTrxNo",
+            "type": "String",
+            "meaning": "银行流水号，用于标识银行交易"
+          },
+          {
+            "param": "timeEnd",
+            "type": "Date",
+            "meaning": "交易结束时间，记录支付成功的时间"
+          },
+          {
+            "param": "bankReturnMsg",
+            "type": "String",
+            "meaning": "银行返回消息，记录银行处理结果信息"
+          }
+        ],
+        "output": {
+          "type": "void",
+          "meaning": "无返回值，执行完成后不返回任何数据"
+        },
+        "flow": "首先更新支付记录的银行流水号、返回消息、成功时间和状态为成功；然后根据商户编号和订单号查询支付订单并更新其状态为成功；接着根据资金流入类型判断是否需要进行账户入账操作；最后根据支付类型决定是否向商户发送支付成功的通知",
+        "flow_chart": "graph TD\n    A[开始完成支付成功订单] --> B[设置支付成功时间、银行流水号、返回消息]\n    B --> C[更新支付记录状态为SUCCESS]\n    C --> D[查询对应的支付订单]\n    D --> E[更新支付订单状态为SUCCESS]\n    E --> F{检查资金流入类型}\n    F -->|PLAT_RECEIVES| G[进行账户入账操作]\n    F -->|非PLAT_RECEIVES| H[跳过入账]\n    G --> I{检查支付类型}\n    H --> I\n    I -->|F2F_PAY| J[获取通知URL并发送成功通知]\n    I -->|其他类型| K[获取通知URL并发送成功通知]\n    J --> L[结束]\n    K --> L",
+        "business_rules": [
+          "支付记录和支付订单的状态都需要更新为SUCCESS",
+          "当资金流入类型为平台收款时需要进行账户入账操作",
+          "不同支付类型都需向商户发送支付成功通知",
+          "整个方法需要在事务中执行，发生异常时回滚"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "getMerchantNotifyUrl",
+        "returnType": "String",
+        "parameters": [
+          {
+            "name": "rpTradePaymentRecord",
+            "type": "RpTradePaymentRecord"
+          },
+          {
+            "name": "rpTradePaymentOrder",
+            "type": "RpTradePaymentOrder"
+          },
+          {
+            "name": "sourceUrl",
+            "type": "String"
+          },
+          {
+            "name": "tradeStatusEnum",
+            "type": "TradeStatusEnum"
+          }
+        ],
+        "modifiers": [
+          "private"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 346,
+        "lineEnd": 382,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据支付记录、支付订单、源URL和交易状态生成商户通知URL，包含签名验证机制",
+        "input": [
+          {
+            "param": "rpTradePaymentRecord",
+            "type": "RpTradePaymentRecord",
+            "meaning": "支付记录信息，包含商品名称、订单编号、订单金额等"
+          },
+          {
+            "param": "rpTradePaymentOrder",
+            "type": "RpTradePaymentOrder",
+            "meaning": "支付订单信息，包含订单日期和订单时间"
+          },
+          {
+            "param": "sourceUrl",
+            "type": "String",
+            "meaning": "原始通知URL地址"
+          },
+          {
+            "param": "tradeStatusEnum",
+            "type": "TradeStatusEnum",
+            "meaning": "交易状态枚举"
+          }
+        ],
+        "output": {
+          "type": "String",
+          "meaning": "包含所有必要参数和签名的完整通知URL"
+        },
+        "flow": "获取用户支付配置 -> 验证配置有效性 -> 构建参数映射表 -> 添加支付相关参数(支付KEY、商品名称、订单编号、金额等) -> 格式化日期时间 -> 生成参数字符串 -> 计算签名 -> 拼接最终通知URL",
+        "flow_chart": "graph TD\n    A[开始] --> B[获取用户支付配置]\n    B --> C{配置是否存在}\n    C -->|否| D[抛出配置错误异常]\n    C -->|是| E[创建参数映射表]\n    E --> F[添加支付KEY]\n    F --> G[添加商品名称/订单编号/金额等基础参数]\n    G --> H[格式化订单日期时间]\n    H --> I[添加其他参数如支付方式/交易状态/备注/流水号]\n    I --> J[生成参数字符串]\n    J --> K[计算签名]\n    K --> L[拼接完整通知URL]\n    L --> M[返回结果]\n    D --> N[结束]\n    M --> N",
+        "business_rules": [
+          "用户支付配置不能为空，否则抛出异常",
+          "必须包含支付KEY、商品名称、订单编号、订单金额等核心参数",
+          "需要对参数进行签名验证以确保数据安全性",
+          "日期时间需要按照特定格式进行格式化"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "completeFailOrder",
+        "returnType": "",
+        "parameters": [
+          {
+            "name": "rpTradePaymentRecord",
+            "type": "RpTradePaymentRecord"
+          },
+          {
+            "name": "bankReturnMsg",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "private"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 390,
+        "lineEnd": 400,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "完成失败订单处理，更新支付记录和订单状态为失败，并发送商户通知",
+        "input": [
+          {
+            "param": "rpTradePaymentRecord",
+            "type": "RpTradePaymentRecord",
+            "meaning": "支付记录对象，包含交易相关信息"
+          },
+          {
+            "param": "bankReturnMsg",
+            "type": "String",
+            "meaning": "银行返回的错误信息或失败原因"
+          }
+        ],
+        "output": {
+          "type": "void",
+          "meaning": "无返回值"
+        },
+        "flow": "设置支付记录的银行返回消息和状态为失败→更新支付记录到数据库→查询对应的支付订单→将订单状态更新为失败→获取商户通知URL→发送失败通知给商户",
+        "flow_chart": "graph TD\n    A[开始] --> B[设置银行返回消息]\n    B --> C[设置支付记录状态为失败]\n    C --> D[更新支付记录到数据库]\n    D --> E[查询对应支付订单]\n    E --> F[设置订单状态为失败]\n    F --> G[更新订单到数据库]\n    G --> H[获取商户通知URL]\n    H --> I[发送失败通知给商户]\n    I --> J[结束]",
+        "business_rules": [
+          "支付记录和订单必须同时更新为失败状态",
+          "需要保存银行返回的具体失败原因信息",
+          "失败后必须向商户发送通知"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "sealF2FRpTradePaymentOrder",
+        "returnType": "RpTradePaymentOrder",
+        "parameters": [
+          {
+            "name": "rpUserPayConfig",
+            "type": "RpUserPayConfig"
+          },
+          {
+            "name": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo"
+          },
+          {
+            "name": "rpUserInfo",
+            "type": "RpUserInfo"
+          },
+          {
+            "name": "rpPayWay",
+            "type": "RpPayWay"
+          }
+        ],
+        "modifiers": [
+          "private"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 944,
+        "lineEnd": 970,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "构建F2F（面对面）支付交易订单实体对象，将支付请求参数封装成完整的交易支付订单信息",
+        "input": [
+          {
+            "param": "rpUserPayConfig",
+            "type": "RpUserPayConfig",
+            "meaning": "用户支付配置信息，包含资金流入方向等配置"
+          },
+          {
+            "param": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo",
+            "meaning": "F2F支付请求业务对象，包含商品名称、订单号、价格、下单时间等信息"
+          },
+          {
+            "param": "rpUserInfo",
+            "type": "RpUserInfo",
+            "meaning": "商户用户信息，包含用户名和用户编号"
+          },
+          {
+            "param": "rpPayWay",
+            "type": "RpPayWay",
+            "meaning": "支付通道信息，包含支付通道编码、名称、支付类型等"
+          }
+        ],
+        "output": {
+          "type": "RpTradePaymentOrder",
+          "meaning": "封装完成的交易支付订单实体，包含完整的订单信息用于后续支付处理"
+        },
+        "flow": "创建新的交易支付订单对象，依次设置商品信息、商户信息、订单基础信息、支付通道信息、订单状态等，解析时间格式，设置默认值，最终返回完整的订单对象",
+        "flow_chart": "graph TD\n    A[开始] --> B[创建RpTradePaymentOrder对象]\n    B --> C[设置商品名称和订单号]\n    C --> D[设置订单金额和商户信息]\n    D --> E[解析并设置订单日期和时间]\n    E --> F[设置订单IP和URL相关字段]\n    F --> G[设置支付通道信息]\n    G --> H[设置订单状态为待支付]\n    H --> I[设置支付类型和资金流向]\n    I --> J[设置备注信息]\n    J --> K[返回订单对象]\n    K --> L[结束]",
+        "business_rules": [
+          "订单状态初始化为等待支付(WAITING_PAYMENT)",
+          "订单过期时间设置为当前时间",
+          "订单有效期设置为0（可能表示使用系统默认有效期）",
+          "需要正确解析yyyyMMdd和yyyyMMddHHmmss格式的时间字符串"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+        "kind": "METHOD",
+        "className": "RpTradePaymentManagerServiceImpl",
+        "methodName": "sealRpTradePaymentRecord",
+        "returnType": "RpTradePaymentRecord",
+        "parameters": [
+          {
+            "name": "merchantNo",
+            "type": "String"
+          },
+          {
+            "name": "merchantName",
+            "type": "String"
+          },
+          {
+            "name": "productName",
+            "type": "String"
+          },
+          {
+            "name": "orderNo",
+            "type": "String"
+          },
+          {
+            "name": "orderPrice",
+            "type": "BigDecimal"
+          },
+          {
+            "name": "payWay",
+            "type": "String"
+          },
+          {
+            "name": "payWayName",
+            "type": "String"
+          },
+          {
+            "name": "payType",
+            "type": "PayTypeEnum"
+          },
+          {
+            "name": "fundIntoType",
+            "type": "String"
+          },
+          {
+            "name": "feeRate",
+            "type": "BigDecimal"
+          },
+          {
+            "name": "orderIp",
+            "type": "String"
+          },
+          {
+            "name": "returnUrl",
+            "type": "String"
+          },
+          {
+            "name": "notifyUrl",
+            "type": "String"
+          },
+          {
+            "name": "remark",
+            "type": "String"
+          },
+          {
+            "name": "field1",
+            "type": "String"
+          },
+          {
+            "name": "field2",
+            "type": "String"
+          },
+          {
+            "name": "field3",
+            "type": "String"
+          },
+          {
+            "name": "field4",
+            "type": "String"
+          },
+          {
+            "name": "field5",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "private"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java",
+        "lineStart": 997,
+        "lineEnd": 1058,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "封装交易支付记录对象，用于创建和初始化一笔支付交易的基本信息、订单信息、支付方式信息以及平台收益计算等",
+        "input": [
+          {
+            "param": "merchantNo",
+            "type": "String",
+            "meaning": "商户编号"
+          },
+          {
+            "param": "merchantName",
+            "type": "String",
+            "meaning": "商户名称"
+          },
+          {
+            "param": "productName",
+            "type": "String",
+            "meaning": "产品名称"
+          },
+          {
+            "param": "orderNo",
+            "type": "String",
+            "meaning": "商户订单号"
+          },
+          {
+            "param": "orderPrice",
+            "type": "BigDecimal",
+            "meaning": "订单金额"
+          },
+          {
+            "param": "payWay",
+            "type": "String",
+            "meaning": "支付通道编码"
+          },
+          {
+            "param": "payWayName",
+            "type": "String",
+            "meaning": "支付通道名称"
+          },
+          {
+            "param": "payType",
+            "type": "PayTypeEnum",
+            "meaning": "支付类型枚举"
+          },
+          {
+            "param": "fundIntoType",
+            "type": "String",
+            "meaning": "资金流入方向"
+          },
+          {
+            "param": "feeRate",
+            "type": "BigDecimal",
+            "meaning": "手续费费率"
+          },
+          {
+            "param": "orderIp",
+            "type": "String",
+            "meaning": "下单IP地址"
+          },
+          {
+            "param": "returnUrl",
+            "type": "String",
+            "meaning": "页面回调地址"
+          },
+          {
+            "param": "notifyUrl",
+            "type": "String",
+            "meaning": "后台异步通知地址"
+          },
+          {
+            "param": "remark",
+            "type": "String",
+            "meaning": "支付备注"
+          },
+          {
+            "param": "field1",
+            "type": "String",
+            "meaning": "扩展字段1"
+          },
+          {
+            "param": "field2",
+            "type": "String",
+            "meaning": "扩展字段2"
+          },
+          {
+            "param": "field3",
+            "type": "String",
+            "meaning": "扩展字段3"
+          },
+          {
+            "param": "field4",
+            "type": "String",
+            "meaning": "扩展字段4"
+          },
+          {
+            "param": "field5",
+            "type": "String",
+            "meaning": "扩展字段5"
+          }
+        ],
+        "output": {
+          "type": "RpTradePaymentRecord",
+          "meaning": "封装好的交易支付记录对象，包含完整的支付订单信息和平台收益计算结果"
+        },
+        "flow": "创建交易支付记录对象 -> 设置基本订单信息(产品名、订单号等) -> 生成支付流水号和银行订单号 -> 设置商户和支付相关信息 -> 设置交易类型和状态 -> 根据资金流向计算平台收益(当平台收款时) -> 设置扩展字段 -> 返回完整对象",
+        "flow_chart": "graph TD\n    A[开始] --> B[创建RpTradePaymentRecord对象]\n    B --> C[设置基础订单信息:产品名、订单号等]\n    C --> D[生成支付流水号和银行订单号]\n    D --> E[设置商户、支付通道、IP等信息]\n    E --> F[设置交易类型和订单状态]\n    F --> G[设置支付类型和资金流向]\n    G --> H{判断资金流向是否为平台收款}\n    H -->|是| I[计算平台收入、成本、利润]\n    I --> J[设置费率和平台收益相关字段]\n    H -->|否| J\n    J --> K[设置备注和扩展字段]\n    K --> L[返回交易支付记录对象]\n    L --> M[结束]",
+        "business_rules": [
+          "交易状态初始设置为等待支付(WAITING_PAYMENT)",
+          "交易类型固定设置为支出(EXPENSE)，订单来源设置为用户支出(USER_EXPENSE)",
+          "当资金流向为平台收款(PLAT_RECEIVES)时，需要根据费率计算平台收入、成本和利润",
+          "平台收入=订单金额*费率/100，平台成本=订单金额*微信费率/100，平台利润=平台收入-平台成本",
+          "支付流水号和银行订单号通过构建服务自动生成"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.service.BuildNoService#buildTrxNo",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.user.service.BuildNoService#buildTrxNo",
+        "kind": "METHOD",
+        "className": "BuildNoService",
+        "methodName": "buildTrxNo",
+        "returnType": "String",
+        "parameters": [],
+        "modifiers": [],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\BuildNoService.java",
+        "lineStart": 32,
+        "lineEnd": 32,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "构建交易流水号的方法，用于生成唯一的交易编号",
+        "input": [],
+        "output": {
+          "type": "String",
+          "meaning": "生成的唯一交易流水号字符串"
+        },
+        "flow": "该方法不接受任何参数，直接生成并返回一个唯一的交易流水号，通常包含时间戳、序列号等信息以确保唯一性",
+        "flow_chart": "graph TD\n    A[开始] --> B[调用buildTrxNo方法]\n    B --> C[生成唯一交易流水号]\n    C --> D[返回交易流水号]\n    D --> E[结束]",
+        "business_rules": [
+          "交易流水号必须保证全局唯一性",
+          "交易流水号应具有一定的可读性和格式规范"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.service.BuildNoService#buildBankOrderNo",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.user.service.BuildNoService#buildBankOrderNo",
+        "kind": "METHOD",
+        "className": "BuildNoService",
+        "methodName": "buildBankOrderNo",
+        "returnType": "String",
+        "parameters": [],
+        "modifiers": [],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\BuildNoService.java",
+        "lineStart": 35,
+        "lineEnd": 35,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "构建银行订单号的方法，用于生成唯一的银行交易订单编号",
+        "input": [],
+        "output": {
+          "type": "String",
+          "meaning": "生成的银行订单号字符串，通常为唯一标识符"
+        },
+        "flow": "该方法通过内部逻辑生成一个符合银行订单号规范的唯一编号，可能包含时间戳、序列号等组成部分",
+        "flow_chart": "graph TD\n    A[开始] --> B[调用buildBankOrderNo方法]\n    B --> C[内部生成订单号逻辑]\n    C --> D[返回银行订单号]\n    D --> E[结束]",
+        "business_rules": [
+          "银行订单号必须保证全局唯一性",
+          "订单号格式需符合银行系统的规范要求",
+          "每次调用应生成不同的订单号"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.service.impl.RpPayWayServiceImpl#getByPayWayTypeCode",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.user.service.impl.RpPayWayServiceImpl#getByPayWayTypeCode",
+        "kind": "METHOD",
+        "className": "RpPayWayServiceImpl",
+        "methodName": "getByPayWayTypeCode",
+        "returnType": "RpPayWay",
+        "parameters": [
+          {
+            "name": "payProductCode",
+            "type": "String"
+          },
+          {
+            "name": "payWayCode",
+            "type": "String"
+          },
+          {
+            "name": "payTypeCode",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [
+          "@Override"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\impl\\RpPayWayServiceImpl.java",
+        "lineStart": 79,
+        "lineEnd": 85,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据支付产品编码、支付方式编码和支付类型编码查询有效的支付方式信息",
+        "input": [
+          {
+            "param": "payProductCode",
+            "type": "String",
+            "meaning": "支付产品编码，标识具体的支付产品"
+          },
+          {
+            "param": "payWayCode",
+            "type": "String",
+            "meaning": "支付方式编码，如支付宝、微信等具体支付方式"
+          },
+          {
+            "param": "payTypeCode",
+            "type": "String",
+            "meaning": "支付类型编码，如扫码支付、刷卡支付等类型"
+          }
+        ],
+        "output": {
+          "type": "RpPayWay",
+          "meaning": "符合条件的有效支付方式对象，如果未找到则返回null"
+        },
+        "flow": "接收三个编码参数，构建查询参数映射表，添加状态为激活的条件，调用数据访问层查询并返回结果",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收参数: payProductCode, payWayCode, payTypeCode]\n    B --> C[创建参数映射表paramMap]\n    C --> D[设置查询参数: 产品编码, 类型编码, 方式编码]\n    D --> E[设置状态条件: ACTIVE]\n    E --> F[调用rpPayWayDao.getBy查询]\n    F --> G[返回查询结果RpPayWay对象]\n    G --> H[结束]",
+        "business_rules": [
+          "只查询状态为激活(Active)的支付方式",
+          "通过三个维度编码组合唯一确定一个支付方式",
+          "必须同时提供支付产品编码、支付方式编码和支付类型编码"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.service.impl.RpUserInfoServiceImpl#getDataByMerchentNo",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.user.service.impl.RpUserInfoServiceImpl#getDataByMerchentNo",
+        "kind": "METHOD",
+        "className": "RpUserInfoServiceImpl",
+        "methodName": "getDataByMerchentNo",
+        "returnType": "RpUserInfo",
+        "parameters": [
+          {
+            "name": "merchantNo",
+            "type": "String"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [
+          "@Override"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\impl\\RpUserInfoServiceImpl.java",
+        "lineStart": 136,
+        "lineEnd": 140,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据商户编号获取激活状态的用户信息",
+        "input": [
+          {
+            "param": "merchantNo",
+            "type": "String",
+            "meaning": "商户编号，用于查询对应的用户信息"
+          }
+        ],
+        "output": {
+          "type": "RpUserInfo",
+          "meaning": "返回指定商户编号且状态为激活的用户详细信息对象"
+        },
+        "flow": "创建参数映射表，将输入的商户编号作为userNo参数，添加激活状态条件，调用数据访问层查询并返回用户信息",
+        "flow_chart": "graph TD\n    A[开始] --> B[接收商户编号]\n    B --> C[创建参数映射表]\n    C --> D[设置userNo为商户编号]\n    D --> E[设置状态为ACTIVE]\n    E --> F[调用rpUserInfoDao.getBy查询]\n    F --> G[返回RpUserInfo结果]\n    G --> H[结束]",
+        "business_rules": [
+          "只查询状态为激活(PublicStatusEnum.ACTIVE)的用户信息",
+          "使用userNo字段匹配传入的merchantNo参数进行查询"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.controller.F2FPayController#initPay",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.controller.F2FPayController#initPay",
+        "kind": "METHOD",
+        "className": "F2FPayController",
+        "methodName": "initPay",
+        "returnType": "String",
+        "parameters": [
+          {
+            "name": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo"
+          },
+          {
+            "name": "bindingResult",
+            "type": "BindingResult"
+          },
+          {
+            "name": "httpServletRequest",
+            "type": "HttpServletRequest"
+          },
+          {
+            "name": "modelMap",
+            "type": "ModelMap"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [
+          "@RequestMapping(Literal(postfix_operators=[], prefix_operators=[], qualifier=None, selectors=[], value=\"/doPay\"))"
+        ],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\controller\\F2FPayController.java",
+        "lineStart": 52,
+        "lineEnd": 71,
+        "isEntry": true
+      },
+      "semantic": {
+        "description": "处理面对面支付初始化请求，验证支付参数并执行支付操作",
+        "input": [
+          {
+            "param": "f2FPayRequestBo",
+            "type": "F2FPayRequestBo",
+            "meaning": "面对面支付请求业务对象，包含支付相关参数信息"
+          },
+          {
+            "param": "bindingResult",
+            "type": "BindingResult",
+            "meaning": "参数绑定和验证结果，用于检查请求参数的有效性"
+          },
+          {
+            "param": "httpServletRequest",
+            "type": "HttpServletRequest",
+            "meaning": "HTTP请求对象，提供请求上下文信息"
+          },
+          {
+            "param": "modelMap",
+            "type": "ModelMap",
+            "meaning": "模型数据容器，用于向视图传递数据"
+          }
+        ],
+        "output": {
+          "type": "String",
+          "meaning": "返回视图路径，成功时返回支付确认页面，失败时返回异常页面"
+        },
+        "flow": "首先通过服务层验证支付参数并获取用户支付配置，然后调用支付管理服务执行面对面支付操作，将支付结果存入模型并返回支付确认页面；如遇业务异常或系统异常则记录错误日志并将错误信息存入模型返回异常页面",
+        "flow_chart": "graph TD\n    A[开始] --> B[验证支付参数并获取支付配置]\n    B --> C{支付操作是否成功}\n    C -->|成功| D[存储支付结果到ModelMap]\n    C -->|失败| E[捕获异常]\n    D --> F[返回支付确认页面]\n    E --> G[记录错误日志]\n    G --> H[存储错误信息到ModelMap]\n    H --> I[返回异常页面]\n    F --> J[结束]\n    I --> J",
+        "business_rules": [
+          "必须先验证支付参数的合法性并获取对应的用户支付配置",
+          "支付过程中发生业务异常时需要返回具体的错误信息给前端展示",
+          "系统异常时统一返回系统异常提示，不暴露具体的技术细节"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.service.CnpPayService#checkIp",
+        "kind": "METHOD",
+        "className": "CnpPayService",
+        "methodName": "checkIp",
+        "returnType": "",
+        "parameters": [
+          {
+            "name": "rpUserPayConfig",
+            "type": "RpUserPayConfig"
+          },
+          {
+            "name": "httpServletRequest",
+            "type": "HttpServletRequest"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java",
+        "lineStart": 41,
+        "lineEnd": 60,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "检查支付请求的IP地址是否合法，用于安全验证防止非法IP访问",
+        "input": [
+          {
+            "param": "rpUserPayConfig",
+            "type": "RpUserPayConfig",
+            "meaning": "用户支付配置信息，包含安全等级和商户服务器IP白名单"
+          },
+          {
+            "param": "httpServletRequest",
+            "type": "HttpServletRequest",
+            "meaning": "HTTP请求对象，用于获取客户端IP地址"
+          }
+        ],
+        "output": {
+          "type": "void",
+          "meaning": "无返回值，验证失败时抛出异常"
+        },
+        "flow": "首先检查安全等级是否为MD5_IP，如果不是则直接返回；然后从请求中获取客户端IP地址；验证IP地址不能为空；最后检查获取到的IP是否在商户服务器IP白名单中，不在白名单则抛出非法IP请求异常",
+        "flow_chart": "graph TD\n    A[开始] --> B{安全等级是否为MD5_IP}\n    B -->|否| C[直接返回]\n    B -->|是| D[获取请求IP地址]\n    D --> E{IP地址是否为空}\n    E -->|是| F[抛出获取IP错误异常]\n    E -->|否| G[检查IP是否在商户白名单]\n    G --> H{IP是否在白名单}\n    H -->|否| I[抛出非法IP请求异常]\n    H -->|是| J[验证通过结束]\n    C --> K[结束]\n    F --> K\n    I --> K\n    J --> K",
+        "business_rules": [
+          "只有安全等级为MD5_IP时才进行IP验证",
+          "请求IP不能为空，否则抛出参数错误异常",
+          "请求IP必须在商户服务器IP白名单中，否则视为非法请求",
+          "IP验证失败时抛出交易业务异常"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+        "kind": "METHOD",
+        "className": "CnpPayService",
+        "methodName": "checkParamAndGetUserPayConfig",
+        "returnType": "RpUserPayConfig",
+        "parameters": [
+          {
+            "name": "object",
+            "type": "Object"
+          },
+          {
+            "name": "bindingResult",
+            "type": "BindingResult"
+          },
+          {
+            "name": "httpServletRequest",
+            "type": "HttpServletRequest"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java",
+        "lineStart": 72,
+        "lineEnd": 101,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "支付参数校验并获取用户支付配置信息的方法，负责校验请求参数的完整性、验证商户合法性、进行IP白名单检查和签名验证",
+        "input": [
+          {
+            "param": "object",
+            "type": "Object",
+            "meaning": "包含支付相关参数的对象，如payKey、sign等"
+          },
+          {
+            "param": "bindingResult",
+            "type": "BindingResult",
+            "meaning": "参数校验结果，用于检查参数是否符合校验规则"
+          },
+          {
+            "param": "httpServletRequest",
+            "type": "HttpServletRequest",
+            "meaning": "HTTP请求对象，用于获取客户端IP地址进行IP白名单校验"
+          }
+        ],
+        "output": {
+          "type": "RpUserPayConfig",
+          "meaning": "返回有效的用户支付配置信息，包含商户的支付密钥等配置"
+        },
+        "flow": "首先对输入参数进行校验，如果校验失败则抛出异常；然后从参数中提取payKey查询对应的用户支付配置；接着校验商户是否存在；再进行IP白名单校验；最后验证请求签名的正确性，全部通过后返回支付配置信息",
+        "flow_chart": "graph TD\n    A[开始] --> B[校验输入参数]\n    B --> C{参数校验是否有错误}\n    C -->|是| D[获取错误信息并记录日志]\n    D --> E[抛出参数错误异常]\n    C -->|否| F[将对象转换为JSON并解析为Map]\n    F --> G[从参数中提取payKey]\n    G --> H[根据payKey查询用户支付配置]\n    H --> I{支付配置是否存在}\n    I -->|否| J[记录日志并抛出配置不存在异常]\n    I -->|是| K[进行IP白名单校验]\n    K --> L[从参数中提取签名sign]\n    L --> M[验证签名正确性]\n    M --> N{签名验证是否通过}\n    N -->|否| O[记录日志并抛出签名异常]\n    N -->|是| P[返回用户支付配置]\n    E --> Q[结束]\n    J --> Q\n    O --> Q\n    P --> Q",
+        "business_rules": [
+          "必须通过参数校验才能继续执行",
+          "payKey对应的商户必须存在且有效",
+          "请求来源IP必须在商户配置的IP白名单内",
+          "请求参数必须包含正确的MD5签名验证"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.service.CnpPayService#getErrorResponse",
+      "kind": "METHOD",
+      "original": {
+        "id": "com.roncoo.pay.service.CnpPayService#getErrorResponse",
+        "kind": "METHOD",
+        "className": "CnpPayService",
+        "methodName": "getErrorResponse",
+        "returnType": "String",
+        "parameters": [
+          {
+            "name": "bindingResult",
+            "type": "BindingResult"
+          }
+        ],
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java",
+        "lineStart": 110,
+        "lineEnd": 116,
+        "isEntry": false
+      },
+      "semantic": {
+        "description": "根据绑定结果获取错误响应信息，将所有验证错误消息拼接成逗号分隔的字符串返回",
+        "input": [
+          {
+            "param": "bindingResult",
+            "type": "BindingResult",
+            "meaning": "数据绑定和验证结果对象，包含验证错误信息"
+          }
+        ],
+        "output": {
+          "type": "String",
+          "meaning": "包含所有错误消息的逗号分隔字符串"
+        },
+        "flow": "遍历绑定结果中的所有错误对象，提取默认错误消息并用逗号连接，最后去除末尾多余逗号后返回完整错误信息字符串",
+        "flow_chart": "graph TD\n    A[开始] --> B[创建StringBuffer对象]\n    B --> C[遍历bindingResult的所有错误]\n    C --> D[获取每个错误的默认消息]\n    D --> E[追加到StringBuffer并添加逗号]\n    E --> F{是否还有更多错误?}\n    F -->|是| C\n    F -->|否| G[删除末尾多余的逗号]\n    G --> H[返回拼接后的错误消息字符串]\n    H --> I[结束]",
+        "business_rules": [
+          "需要处理BindingResult中的所有错误信息",
+          "错误消息之间使用逗号分隔",
+          "需要去除末尾多余的逗号"
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "kind": "CLASS",
+      "original": {
+        "id": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+        "kind": "CLASS",
+        "className": "RpTradePaymentOrder",
+        "package": "com.roncoo.pay.trade.entity",
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\entity\\RpTradePaymentOrder.java",
+        "isInterface": false,
+        "isAbstract": false,
+        "superClass": "com.roncoo.pay.common.core.entity.BaseEntity",
+        "interfaces": [
+          "Serializable"
+        ]
+      },
+      "semantic": {
+        "fields": [
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "productName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantOrderNo"
+          },
+          {
+            "modifier": "private",
+            "type": "BigDecimal",
+            "name": "orderAmount"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "orderFrom"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantNo"
+          },
+          {
+            "modifier": "private",
+            "type": "Date",
+            "name": "orderTime"
+          },
+          {
+            "modifier": "private",
+            "type": "Date",
+            "name": "orderDate"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "orderIp"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "orderRefererUrl"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "returnUrl"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "notifyUrl"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "cancelReason"
+          },
+          {
+            "modifier": "private",
+            "type": "Integer",
+            "name": "orderPeriod"
+          },
+          {
+            "modifier": "private",
+            "type": "Date",
+            "name": "expireTime"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payWayCode"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payWayName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "remark"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "trxType"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "trxNo"
+          }
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "kind": "CLASS",
+      "original": {
+        "id": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+        "kind": "CLASS",
+        "className": "RpTradePaymentRecord",
+        "package": "com.roncoo.pay.trade.entity",
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\entity\\RpTradePaymentRecord.java",
+        "isInterface": false,
+        "isAbstract": false,
+        "superClass": "com.roncoo.pay.common.core.entity.BaseEntity",
+        "interfaces": [
+          "Serializable"
+        ]
+      },
+      "semantic": {
+        "fields": [
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "productName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantOrderNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "trxNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "bankOrderNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "bankTrxNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payerUserNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payerName"
+          },
+          {
+            "modifier": "private",
+            "type": "BigDecimal",
+            "name": "payerPayAmount"
+          },
+          {
+            "modifier": "private",
+            "type": "BigDecimal",
+            "name": "payerFee"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payerAccountType"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "receiverUserNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "receiverName"
+          },
+          {
+            "modifier": "private",
+            "type": "BigDecimal",
+            "name": "receiverPayAmount"
+          },
+          {
+            "modifier": "private",
+            "type": "BigDecimal",
+            "name": "receiverFee"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "receiverAccountType"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "orderIp"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "orderRefererUrl"
+          },
+          {
+            "modifier": "private",
+            "type": "BigDecimal",
+            "name": "orderAmount"
+          }
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.entity.RpPayWay",
+      "kind": "CLASS",
+      "original": {
+        "id": "com.roncoo.pay.user.entity.RpPayWay",
+        "kind": "CLASS",
+        "className": "RpPayWay",
+        "package": "com.roncoo.pay.user.entity",
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\entity\\RpPayWay.java",
+        "isInterface": false,
+        "isAbstract": false,
+        "superClass": "com.roncoo.pay.common.core.entity.BaseEntity",
+        "interfaces": [
+          "Serializable"
+        ]
+      },
+      "semantic": {
+        "fields": [
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payWayCode"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payWayName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payTypeCode"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payTypeName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payProductCode"
+          },
+          {
+            "modifier": "private",
+            "type": "Integer",
+            "name": "sorts"
+          },
+          {
+            "modifier": "private",
+            "type": "Double",
+            "name": "payRate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.entity.RpUserInfo",
+      "kind": "CLASS",
+      "original": {
+        "id": "com.roncoo.pay.user.entity.RpUserInfo",
+        "kind": "CLASS",
+        "className": "RpUserInfo",
+        "package": "com.roncoo.pay.user.entity",
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\entity\\RpUserInfo.java",
+        "isInterface": false,
+        "isAbstract": false,
+        "superClass": "com.roncoo.pay.common.core.entity.BaseEntity",
+        "interfaces": [
+          "Serializable"
+        ]
+      },
+      "semantic": {
+        "fields": [
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "userNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "userName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "accountNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "mobile"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "password"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payPwd"
+          }
+        ]
+      }
+    },
+    {
+      "id": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "kind": "CLASS",
+      "original": {
+        "id": "com.roncoo.pay.user.entity.RpUserPayInfo",
+        "kind": "CLASS",
+        "className": "RpUserPayInfo",
+        "package": "com.roncoo.pay.user.entity",
+        "modifiers": [
+          "public"
+        ],
+        "annotations": [],
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\entity\\RpUserPayInfo.java",
+        "isInterface": false,
+        "isAbstract": false,
+        "superClass": "com.roncoo.pay.common.core.entity.BaseEntity",
+        "interfaces": [
+          "Serializable"
+        ]
+      },
+      "semantic": {
+        "fields": [
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "appId"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "appSectet"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "merchantId"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "appType"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "userNo"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "userName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "partnerKey"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payWayCode"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "payWayName"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "offlineAppId"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "rsaPrivateKey"
+          },
+          {
+            "modifier": "private",
+            "type": "String",
+            "name": "rsaPublicKey"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "com.roncoo.pay.controller.F2FPayController#initPay",
+      "to": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "type": "CALL",
+      "callSite": "cnpPayService.checkParamAndGetUserPayConfig(...)",
+      "line": 55
+    },
+    {
+      "from": "com.roncoo.pay.controller.F2FPayController#initPay",
+      "to": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "type": "CALL",
+      "callSite": "rpTradePaymentManagerService.f2fPay(...)",
+      "line": 58
+    },
+    {
+      "from": "com.roncoo.pay.controller.F2FPayController#initPay",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.controller.F2FPayController#initPay",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.controller.F2FPayController#initPay",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "to": "com.roncoo.pay.utils.MD5Util#encode",
+      "type": "CALL",
+      "callSite": "MD5Util.encode(...)",
+      "line": 54
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "to": "com.roncoo.pay.utils.MD5Util",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.service.CnpPayService#getErrorResponse",
+      "type": "CALL",
+      "callSite": "getErrorResponse(...)",
+      "line": 75
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey",
+      "type": "CALL",
+      "callSite": "rpUserPayConfigService.getByPayKey(...)",
+      "line": 87
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "type": "CALL",
+      "callSite": "checkIp(...)",
+      "line": 93
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#isRightSign",
+      "type": "CALL",
+      "callSite": "MerchantApiUtil.isRightSign(...)",
+      "line": 96
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.user.exception.PayBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.user.exception.PayBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkParamAndGetUserPayConfig",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey",
+      "to": "com.roncoo.pay.user.service.impl.RpUserPayConfigServiceImpl#getByPayKey",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.utils.NetworkUtil#getIpAddress",
+      "type": "CALL",
+      "callSite": "NetworkUtil.getIpAddress(...)",
+      "line": 48
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CALL",
+      "callSite": "StringUtil.isEmpty(...)",
+      "line": 49
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.utils.NetworkUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.service.CnpPayService#checkIp",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil#isRightSign",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "type": "CALL",
+      "callSite": "getSign(...)",
+      "line": 92
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo",
+      "to": "com.roncoo.pay.user.service.impl.RpUserInfoServiceImpl#getDataByMerchentNo",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo",
+      "to": "com.roncoo.pay.user.service.impl.RpUserPayInfoServiceImpl#getByUserNo",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MD5Util#encode",
+      "to": "com.roncoo.pay.utils.MD5Util#byteArrayToHexString",
+      "type": "CALL",
+      "callSite": "byteArrayToHexString(...)",
+      "line": 40
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode",
+      "type": "CALL",
+      "callSite": "rpPayWayService.getByPayWayTypeCode(...)",
+      "line": 183
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo",
+      "type": "CALL",
+      "callSite": "rpUserInfoService.getDataByMerchentNo(...)",
+      "line": 191
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "type": "CALL",
+      "callSite": "rpTradePaymentOrderDao.selectByMerchantNoAndMerchantOrderNo(...)",
+      "line": 197
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "type": "CALL",
+      "callSite": "sealF2FRpTradePaymentOrder(...)",
+      "line": 200
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "type": "CALL",
+      "callSite": "getF2FPayResultVo(...)",
+      "line": 213
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.exception.PayBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.exception.PayBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.exception.UserBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.exception.UserBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpUserPayConfigServiceImpl#getByPayKey",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpUserInfoServiceImpl#getDataByMerchentNo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpUserPayInfoServiceImpl#getByUserNo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MD5Util#byteArrayToHexString",
+      "to": "com.roncoo.pay.utils.MD5Util#byteToHexChar",
+      "type": "CALL",
+      "callSite": "byteToHexChar(...)",
+      "line": 51
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode",
+      "to": "com.roncoo.pay.user.service.impl.RpPayWayServiceImpl#getByPayWayTypeCode",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode",
+      "to": "com.roncoo.pay.user.entity.RpPayWay",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "to": "com.roncoo.pay.trade.dao.impl.RpTradePaymentOrderDaoImpl#selectByMerchantNoAndMerchantOrderNo",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#parseDate",
+      "type": "CALL",
+      "callSite": "DateUtils.parseDate(...)",
+      "line": 952
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#parseDate",
+      "type": "CALL",
+      "callSite": "DateUtils.parseDate(...)",
+      "line": 953
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.user.entity.RpPayWay",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealF2FRpTradePaymentOrder",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "type": "CALL",
+      "callSite": "sealRpTradePaymentRecord(...)",
+      "line": 241
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo",
+      "type": "CALL",
+      "callSite": "rpUserPayInfoService.getByUserNo(...)",
+      "line": 245
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "type": "CALL",
+      "callSite": "WeiXinPayUtil.micropay(...)",
+      "line": 249
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+      "type": "CALL",
+      "callSite": "rpNotifyService.orderSend(...)",
+      "line": 252
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "type": "CALL",
+      "callSite": "completeSuccessOrder(...)",
+      "line": 258
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CALL",
+      "callSite": "StringUtil.isEmpty(...)",
+      "line": 259
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "type": "CALL",
+      "callSite": "completeFailOrder(...)",
+      "line": 261
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+      "type": "CALL",
+      "callSite": "rpNotifyService.orderSend(...)",
+      "line": 264
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "type": "CALL",
+      "callSite": "completeFailOrder(...)",
+      "line": 267
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo",
+      "type": "CALL",
+      "callSite": "rpUserPayInfoService.getByUserNo(...)",
+      "line": 273
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+      "type": "CALL",
+      "callSite": "rpNotifyService.orderSend(...)",
+      "line": 279
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "type": "CALL",
+      "callSite": "MerchantApiUtil.getSign(...)",
+      "line": 306
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.entity.RpPayWay",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.exception.UserBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.exception.UserBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.trade.utils.alipay.util.AliPayUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getF2FPayResultVo",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "type": "CALL",
+      "callSite": "rpTradePaymentOrderDao.selectByMerchantNoAndMerchantOrderNo(...)",
+      "line": 326
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.account.service.RpAccountTransactionService#creditToAccount",
+      "type": "CALL",
+      "callSite": "rpAccountTransactionService.creditToAccount(...)",
+      "line": 332
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "type": "CALL",
+      "callSite": "getMerchantNotifyUrl(...)",
+      "line": 337
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#notifySend",
+      "type": "CALL",
+      "callSite": "rpNotifyService.notifySend(...)",
+      "line": 338
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "type": "CALL",
+      "callSite": "getMerchantNotifyUrl(...)",
+      "line": 341
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#notifySend",
+      "type": "CALL",
+      "callSite": "rpNotifyService.notifySend(...)",
+      "line": 342
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeSuccessOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "to": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "type": "CALL",
+      "callSite": "rpTradePaymentOrderDao.selectByMerchantNoAndMerchantOrderNo(...)",
+      "line": 395
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "to": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "type": "CALL",
+      "callSite": "getMerchantNotifyUrl(...)",
+      "line": 399
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#notifySend",
+      "type": "CALL",
+      "callSite": "rpNotifyService.notifySend(...)",
+      "line": 400
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#completeFailOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#formatDate",
+      "type": "CALL",
+      "callSite": "DateUtils.formatDate(...)",
+      "line": 369
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#formatDate",
+      "type": "CALL",
+      "callSite": "DateUtils.formatDate(...)",
+      "line": 371
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#getParamStr",
+      "type": "CALL",
+      "callSite": "MerchantApiUtil.getParamStr(...)",
+      "line": 378
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "type": "CALL",
+      "callSite": "MerchantApiUtil.getSign(...)",
+      "line": 379
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "parameter_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.user.exception.UserBizException",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#getMerchantNotifyUrl",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpPayWayServiceImpl#getByPayWayTypeCode",
+      "to": "com.roncoo.pay.user.entity.RpPayWay",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.dao.impl.RpTradePaymentOrderDaoImpl#selectByMerchantNoAndMerchantOrderNo",
+      "to": "com.roncoo.pay.common.core.dao.impl.BaseDaoImpl#getBy",
+      "type": "CALL",
+      "callSite": "super.getBy()",
+      "line": 0
+    },
+    {
+      "from": "com.roncoo.pay.trade.dao.impl.RpTradePaymentOrderDaoImpl#selectByMerchantNoAndMerchantOrderNo",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils#parseDate",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#parseDate",
+      "type": "CALL",
+      "callSite": "parseDate(...)",
+      "line": 85
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.user.service.BuildNoService#buildTrxNo",
+      "type": "CALL",
+      "callSite": "buildNoService.buildTrxNo(...)",
+      "line": 1002
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.user.service.BuildNoService#buildBankOrderNo",
+      "type": "CALL",
+      "callSite": "buildNoService.buildBankOrderNo(...)",
+      "line": 1005
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.utils.WeixinConfigUtil#readConfig",
+      "type": "CALL",
+      "callSite": "WeixinConfigUtil.readConfig(...)",
+      "line": 1037
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "return_type"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "new"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "type": "REFERENCES",
+      "usage": "local_var"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#sealRpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.utils.WeixinConfigUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getnonceStr",
+      "type": "CALL",
+      "callSite": "getnonceStr(...)",
+      "line": 34
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "type": "CALL",
+      "callSite": "getSign(...)",
+      "line": 48
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml",
+      "type": "CALL",
+      "callSite": "mapToXml(...)",
+      "line": 49
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "to": "com.roncoo.pay.trade.utils.WeiXinPayUtils#httpXmlRequest",
+      "type": "CALL",
+      "callSite": "WeiXinPayUtils.httpXmlRequest(...)",
+      "line": 51
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "type": "CALL",
+      "callSite": "getSign(...)",
+      "line": 58
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "to": "com.roncoo.pay.trade.utils.WeiXinPayUtils",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+      "to": "com.roncoo.pay.notify.service.impl.RpNotifyServiceImpl#orderSend",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getnonceStr",
+      "type": "CALL",
+      "callSite": "getnonceStr(...)",
+      "line": 74
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "type": "CALL",
+      "callSite": "getSign(...)",
+      "line": 104
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml",
+      "type": "CALL",
+      "callSite": "mapToXml(...)",
+      "line": 105
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "to": "com.roncoo.pay.trade.utils.WeiXinPayUtils#httpXmlRequest",
+      "type": "CALL",
+      "callSite": "WeiXinPayUtils.httpXmlRequest(...)",
+      "line": 107
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "type": "CALL",
+      "callSite": "getSign(...)",
+      "line": 114
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "to": "com.roncoo.pay.trade.utils.WeiXinPayUtils",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CALL",
+      "callSite": "StringUtil.isEmpty(...)",
+      "line": 148
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "to": "com.roncoo.pay.utils.MD5Util#encode",
+      "type": "CALL",
+      "callSite": "MD5Util.encode(...)",
+      "line": 154
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "to": "com.roncoo.pay.utils.MD5Util",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CALL",
+      "callSite": "StringUtil.isEmpty(...)",
+      "line": 166
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil",
+      "type": "REFERENCES",
+      "usage": "static_call"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getVersion",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setVersion",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getStatus",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setStatus",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getCreater",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setCreater",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getCreateTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setCreateTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getEditor",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setEditor",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getEditTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setEditTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#BizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#BizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#BizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#BizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#BizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#getMsg",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#getCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.exception.BizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException#newInstance",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#parseDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#compareDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#compareTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#nowTimeMillis",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#nowTimeStamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getReqDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getReqDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getReqDateyyyyMMdd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#TimestampToDateStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getReqTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getTimeStampStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getLongDateStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getLongDateStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getShortDateStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getShortDateStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#addSecond",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#addMinute",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#addHour",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDayStart",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDayEnd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#addDay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getMonthEnd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#addYear",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#strToTimestamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#strToTimestamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getCurTimestamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#daysBetween",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getSysDateTimestamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toSqlTimestamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toSqlTimestamp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getSysDateTimeString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toSqlTimestampString2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#toSqlTimestampString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getWeek",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#timestampToStringYMD",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isBetween",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isBetween",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getWeekStart",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getWeekEnd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getMonthStart",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getYearStart",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getYearEnd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDayOfMonth",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getFirstDateOfMonth",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getLastDateOfMonth",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getSeasonStart",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getSeasonEnd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getSeasonDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getSeason",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#StringToDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getWeekIndex",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#subDays",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isOverIntervalLimit",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isOverIntervalLimit",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isOverIntervalLimit",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDateFromString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getQuarter",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#formatDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#today",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#currentTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#formatDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getYesterday",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isInBetweenTimes",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDateByStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getMaxTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getMinTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getLastDayOfMonth",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getFirstDayOfMonth",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getPreviousMonthFirstDay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getPreviousMonthLastDay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDateDiff",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getDateDiff",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getYearDiff",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getTimeDiff",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isSameWeekWithToday",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getStrFormTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#getLastDays",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#dateFormat",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.DateUtils",
+      "to": "com.roncoo.pay.common.core.utils.DateUtils#isSameDayWithToday",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#StringUtil",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#getExt",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#get32UUID",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#get36UUID",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isNumeric",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#getByteSize",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#getInParam",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.common.core.utils.StringUtil",
+      "to": "com.roncoo.pay.common.core.utils.StringUtil#isNotNull",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.notify.service.impl.RpNotifyServiceImpl#orderSend",
+      "to": "com.roncoo.pay.notify.service.RpNotifyService#orderSend",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getPayKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setPayKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getOrderPrice",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setOrderPrice",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getOrderDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setOrderDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getOrderTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setOrderTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getPayType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setPayType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#getAuthCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#setAuthCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.bo.F2FPayRequestBo",
+      "to": "com.roncoo.pay.trade.bo.F2FPayRequestBo#toString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.dao.impl.RpTradePaymentOrderDaoImpl#selectByMerchantNoAndMerchantOrderNo",
+      "to": "com.roncoo.pay.trade.dao.RpTradePaymentOrderDao#selectByMerchantNoAndMerchantOrderNo",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getMerchantOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setMerchantOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderFrom",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderFrom",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getMerchantName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setMerchantName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getMerchantNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setMerchantNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderDate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderRefererUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderRefererUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getReturnUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setReturnUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getNotifyUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setNotifyUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getCancelReason",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setCancelReason",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getOrderPeriod",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setOrderPeriod",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getExpireTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setExpireTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getTrxType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setTrxType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getPayTypeCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setPayTypeCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getPayTypeName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setPayTypeName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getFundIntoType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setFundIntoType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getIsRefund",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setIsRefund",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getRefundTimes",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setRefundTimes",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getSuccessRefundAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setSuccessRefundAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getField1",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setField1",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getField2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setField2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getField3",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setField3",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getField4",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setField4",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getField5",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setField5",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#toString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#getRemark",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getRemark",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentOrder#setRemark",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setRemark",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getMerchantOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setMerchantOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getBankOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setBankOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getBankTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setBankTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getMerchantName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setMerchantName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getMerchantNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setMerchantNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayerUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayerUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayerName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayerName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayerPayAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayerPayAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayerFee",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayerFee",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayerAccountType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayerAccountType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getReceiverUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setReceiverUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getReceiverName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setReceiverName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getReceiverPayAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setReceiverPayAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getReceiverFee",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setReceiverFee",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getReceiverAccountType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setReceiverAccountType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getOrderRefererUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setOrderRefererUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getOrderAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setOrderAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPlatIncome",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPlatIncome",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getFeeRate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setFeeRate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPlatCost",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPlatCost",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPlatProfit",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPlatProfit",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getReturnUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setReturnUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getNotifyUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setNotifyUrl",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPaySuccessTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPaySuccessTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getCompleteTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setCompleteTime",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getIsRefund",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setIsRefund",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getSuccessRefundAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setSuccessRefundAmount",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getOrderFrom",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setOrderFrom",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayTypeCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayTypeCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayTypeName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setPayTypeName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getFundIntoType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setFundIntoType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getField1",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setField1",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getField2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setField2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getField3",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setField3",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getField4",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setField4",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getField5",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setField5",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getRefundTimes",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setRefundTimes",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getTrxType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setTrxType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getBankReturnMsg",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setBankReturnMsg",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getTrxTypeDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getPayWayNameDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getStatusDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getCreateTimeDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#toString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#getRemark",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#getRemark",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.entity.RpTradePaymentRecord#setRemark",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity#setRemark",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.exception.TradeBizException",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException#TradeBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.exception.TradeBizException",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException#TradeBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.exception.TradeBizException",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException#TradeBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.exception.TradeBizException",
+      "to": "com.roncoo.pay.trade.exception.TradeBizException#print",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.exception.TradeBizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.service.impl.RpTradePaymentManagerServiceImpl#f2fPay",
+      "to": "com.roncoo.pay.trade.service.RpTradePaymentManagerService#f2fPay",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.WeixinConfigUtil",
+      "to": "com.roncoo.pay.trade.utils.WeixinConfigUtil#readConfig",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.WeiXinPayUtils",
+      "to": "com.roncoo.pay.trade.utils.WeiXinPayUtils#httpXmlRequest",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.alipay.util.AliPayUtil",
+      "to": "com.roncoo.pay.trade.utils.alipay.util.AliPayUtil#parseNotifyMsg",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#WeiXinPayUtil",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getnonceStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil",
+      "to": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setTrxNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setOrderNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getPayKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setPayKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setRemark",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setOrderIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getField1",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setField1",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getField2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setField2",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getField3",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setField3",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getField4",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setField4",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getField5",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setField5",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#getStatus",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.trade.vo.F2FPayResultVo",
+      "to": "com.roncoo.pay.trade.vo.F2FPayResultVo#setStatus",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getPayTypeCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setPayTypeCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getPayTypeName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setPayTypeName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getPayProductCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setPayProductCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getSorts",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setSorts",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#getPayRate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.user.entity.RpPayWay#setPayRate",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpPayWay",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getPayPwd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#setPayPwd",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getMobile",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#setMobile",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getPassword",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#setPassword",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#setUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getUserName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#setUserName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getAccountNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#setAccountNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserInfo#getStatusDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserInfo",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getPaySecret",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setPaySecret",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getFundIntoType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setFundIntoType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getAuditStatus",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setAuditStatus",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getIsAutoSett",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setIsAutoSett",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getPayKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setPayKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getProductCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setProductCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setProductName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getUserName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setUserName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getRiskDay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setRiskDay",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getAuditStatusDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getFundIntoTypeDesc",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getSecurityRating",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setSecurityRating",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#getMerchantServerIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.user.entity.RpUserPayConfig#setMerchantServerIp",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayConfig",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getOfflineAppId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setOfflineAppId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getRsaPrivateKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setRsaPrivateKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getRsaPublicKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setRsaPublicKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setPayWayCode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setPayWayName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getPartnerKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setPartnerKey",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getAppId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setAppId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getAppSectet",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setAppSectet",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getMerchantId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setMerchantId",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getAppType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setAppType",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setUserNo",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#getUserName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.user.entity.RpUserPayInfo#setUserName",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.entity.RpUserPayInfo",
+      "to": "com.roncoo.pay.common.core.entity.BaseEntity",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.PayBizException",
+      "to": "com.roncoo.pay.user.exception.PayBizException#PayBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.PayBizException",
+      "to": "com.roncoo.pay.user.exception.PayBizException#PayBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.PayBizException",
+      "to": "com.roncoo.pay.user.exception.PayBizException#PayBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.PayBizException",
+      "to": "com.roncoo.pay.user.exception.PayBizException#print",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.PayBizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.UserBizException",
+      "to": "com.roncoo.pay.user.exception.UserBizException#UserBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.UserBizException",
+      "to": "com.roncoo.pay.user.exception.UserBizException#UserBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.UserBizException",
+      "to": "com.roncoo.pay.user.exception.UserBizException#UserBizException",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.UserBizException",
+      "to": "com.roncoo.pay.user.exception.UserBizException#print",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.user.exception.UserBizException",
+      "to": "com.roncoo.pay.common.core.exception.BizException",
+      "type": "EXTENDS"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpPayWayServiceImpl#getByPayWayTypeCode",
+      "to": "com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpUserInfoServiceImpl#getDataByMerchentNo",
+      "to": "com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpUserPayConfigServiceImpl#getByPayKey",
+      "to": "com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.user.service.impl.RpUserPayInfoServiceImpl#getByUserNo",
+      "to": "com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo",
+      "type": "OVERRIDE"
+    },
+    {
+      "from": "com.roncoo.pay.utils.NetworkUtil",
+      "to": "com.roncoo.pay.utils.NetworkUtil#getIpAddress",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MD5Util",
+      "to": "com.roncoo.pay.utils.MD5Util#MD5Util",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MD5Util",
+      "to": "com.roncoo.pay.utils.MD5Util#encode",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MD5Util",
+      "to": "com.roncoo.pay.utils.MD5Util#byteArrayToHexString",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MD5Util",
+      "to": "com.roncoo.pay.utils.MD5Util#byteToHexChar",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#getParamStr",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#isRightSign",
+      "type": "CONTAINS"
+    },
+    {
+      "from": "com.roncoo.pay.utils.MerchantApiUtil",
+      "to": "com.roncoo.pay.utils.MerchantApiUtil#buildRequest",
+      "type": "CONTAINS"
+    }
+  ]
+}
