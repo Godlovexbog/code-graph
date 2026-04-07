@@ -69,7 +69,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 #detail .rule-item{background:#1a2a1a;padding:2px 6px;margin:2px 0;border-radius:4px;font-size:11px;border-left:2px solid #4ecca3}
 #detail .mermaid-code{background:#0d1117;padding:6px 8px;border-radius:4px;font-family:monospace;font-size:10px;max-height:200px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
 #detail .mermaid-chart{background:#0d1117;padding:8px;border-radius:4px;min-height:100px}
-#detail .mermaid{background:#0d1117;padding:8px;border-radius:4px;min-height:150px}
+#detail .mermaid-render{background:#0d1117;padding:8px;border-radius:4px;min-height:150px}
+#detail .mermaid-render svg{max-width:100%;height:auto}
 #loading{position:fixed;top:0;left:0;right:0;bottom:0;background:#0d1117;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
 #loading .spinner{width:36px;height:36px;border:3px solid #30363d;border-top-color:#58a6ff;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -103,6 +104,34 @@ var GRAPH_DATA = {
   "nodes": [
     {
       "id": "L6-001",
+      "name": "RpTradePaymentOrder",
+      "level": 6,
+      "type": "class",
+      "description": "RpTradePaymentOrder",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-002",
+      "name": "F2FPayResultVo",
+      "level": 6,
+      "type": "class",
+      "description": "F2FPayResultVo",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "VO",
+      "package": ""
+    },
+    {
+      "id": "L6-003",
       "name": "RpPayWay",
       "level": 6,
       "type": "class",
@@ -116,39 +145,11 @@ var GRAPH_DATA = {
       "package": ""
     },
     {
-      "id": "L6-002",
-      "name": "RpUserPayConfig",
-      "level": 6,
-      "type": "class",
-      "description": "RpUserPayConfig",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-003",
-      "name": "Object",
-      "level": 6,
-      "type": "class",
-      "description": "Object",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
       "id": "L6-004",
-      "name": "ModelMap",
+      "name": "List",
       "level": 6,
       "type": "class",
-      "description": "ModelMap",
+      "description": "List",
       "tags": [],
       "source": {},
       "contains": [],
@@ -159,24 +160,24 @@ var GRAPH_DATA = {
     },
     {
       "id": "L6-005",
-      "name": "F2FPayRequestBo",
+      "name": "RpAccount",
       "level": 6,
       "type": "class",
-      "description": "F2FPayRequestBo",
+      "description": "RpAccount",
       "tags": [],
       "source": {},
       "contains": [],
       "references": [],
       "calls": [],
-      "class_type": "BO",
+      "class_type": "Entity",
       "package": ""
     },
     {
       "id": "L6-006",
-      "name": "RpTradePaymentRecord",
+      "name": "Object",
       "level": 6,
       "type": "class",
-      "description": "RpTradePaymentRecord",
+      "description": "Object",
       "tags": [],
       "source": {},
       "contains": [],
@@ -201,10 +202,10 @@ var GRAPH_DATA = {
     },
     {
       "id": "L6-008",
-      "name": "PayTypeEnum",
+      "name": "ModelMap",
       "level": 6,
       "type": "class",
-      "description": "PayTypeEnum",
+      "description": "ModelMap",
       "tags": [],
       "source": {},
       "contains": [],
@@ -229,24 +230,24 @@ var GRAPH_DATA = {
     },
     {
       "id": "L6-010",
-      "name": "RpTradePaymentOrder",
+      "name": "F2FPayRequestBo",
       "level": 6,
       "type": "class",
-      "description": "RpTradePaymentOrder",
+      "description": "F2FPayRequestBo",
       "tags": [],
       "source": {},
       "contains": [],
       "references": [],
       "calls": [],
-      "class_type": "Entity",
+      "class_type": "BO",
       "package": ""
     },
     {
       "id": "L6-011",
-      "name": "RpAccount",
+      "name": "PayTypeEnum",
       "level": 6,
       "type": "class",
-      "description": "RpAccount",
+      "description": "PayTypeEnum",
       "tags": [],
       "source": {},
       "contains": [],
@@ -257,20 +258,6 @@ var GRAPH_DATA = {
     },
     {
       "id": "L6-012",
-      "name": "F2FPayResultVo",
-      "level": 6,
-      "type": "class",
-      "description": "F2FPayResultVo",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "VO",
-      "package": ""
-    },
-    {
-      "id": "L6-013",
       "name": "TradeStatusEnum",
       "level": 6,
       "type": "class",
@@ -284,11 +271,25 @@ var GRAPH_DATA = {
       "package": ""
     },
     {
-      "id": "L6-014",
-      "name": "List",
+      "id": "L6-013",
+      "name": "RpTradePaymentRecord",
       "level": 6,
       "type": "class",
-      "description": "List",
+      "description": "RpTradePaymentRecord",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-014",
+      "name": "RpUserPayConfig",
+      "level": 6,
+      "type": "class",
+      "description": "RpUserPayConfig",
       "tags": [],
       "source": {},
       "contains": [],
@@ -393,7 +394,7 @@ var GRAPH_DATA = {
         "L5-004"
       ],
       "references": [
-        "L6-011"
+        "L6-005"
       ],
       "calls": [],
       "flow": "根据用户编号查询账户信息 -> 验证账户状态和入账金额有效性 -> 执行贷方入账操作 -> 更新账户余额 -> 记录交易流水 -> 返回更新后的账户信息",
@@ -789,7 +790,7 @@ var GRAPH_DATA = {
         "L5-016"
       ],
       "references": [
-        "L6-010"
+        "L6-001"
       ],
       "calls": [],
       "flow": "接收商户编号和商户订单号作为查询条件，在数据库中查找对应的交易支付订单记录并返回",
@@ -887,7 +888,7 @@ var GRAPH_DATA = {
         "L5-019"
       ],
       "references": [
-        "L6-010"
+        "L6-001"
       ],
       "calls": [],
       "flow": "接收商户编号和商户订单号两个参数，构建参数映射表，调用父类的getBy方法执行数据库查询操作，返回对应的交易支付订单记录",
@@ -1006,8 +1007,8 @@ var GRAPH_DATA = {
       ],
       "references": [
         "L6-002",
-        "L6-012",
-        "L6-005"
+        "L6-010",
+        "L6-014"
       ],
       "calls": [],
       "flow": "接收用户支付配置和支付请求参数，执行面对面支付处理逻辑，返回支付结果",
@@ -1146,8 +1147,8 @@ var GRAPH_DATA = {
       ],
       "references": [
         "L6-002",
-        "L6-012",
-        "L6-005"
+        "L6-010",
+        "L6-014"
       ],
       "calls": [
         "L4-005",
@@ -1289,10 +1290,10 @@ var GRAPH_DATA = {
         "L5-033"
       ],
       "references": [
+        "L6-003",
         "L6-001",
-        "L6-010",
-        "L6-014",
-        "L6-012"
+        "L6-002",
+        "L6-004"
       ],
       "calls": [
         "L4-014",
@@ -1456,7 +1457,7 @@ var GRAPH_DATA = {
       ],
       "references": [
         "L6-009",
-        "L6-006"
+        "L6-013"
       ],
       "calls": [
         "L4-005",
@@ -1589,8 +1590,8 @@ var GRAPH_DATA = {
         "L5-042"
       ],
       "references": [
-        "L6-010",
-        "L6-006",
+        "L6-012",
+        "L6-001",
         "L6-013"
       ],
       "calls": [],
@@ -1699,7 +1700,7 @@ var GRAPH_DATA = {
         "L5-045"
       ],
       "references": [
-        "L6-006"
+        "L6-013"
       ],
       "calls": [
         "L4-005",
@@ -1841,11 +1842,11 @@ var GRAPH_DATA = {
         "L5-050"
       ],
       "references": [
-        "L6-002",
-        "L6-007",
-        "L6-001",
+        "L6-003",
         "L6-010",
-        "L6-005"
+        "L6-001",
+        "L6-007",
+        "L6-014"
       ],
       "calls": [],
       "flow": "创建新的交易支付订单实例 -> 从支付请求对象中提取并设置商品信息、订单信息、时间信息 -> 从用户信息中设置商户信息 -> 设置支付通道和支付方式信息 -> 设置订单状态为等待支付 -> 设置资金流入类型和备注信息 -> 返回组装完成的交易订单",
@@ -1993,8 +1994,8 @@ var GRAPH_DATA = {
         "L5-055"
       ],
       "references": [
-        "L6-008",
-        "L6-006"
+        "L6-011",
+        "L6-013"
       ],
       "calls": [
         "L4-015",
@@ -2310,7 +2311,7 @@ var GRAPH_DATA = {
         "L5-062"
       ],
       "references": [
-        "L6-001"
+        "L6-003"
       ],
       "calls": [],
       "flow": "接收三个参数构建查询条件，添加状态为激活状态的过滤条件，调用数据访问层查询并返回结果",
@@ -2506,8 +2507,8 @@ var GRAPH_DATA = {
         "L5-068"
       ],
       "references": [
-        "L6-004",
-        "L6-005"
+        "L6-010",
+        "L6-008"
       ],
       "calls": [
         "L4-021",
@@ -2658,7 +2659,7 @@ var GRAPH_DATA = {
         "L5-073"
       ],
       "references": [
-        "L6-002"
+        "L6-014"
       ],
       "calls": [],
       "flow": "首先检查支付配置的安全等级是否为MD5_IP模式，如果不是则直接返回；然后从HTTP请求中提取客户端IP地址并进行非空校验；接着将提取的IP与商户服务器IP白名单进行匹配校验，如果IP不在白名单中则抛出非法IP请求异常；最后捕获IP获取过程中的IO异常并转换为业务异常",
@@ -2796,8 +2797,8 @@ var GRAPH_DATA = {
         "L5-078"
       ],
       "references": [
-        "L6-003",
-        "L6-002"
+        "L6-006",
+        "L6-014"
       ],
       "calls": [
         "L4-022",
@@ -2923,7 +2924,7 @@ var GRAPH_DATA = {
       "name": "F2FPayController.initPay",
       "level": 3,
       "type": "process",
-      "description": "入口方法 F2FPayController#initPay 的调用链",
+      "description": "入口方法 F2FPayController.initPay 的完整业务流程",
       "tags": [],
       "source": {},
       "contains": [
@@ -2931,17 +2932,38 @@ var GRAPH_DATA = {
         "L4-021",
         "L4-007",
         "L4-022",
-        "L4-020"
+        "L4-020",
+        "L5-077",
+        "L5-065",
+        "L5-075",
+        "L5-067",
+        "L5-066",
+        "L5-076",
+        "L5-081",
+        "L5-023",
+        "L5-071",
+        "L5-080",
+        "L5-070",
+        "L5-068",
+        "L5-078",
+        "L5-074",
+        "L5-022",
+        "L5-069",
+        "L5-073",
+        "L5-020",
+        "L5-079",
+        "L5-072",
+        "L5-021"
       ],
       "references": [
         "L6-002",
-        "L6-012",
-        "L6-003",
-        "L6-004",
-        "L6-005"
+        "L6-008",
+        "L6-006",
+        "L6-010",
+        "L6-014"
       ],
       "calls": [],
-      "flow_chart": "graph TD\n    A[开始]\n    B[RpTradePaymentManagerService.f2fPay]\n    A --> B\n    C[F2FPayController.initPay]\n    B --> C\n    D[CnpPayService.checkIp]\n    C --> D\n    E[CnpPayService.checkParamAndGetUserPayConfig]\n    D --> E\n    F[CnpPayService.getErrorResponse]\n    E --> F\n    F --> Z[结束]"
+      "flow_chart": "graph TD\n    subgraph 第1步: RpTradePaymentManagerService.f2fPay\n    开始\n    执行面对面支付处理\n    返回支付结果\n    结束\n    end\n    subgraph 第2步: F2FPayController.initPay\n    开始-接收支付请求\n    执行条码支付操作\n    捕获业务异常\n    将支付结果存入ModelMap\n    返回支付确认页面\n    设置错误信息到ModelMap\n    返回异常页面\n    end\n    subgraph 第3步: CnpPayService.checkIp\n    开始\n    直接返回\n    获取请求IP地址\n    抛出获取IP错误异常\n    获取商户服务器IP白名单\n    抛出非法IP请求异常\n    校验通过\n    捕获IO异常\n    结束\n    end\n    subgraph 第4步: CnpPayService.checkParamAndGetUserPayConfig\n    开始\n    获取错误信息\n    记录日志并抛出参数错误异常\n    解析参数对象为Map\n    提取payKey\n    根据payKey查询商户支付配置\n    记录日志并抛出商户不存在异常\n    进行IP校验\n    提取签名参数\n    验证签名正确性\n    记录日志并抛出签名异常\n    返回商户支付配置\n    结束\n    end\n    subgraph 第5步: CnpPayService.getErrorResponse\n    开始\n    遍历bindingResult的所有错误\n    获取每个错误的默认消息\n    追加到StringBuffer并添加逗号\n    检查是否还有更多错误\n    删除末尾逗号\n    返回错误信息字符串\n    结束\n    end\n    A[开始]\n    L1[第1步]\n    A --> L1\n    L2[第2步]\n    L1 --> L2\n    L3[第3步]\n    L2 --> L3\n    L4[第4步]\n    L3 --> L4\n    L5[第5步]\n    L4 --> L5\n    L5 --> Z[结束]"
     }
   ],
   "edges": [
@@ -3377,32 +3399,32 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-001",
-      "to": "L6-011",
+      "to": "L6-005",
       "type": "references"
     },
     {
       "from": "L4-005",
-      "to": "L6-010",
+      "to": "L6-001",
       "type": "references"
     },
     {
       "from": "L4-006",
+      "to": "L6-001",
+      "type": "references"
+    },
+    {
+      "from": "L4-007",
+      "to": "L6-002",
+      "type": "references"
+    },
+    {
+      "from": "L4-007",
       "to": "L6-010",
       "type": "references"
     },
     {
       "from": "L4-007",
-      "to": "L6-002",
-      "type": "references"
-    },
-    {
-      "from": "L4-007",
-      "to": "L6-012",
-      "type": "references"
-    },
-    {
-      "from": "L4-007",
-      "to": "L6-005",
+      "to": "L6-014",
       "type": "references"
     },
     {
@@ -3412,12 +3434,17 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-008",
-      "to": "L6-012",
+      "to": "L6-010",
       "type": "references"
     },
     {
       "from": "L4-008",
-      "to": "L6-005",
+      "to": "L6-014",
+      "type": "references"
+    },
+    {
+      "from": "L4-009",
+      "to": "L6-003",
       "type": "references"
     },
     {
@@ -3427,17 +3454,12 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-009",
-      "to": "L6-010",
+      "to": "L6-002",
       "type": "references"
     },
     {
       "from": "L4-009",
-      "to": "L6-014",
-      "type": "references"
-    },
-    {
-      "from": "L4-009",
-      "to": "L6-012",
+      "to": "L6-004",
       "type": "references"
     },
     {
@@ -3447,17 +3469,17 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-010",
-      "to": "L6-006",
+      "to": "L6-013",
       "type": "references"
     },
     {
       "from": "L4-011",
-      "to": "L6-010",
+      "to": "L6-012",
       "type": "references"
     },
     {
       "from": "L4-011",
-      "to": "L6-006",
+      "to": "L6-001",
       "type": "references"
     },
     {
@@ -3467,22 +3489,12 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-012",
-      "to": "L6-006",
+      "to": "L6-013",
       "type": "references"
     },
     {
       "from": "L4-013",
-      "to": "L6-002",
-      "type": "references"
-    },
-    {
-      "from": "L4-013",
-      "to": "L6-007",
-      "type": "references"
-    },
-    {
-      "from": "L4-013",
-      "to": "L6-001",
+      "to": "L6-003",
       "type": "references"
     },
     {
@@ -3492,22 +3504,32 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-013",
-      "to": "L6-005",
+      "to": "L6-001",
+      "type": "references"
+    },
+    {
+      "from": "L4-013",
+      "to": "L6-007",
+      "type": "references"
+    },
+    {
+      "from": "L4-013",
+      "to": "L6-014",
       "type": "references"
     },
     {
       "from": "L4-014",
-      "to": "L6-008",
+      "to": "L6-011",
       "type": "references"
     },
     {
       "from": "L4-014",
-      "to": "L6-006",
+      "to": "L6-013",
       "type": "references"
     },
     {
       "from": "L4-017",
-      "to": "L6-001",
+      "to": "L6-003",
       "type": "references"
     },
     {
@@ -3517,27 +3539,27 @@ var GRAPH_DATA = {
     },
     {
       "from": "L4-019",
-      "to": "L6-004",
+      "to": "L6-010",
       "type": "references"
     },
     {
       "from": "L4-019",
-      "to": "L6-005",
+      "to": "L6-008",
       "type": "references"
     },
     {
       "from": "L4-020",
-      "to": "L6-002",
+      "to": "L6-014",
       "type": "references"
     },
     {
       "from": "L4-021",
-      "to": "L6-003",
+      "to": "L6-006",
       "type": "references"
     },
     {
       "from": "L4-021",
-      "to": "L6-002",
+      "to": "L6-014",
       "type": "references"
     },
     {

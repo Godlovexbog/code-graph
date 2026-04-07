@@ -1,4 +1,5 @@
 import json
+import re
 from typing import Dict, List, Any, Set
 from collections import defaultdict
 
@@ -45,10 +46,10 @@ class BizGraphBuilder:
         # 1. 构建 L6 (类)
         self._build_l6_nodes()
         
-        # 2. 构建 L4 (活动) 和 L5 (规则)
+        # 2. 构建 L4 (活动) 和 L5 (规则) - 不创建 L3
         self._build_l4_l5_nodes()
         
-        # 3. 构建 L3 (流程) - 遍历所有入口
+        # 3. 构建 L3 (流程) - 每个入口方法一个流程
         self._build_all_l3_processes()
         
         # 4. 建立边关系
@@ -146,16 +147,23 @@ class BizGraphBuilder:
     
     def _build_l4_l5_nodes(self):
         """构建 L4 活动节点和 L5 规则节点"""
+        # 先收集所有 L4 和 L5
+        all_l4_ids = set()
+        l4_to_entry = {}  # L4 ID -> 对应的入口方法 ID
+        
         for node in self.semantic_data.get('nodes', []):
-            # 只处理 METHOD 类型的节点
             node_kind = node.get('kind', '')
             if node_kind != 'METHOD':
                 continue
             
+            is_entry = node.get('isEntry', False)
+            if not is_entry and node.get('original', {}):
+                is_entry = node.get('original', {}).get('isEntry', False)
+            
+            # 入口方法也创建为 L4，稍后 L3 会引用它
             orig = node.get('original', {})
             sem = node.get('semantic', {})
             
-            # 兼容两种格式：batch_builder 生成的简化格式和原有格式
             if not orig:
                 orig = {
                     'methodName': node.get('methodName', ''),
@@ -163,7 +171,7 @@ class BizGraphBuilder:
                     'file': node.get('file', ''),
                     'parameters': node.get('parameters', []),
                     'returnType': node.get('returnType', ''),
-                    'isEntry': node.get('isEntry', False)
+                    'isEntry': False
                 }
             
             if not sem:
@@ -180,12 +188,11 @@ class BizGraphBuilder:
             method_name = orig.get('methodName', '')
             class_name = orig.get('className', '')
             
-            # L4 名称使用 className.methodName 避免重复
             l4_name = f"{class_name}.{method_name}" if class_name and method_name else method_name
             
-            # 创建 L4 节点
             l4_id = self._generate_l4_id()
             self.method_to_l4[method_id] = l4_id
+            all_l4_ids.add(l4_id)
             
             l4 = L4Activity(
                 id=l4_id,
@@ -197,7 +204,6 @@ class BizGraphBuilder:
             l4.input = sem.get('input', [])
             l4.output = sem.get('output', {})
             
-            # 溯源
             l4.source = {
                 "origin": "semantic-graph",
                 "class": class_name,
@@ -205,14 +211,12 @@ class BizGraphBuilder:
                 "file": orig.get('file', '')
             }
             
-            # 处理 L5 规则
             business_rules = sem.get('business_rules', [])
             l5_ids = []
             for rule_content in business_rules:
                 l5_id = self._generate_l5_id()
                 l5_ids.append(l5_id)
                 
-                # 生成规则名称
                 rule_name = self._generate_rule_name(rule_content)
                 rule_type = self._guess_rule_type(rule_content)
                 
@@ -229,13 +233,10 @@ class BizGraphBuilder:
                 }
                 
                 self.biz_graph.add_node(l5)
-                
-                # 建立 L4 contains L5
                 self.biz_graph.add_edge(l4_id, l5_id, "contains")
             
             l4.contains = l5_ids
             
-            # 建立 L4 references L6
             l6_refs = []
             for inp in l4.input:
                 inp_type = inp.get('type', '')
@@ -248,7 +249,6 @@ class BizGraphBuilder:
             
             l4.references = list(set(l6_refs))
             
-            # 添加 L4 节点
             self.biz_graph.add_node(l4)
     
     def _generate_rule_name(self, content: str) -> str:
@@ -276,10 +276,9 @@ class BizGraphBuilder:
             return 'business'
     
     def _build_all_l3_processes(self):
-        """构建所有 L3 流程 - 每个入口方法一个流程"""
+        """构建所有 L3 流程 - 基于已创建的 L4"""
         entry_methods = []
         for node in self.semantic_data.get('nodes', []):
-            # 兼容两种格式
             is_entry = node.get('isEntry', False)
             if not is_entry and node.get('original', {}):
                 is_entry = node.get('original', {}).get('isEntry', False)
@@ -288,7 +287,7 @@ class BizGraphBuilder:
                 entry_methods.append(node.get('id'))
         
         if not entry_methods:
-            entry_methods = [self.semantic_data.get('nodes', [{}])[0].get('id')]
+            return
         
         call_edges = [e for e in self.semantic_data.get('edges', []) if e.get('type') == 'CALL']
         adj = defaultdict(list)
@@ -296,7 +295,71 @@ class BizGraphBuilder:
             adj[e['from']].append(e['to'])
         
         for entry_method in entry_methods:
-            self._build_single_l3_process(entry_method, adj)
+            if entry_method not in self.method_to_l4:
+                continue
+            
+            entry_l4_id = self.method_to_l4[entry_method]
+            
+            # BFS 找到所有被调用的 L4
+            visited = set()
+            called_l4_ids = []
+            
+            queue = [entry_method]
+            while queue:
+                node_id = queue.pop(0)
+                if node_id in visited:
+                    continue
+                visited.add(node_id)
+                
+                for next_node in adj.get(node_id, []):
+                    if next_node not in visited:
+                        if next_node in self.method_to_l4 and next_node != entry_method:
+                            called_l4_ids.append(self.method_to_l4[next_node])
+                        queue.append(next_node)
+            
+            # 获取入口 L4 信息
+            entry_l4 = None
+            for node in self.biz_graph.nodes:
+                if node.id == entry_l4_id:
+                    entry_l4 = node
+                    break
+            
+            if not entry_l4:
+                continue
+            
+            # 创建 L3
+            l3_id = self._generate_l3_id()
+            
+            # L3 包含入口 L4 + 所有调用的 L4
+            all_l4_ids = [entry_l4_id] + called_l4_ids
+            all_l5_ids = set()
+            all_l6_ids = set()
+            
+            for lid in all_l4_ids:
+                for node in self.biz_graph.nodes:
+                    if node.id == lid and node.level == 4:
+                        all_l5_ids.update(node.contains)
+                        all_l6_ids.update(node.references)
+            
+            l3_contains = all_l4_ids + list(all_l5_ids)
+            
+            # 生成流程图
+            flow_chart = self._generate_l3_flowchart(all_l4_ids)
+            
+            l3 = L3Process(
+                id=l3_id,
+                name=entry_l4.name,
+                description=f"入口方法 {entry_l4.name} 的完整业务流程",
+                flow_chart=flow_chart
+            )
+            l3.contains = l3_contains
+            l3.references = list(all_l6_ids)
+            
+            self.biz_graph.add_node(l3)
+            
+            # 建立 L3 contains L4 边
+            for lid in all_l4_ids:
+                self.biz_graph.add_edge(l3_id, lid, "contains")
     
     def _build_single_l3_process(self, entry_method: str, adj: Dict):
         """构建单个 L3 流程"""
@@ -337,20 +400,25 @@ class BizGraphBuilder:
         l3_id = self._generate_l3_id()
         flow_chart = self._generate_l3_flowchart(l4_sequence)
         
+        # L3 包含：L4 + 每个 L4 包含的 L5
+        l3_contains = list(l4_sequence)
+        l3_references = set()
+        
+        for l4 in self.biz_graph.nodes:
+            if l4.level == 4 and l4.id in l4_sequence:
+                # 添加 L4 包含的 L5
+                l3_contains.extend(l4.contains)
+                # 添加 L4 引用的 L6
+                l3_references.update(l4.references)
+        
         l3 = L3Process(
             id=l3_id,
             name=f"{class_name}.{method_name}",
             description=f"入口方法 {class_name}#{method_name} 的调用链",
             flow_chart=flow_chart
         )
-        l3.contains = l4_sequence
-        
-        all_l6_refs = set()
-        for l4 in self.biz_graph.nodes:
-            if l4.level == 4 and l4.id in l4_sequence:
-                all_l6_refs.update(l4.references)
-        
-        l3.references = list(all_l6_refs)
+        l3.contains = l3_contains
+        l3.references = list(l3_references)
         
         self.biz_graph.add_node(l3)
         
@@ -358,26 +426,47 @@ class BizGraphBuilder:
             self.biz_graph.add_edge(l3_id, l4_id, "contains")
     
     def _generate_l3_flowchart(self, l4_sequence: List[str]) -> str:
-        """生成 L3 流程图"""
+        """生成 L3 流程图 - 包含所有 L4 的详细流程"""
         if not l4_sequence:
-            return "graph TD\n    A[开始] → Z[结束]"
+            return "graph TD\n    A[开始] --> Z[结束]"
         
-        # 获取 L4 名称
-        l4_names = []
-        for l4 in self.biz_graph.nodes:
-            if l4.level == 4 and l4.id in l4_sequence:
-                l4_names.append(l4.name)
+        l4_nodes = [n for n in self.biz_graph.nodes if n.level == 4 and n.id in l4_sequence]
         
-        # 生成 Mermaid
         lines = ["graph TD"]
-        lines.append("    A[开始]")
         
+        # 收集所有 L4 的详细流程
+        for i, l4 in enumerate(l4_nodes):
+            flow = l4.flow_chart if l4.flow_chart else ""
+            
+            lines.append(f"    subgraph 第{i+1}步: {l4.name}")
+            
+            # 提取节点名 (格式: A[内容] 或 B[内容])
+            node_names = []
+            for line in flow.split('\n'):
+                line = line.strip()
+                if line and not line.startswith('graph') and not line.startswith('style'):
+                    match = re.search(r'([A-Z])\[([^\]]+)\]', line)
+                    if match:
+                        node_names.append(match.group(2))
+            
+            # 显示提取到的节点名
+            if node_names:
+                for name in node_names:
+                    # 截断过长的名称
+                    display_name = name[:30] + "..." if len(name) > 30 else name
+                    lines.append(f"    {display_name}")
+            else:
+                lines.append(f"    {l4.name}")
+            
+            lines.append(f"    end")
+        
+        # 主流程线
+        lines.append("    A[开始]")
         prev = "A"
-        for i, name in enumerate(l4_names):
-            node_id = chr(65 + i + 1)  # B, C, D...
-            lines.append(f"    {node_id}[{name}]")
-            lines.append(f"    {prev} --> {node_id}")
-            prev = node_id
+        for i in range(len(l4_nodes)):
+            lines.append(f"    L{i+1}[第{i+1}步]")
+            lines.append(f"    {prev} --> L{i+1}")
+            prev = f"L{i+1}"
         
         lines.append(f"    {prev} --> Z[结束]")
         

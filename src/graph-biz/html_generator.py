@@ -83,7 +83,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 #detail .rule-item{background:#1a2a1a;padding:2px 6px;margin:2px 0;border-radius:4px;font-size:11px;border-left:2px solid #4ecca3}
 #detail .mermaid-code{background:#0d1117;padding:6px 8px;border-radius:4px;font-family:monospace;font-size:10px;max-height:200px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
 #detail .mermaid-chart{background:#0d1117;padding:8px;border-radius:4px;min-height:100px}
-#detail .mermaid{background:#0d1117;padding:8px;border-radius:4px;min-height:150px}
+#detail .mermaid-render{background:#0d1117;padding:8px;border-radius:4px;min-height:150px}
+#detail .mermaid-render svg{max-width:100%;height:auto}
 #loading{position:fixed;top:0;left:0;right:0;bottom:0;background:#0d1117;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
 #loading .spinner{width:36px;height:36px;border:3px solid #30363d;border-top-color:#58a6ff;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
