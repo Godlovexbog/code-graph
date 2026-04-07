@@ -58,10 +58,12 @@ class L4Activity(CapabilityNode):
     input: List[Dict[str, Any]] = field(default_factory=list)
     output: Dict[str, Any] = field(default_factory=dict)
     
-    def __init__(self, id: str, name: str, description: str = "", flow: str = "", flow_chart: str = ""):
+    def __init__(self, id: str, name: str, description: str = "", flow: str = "", flow_chart: str = "", input: List = None, output: Dict = None):
         super().__init__(id, name, 4, "activity", description)
         self.flow = flow
         self.flow_chart = flow_chart
+        self.input = input or []
+        self.output = output or {}
     
     def to_dict(self) -> Dict:
         base = super().to_dict()

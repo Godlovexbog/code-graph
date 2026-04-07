@@ -1,5 +1,7 @@
 import json
 import re
+import os
+import requests
 from typing import Dict, List, Any, Set
 from collections import defaultdict
 
@@ -147,109 +149,163 @@ class BizGraphBuilder:
     
     def _build_l4_l5_nodes(self):
         """构建 L4 活动节点和 L5 规则节点"""
-        # 先收集所有 L4 和 L5
-        all_l4_ids = set()
-        l4_to_entry = {}  # L4 ID -> 对应的入口方法 ID
         
+        # 1. 先收集所有需要创建 L4 的方法
+        all_method_ids = set()
+        
+        # 添加 semantic-graph 中的 METHOD 节点
         for node in self.semantic_data.get('nodes', []):
-            node_kind = node.get('kind', '')
-            if node_kind != 'METHOD':
-                continue
+            if node.get('kind') == 'METHOD':
+                all_method_ids.add(node.get('id'))
+        
+        # 添加被调用但不在 nodes 中的方法（从 CALL/IMPLEMENTS 边提取）
+        for edge in self.semantic_data.get('edges', []):
+            if edge.get('type') in ('CALL', 'IMPLEMENTS'):
+                all_method_ids.add(edge.get('from'))
+                all_method_ids.add(edge.get('to'))
+        
+        # 2. 为每个方法创建 L4
+        for method_id in all_method_ids:
+            if method_id in self.method_to_l4:
+                continue  # 已经创建过了
             
-            is_entry = node.get('isEntry', False)
-            if not is_entry and node.get('original', {}):
-                is_entry = node.get('original', {}).get('isEntry', False)
+            # 查找这个方法的信息
+            node = None
+            for n in self.semantic_data.get('nodes', []):
+                if n.get('id') == method_id:
+                    node = n
+                    break
             
-            # 入口方法也创建为 L4，稍后 L3 会引用它
-            orig = node.get('original', {})
-            sem = node.get('semantic', {})
+            if node:
+                self._create_l4_from_node(node)
+            else:
+                self._create_l4_from_method_id(method_id)
+    
+    def _create_l4_from_node(self, node: Dict):
+        """从 semantic-graph 节点创建 L4"""
+        orig = node.get('original', {})
+        sem = node.get('semantic', {})
+        
+        if not orig:
+            orig = {
+                'methodName': node.get('methodName', ''),
+                'className': node.get('className', ''),
+                'file': node.get('file', ''),
+                'parameters': node.get('parameters', []),
+                'returnType': node.get('returnType', ''),
+            }
+        
+        if not sem:
+            sem = {
+                'description': node.get('description', ''),
+                'flow': node.get('flow', ''),
+                'flow_chart': node.get('flow_chart', ''),
+                'input': node.get('input', []),
+                'output': node.get('output', {}),
+                'business_rules': node.get('business_rules', [])
+            }
+        
+        method_id = node.get('id', '')
+        method_name = orig.get('methodName', '')
+        class_name = orig.get('className', '')
+        
+        l4_name = f"{class_name}.{method_name}" if class_name and method_name else method_name
+        
+        l4_id = self._generate_l4_id()
+        self.method_to_l4[method_id] = l4_id
+        
+        l4 = L4Activity(
+            id=l4_id,
+            name=l4_name,
+            description=sem.get('description', ''),
+            flow=sem.get('flow', ''),
+            flow_chart=sem.get('flow_chart', '')
+        )
+        l4.input = sem.get('input', [])
+        l4.output = sem.get('output', {})
+        
+        l4.source = {
+            "origin": "semantic-graph",
+            "class": class_name,
+            "method": method_name,
+            "file": orig.get('file', '')
+        }
+        
+        # L5 规则
+        business_rules = sem.get('business_rules', [])
+        l5_ids = []
+        for rule_content in business_rules:
+            l5_id = self._generate_l5_id()
+            l5_ids.append(l5_id)
             
-            if not orig:
-                orig = {
-                    'methodName': node.get('methodName', ''),
-                    'className': node.get('className', ''),
-                    'file': node.get('file', ''),
-                    'parameters': node.get('parameters', []),
-                    'returnType': node.get('returnType', ''),
-                    'isEntry': False
-                }
+            rule_name = self._generate_rule_name(rule_content)
+            rule_type = self._guess_rule_type(rule_content)
             
-            if not sem:
-                sem = {
-                    'description': node.get('description', ''),
-                    'flow': node.get('flow', ''),
-                    'flow_chart': node.get('flow_chart', ''),
-                    'input': node.get('input', []),
-                    'output': node.get('output', {}),
-                    'business_rules': node.get('business_rules', [])
-                }
-            
-            method_id = node.get('id', '')
-            method_name = orig.get('methodName', '')
-            class_name = orig.get('className', '')
-            
-            l4_name = f"{class_name}.{method_name}" if class_name and method_name else method_name
-            
-            l4_id = self._generate_l4_id()
-            self.method_to_l4[method_id] = l4_id
-            all_l4_ids.add(l4_id)
-            
-            l4 = L4Activity(
-                id=l4_id,
-                name=l4_name,
-                description=sem.get('description', ''),
-                flow=sem.get('flow', ''),
-                flow_chart=sem.get('flow_chart', '')
+            l5 = L5Rule(
+                id=l5_id,
+                name=rule_name,
+                content=rule_content,
+                rule_type=rule_type
             )
-            l4.input = sem.get('input', [])
-            l4.output = sem.get('output', {})
-            
-            l4.source = {
+            l5.source = {
                 "origin": "semantic-graph",
                 "class": class_name,
-                "method": method_name,
-                "file": orig.get('file', '')
+                "method": method_name
             }
             
-            business_rules = sem.get('business_rules', [])
-            l5_ids = []
-            for rule_content in business_rules:
-                l5_id = self._generate_l5_id()
-                l5_ids.append(l5_id)
-                
-                rule_name = self._generate_rule_name(rule_content)
-                rule_type = self._guess_rule_type(rule_content)
-                
-                l5 = L5Rule(
-                    id=l5_id,
-                    name=rule_name,
-                    content=rule_content,
-                    rule_type=rule_type
-                )
-                l5.source = {
-                    "origin": "semantic-graph",
-                    "class": class_name,
-                    "method": method_name
-                }
-                
-                self.biz_graph.add_node(l5)
-                self.biz_graph.add_edge(l4_id, l5_id, "contains")
-            
-            l4.contains = l5_ids
-            
-            l6_refs = []
-            for inp in l4.input:
-                inp_type = inp.get('type', '')
-                if inp_type in self.class_name_to_l6:
-                    l6_refs.append(self.class_name_to_l6[inp_type])
-            
-            out_type = l4.output.get('type', '')
-            if out_type in self.class_name_to_l6:
-                l6_refs.append(self.class_name_to_l6[out_type])
-            
-            l4.references = list(set(l6_refs))
-            
-            self.biz_graph.add_node(l4)
+            self.biz_graph.add_node(l5)
+            self.biz_graph.add_edge(l4_id, l5_id, "contains")
+        
+        l4.contains = l5_ids
+        
+        # L4 references L6
+        l6_refs = []
+        for inp in l4.input:
+            inp_type = inp.get('type', '')
+            if inp_type in self.class_name_to_l6:
+                l6_refs.append(self.class_name_to_l6[inp_type])
+        
+        out_type = l4.output.get('type', '')
+        if out_type in self.class_name_to_l6:
+            l6_refs.append(self.class_name_to_l6[out_type])
+        
+        l4.references = list(set(l6_refs))
+        
+        self.biz_graph.add_node(l4)
+    
+    def _create_l4_from_method_id(self, method_id: str):
+        """从 method_id 创建 L4（方法不在 semantic-graph nodes 中）"""
+        if method_id in self.method_to_l4:
+            return  # 已经创建过了
+        
+        # 解析 className 和 methodName
+        if '#' not in method_id:
+            class_name = 'Unknown'
+            method_name = method_id
+        else:
+            parts = method_id.split('#')
+            class_name = parts[0].split('.')[-1]  # 取最后一部分作为类名
+            method_name = parts[-1]
+        
+        l4_name = f"{class_name}.{method_name}"
+        
+        l4_id = self._generate_l4_id()
+        self.method_to_l4[method_id] = l4_id
+        
+        l4 = L4Activity(
+            id=l4_id,
+            name=l4_name,
+            description=f"方法 {method_id}",
+            flow="",
+            flow_chart=""
+        )
+        
+        l4.source = {
+            "origin": "edge-derived",
+            "method_id": method_id
+        }
+        
+        self.biz_graph.add_node(l4)
     
     def _generate_rule_name(self, content: str) -> str:
         """从规则内容生成名称"""
@@ -289,7 +345,16 @@ class BizGraphBuilder:
         if not entry_methods:
             return
         
-        call_edges = [e for e in self.semantic_data.get('edges', []) if e.get('type') == 'CALL']
+        call_edges = [e for e in self.semantic_data.get('edges', []) if e.get('type') in ('CALL', 'IMPLEMENTS')]
+        
+        # 构建 method_id -> implementation 的映射
+        method_to_impl = {}
+        for e in call_edges:
+            from_method = e.get('from', '')
+            to_method = e.get('to', '')
+            if '#' in from_method and '#' in to_method:
+                method_to_impl[from_method] = to_method
+        
         adj = defaultdict(list)
         for e in call_edges:
             adj[e['from']].append(e['to'])
@@ -300,9 +365,9 @@ class BizGraphBuilder:
             
             entry_l4_id = self.method_to_l4[entry_method]
             
-            # BFS 找到所有被调用的 L4
+            # BFS 找到所有被调用的方法（包括没有 L4 映射的）
             visited = set()
-            called_l4_ids = []
+            all_reachable_methods = []
             
             queue = [entry_method]
             while queue:
@@ -310,11 +375,16 @@ class BizGraphBuilder:
                 if node_id in visited:
                     continue
                 visited.add(node_id)
+                all_reachable_methods.append(node_id)
+                
+                # 如果这是 interface，尝试跳转到 implementation
+                if node_id in method_to_impl:
+                    impl = method_to_impl[node_id]
+                    if impl not in visited:
+                        queue.append(impl)
                 
                 for next_node in adj.get(node_id, []):
                     if next_node not in visited:
-                        if next_node in self.method_to_l4 and next_node != entry_method:
-                            called_l4_ids.append(self.method_to_l4[next_node])
                         queue.append(next_node)
             
             # 获取入口 L4 信息
@@ -330,25 +400,33 @@ class BizGraphBuilder:
             # 创建 L3
             l3_id = self._generate_l3_id()
             
-            # L3 包含入口 L4 + 所有调用的 L4
-            all_l4_ids = [entry_l4_id] + called_l4_ids
+            # L3 包含入口 L4 + 所有 BFS 可达的 L4
+            all_l4_in_bfs = [self.method_to_l4[m] for m in all_reachable_methods 
+                           if m in self.method_to_l4]
+            
+            # 收集所有 L4 的 L5 和 L6
             all_l5_ids = set()
             all_l6_ids = set()
             
-            for lid in all_l4_ids:
+            for lid in self.method_to_l4.values():
                 for node in self.biz_graph.nodes:
                     if node.id == lid and node.level == 4:
                         all_l5_ids.update(node.contains)
                         all_l6_ids.update(node.references)
             
-            l3_contains = all_l4_ids + list(all_l5_ids)
+            l3_contains = all_l4_in_bfs
             
-            # 生成流程图
-            flow_chart = self._generate_l3_flowchart(all_l4_ids)
+            # 使用 LLM 生成流程图 - 传入完整的方法列表
+            print(f"调用 LLM 生成 L3 流程图 (共 {len(all_reachable_methods)} 个方法)...")
+            flow_chart = self._generate_l3_flowchart_llm(entry_method, all_reachable_methods)
+            
+            if not flow_chart:
+                # 回退到简单版本
+                flow_chart = self._generate_l3_flowchart_simple(all_l4_ids)
             
             l3 = L3Process(
                 id=l3_id,
-                name=entry_l4.name,
+                name="L3-" + entry_l4.name,
                 description=f"入口方法 {entry_l4.name} 的完整业务流程",
                 flow_chart=flow_chart
             )
@@ -358,7 +436,7 @@ class BizGraphBuilder:
             self.biz_graph.add_node(l3)
             
             # 建立 L3 contains L4 边
-            for lid in all_l4_ids:
+            for lid in l3_contains:
                 self.biz_graph.add_edge(l3_id, lid, "contains")
     
     def _build_single_l3_process(self, entry_method: str, adj: Dict):
@@ -425,50 +503,52 @@ class BizGraphBuilder:
         for l4_id in l4_sequence:
             self.biz_graph.add_edge(l3_id, l4_id, "contains")
     
-    def _generate_l3_flowchart(self, l4_sequence: List[str]) -> str:
-        """生成 L3 流程图 - 包含所有 L4 的详细流程"""
+    def _generate_l3_flowchart_simple(self, l4_sequence: List[str]) -> str:
+        """生成 L3 流程图 - 融合所有 L4 的详细流程为一个大流程"""
         if not l4_sequence:
-            return "graph TD\n    A[开始] --> Z[结束]"
+            return "graph TD\n    START[开始] --> END[结束]"
         
         l4_nodes = [n for n in self.biz_graph.nodes if n.level == 4 and n.id in l4_sequence]
         
         lines = ["graph TD"]
         
-        # 收集所有 L4 的详细流程
-        for i, l4 in enumerate(l4_nodes):
+        # 融合：按调用顺序把所有 L4 的流程图节点串起来
+        lines.append("    START[开始]")
+        prev_node = "START"
+        step_num = 0
+        
+        for l4 in l4_nodes:
             flow = l4.flow_chart if l4.flow_chart else ""
             
-            lines.append(f"    subgraph 第{i+1}步: {l4.name}")
-            
-            # 提取节点名 (格式: A[内容] 或 B[内容])
-            node_names = []
+            # 提取所有节点
+            nodes = []
             for line in flow.split('\n'):
                 line = line.strip()
-                if line and not line.startswith('graph') and not line.startswith('style'):
-                    match = re.search(r'([A-Z])\[([^\]]+)\]', line)
-                    if match:
-                        node_names.append(match.group(2))
+                if not line or line.startswith('graph') or line.startswith('style'):
+                    continue
+                match = re.search(r'([A-Z])\[([^\]]+)\]', line)
+                if match:
+                    nodes.append(match.group(2)[:20])  # 取节点名，截断
             
-            # 显示提取到的节点名
-            if node_names:
-                for name in node_names:
-                    # 截断过长的名称
-                    display_name = name[:30] + "..." if len(name) > 30 else name
-                    lines.append(f"    {display_name}")
+            # 如果有子节点，插入到流程中
+            if nodes:
+                # 只取前几个关键节点
+                key_nodes = [n for n in nodes if n and n != '开始' and n != '结束']
+                for j, node_name in enumerate(key_nodes[:4]):
+                    step_num += 1
+                    step_id = f"S{step_num}"
+                    lines.append(f"    {step_id}[{node_name}]")
+                    lines.append(f"    {prev_node} --> {step_id}")
+                    prev_node = step_id
             else:
-                lines.append(f"    {l4.name}")
-            
-            lines.append(f"    end")
+                # 没有子节点，显示 L4 名称
+                step_num += 1
+                step_id = f"S{step_num}"
+                lines.append(f"    {step_id}[{l4.name.split('.')[-1]}]")
+                lines.append(f"    {prev_node} --> {step_id}")
+                prev_node = step_id
         
-        # 主流程线
-        lines.append("    A[开始]")
-        prev = "A"
-        for i in range(len(l4_nodes)):
-            lines.append(f"    L{i+1}[第{i+1}步]")
-            lines.append(f"    {prev} --> L{i+1}")
-            prev = f"L{i+1}"
-        
-        lines.append(f"    {prev} --> Z[结束]")
+        lines.append(f"    {prev_node} --> END[结束]")
         
         return "\n".join(lines)
     
@@ -506,6 +586,103 @@ class BizGraphBuilder:
                 
                 # 添加边
                 self.biz_graph.add_edge(from_l4, to_l4, "calls")
+
+    def _generate_l3_flowchart_llm(self, entry_method: str, all_reachable_methods: List[str]) -> str:
+        """使用 LLM 生成 L3 流程图 - 基于完整的可达方法列表"""
+        
+        # 收集所有可达方法的语义信息
+        methods_info = []
+        
+        # 先从 semantic_data 获取完整信息
+        method_semantic_map = {}
+        for node in self.semantic_data.get('nodes', []):
+            node_id = node.get('id', '')
+            if node_id in all_reachable_methods:
+                sem = node.get('semantic', {})
+                if not sem:
+                    sem = {
+                        'description': node.get('description', ''),
+                        'flow': node.get('flow', ''),
+                        'flow_chart': node.get('flow_chart', '')
+                    }
+                method_semantic_map[node_id] = {
+                    'method_id': node_id,
+                    'method': node.get('className', '') + '.' + node.get('methodName', ''),
+                    'description': sem.get('description', ''),
+                    'flow': sem.get('flow', ''),
+                    'flow_chart': sem.get('flow_chart', '')
+                }
+        
+        for mid in all_reachable_methods:
+            if mid in method_semantic_map:
+                methods_info.append(method_semantic_map[mid])
+            else:
+                # 尝试从 code-graph 获取基本信息
+                methods_info.append({
+                    'method_id': mid,
+                    'method': mid.split('#')[-1] if '#' in mid else mid,
+                    'description': '从入口方法调用的服务',
+                    'flow': '',
+                    'flow_chart': ''
+                })
+        
+        if not methods_info:
+            return ""
+        
+        methods_json = json.dumps(methods_info, ensure_ascii=False, indent=2)
+        
+        prompt = f"""你是一个业务分析师。请根据以下完整的调用链方法列表，生成一个全面的业务主流程图（Mermaid格式）。
+
+## 调用链方法列表（共 {len(methods_info)} 个方法）:
+{methods_json}
+
+## 要求:
+1. 完整遍历所有方法的 flow 和 flow_chart
+2. 按调用顺序整理业务流程
+3. 生成一个完整、清晰的 Mermaid 流程图
+4. 流程图要展示主要的业务处理步骤、分支逻辑、异常处理等
+5. 只输出 Mermaid 流程图代码（graph TD 格式），前后用 ```mermaid 包裹
+
+请直接输出 Mermaid 流程图代码:"""
+
+        try:
+            api_key = os.environ.get("QWQ_API_KEY", "sk-3c4f02367af44ee28f081f495a80c8d5")
+            url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            }
+            data = {
+                "model": "qwen3-coder-plus",
+                "input": {"prompt": prompt},
+                "parameters": {"max_tokens": 3000, "temperature": 0.7}
+            }
+            
+            response = requests.post(url, headers=headers, json=data, timeout=180)
+            result = response.json()
+            
+            if "output" in result and "text" in result["output"]:
+                flow_chart = result["output"]["text"]
+            elif "output" in result and "choices" in result["output"]:
+                if result["output"].get("choices"):
+                    flow_chart = result["output"]["choices"][0]["message"]["content"]
+            else:
+                return ""
+            
+            # 提取 Mermaid 代码
+            if "```mermaid" in flow_chart:
+                start = flow_chart.find("```mermaid") + len("```mermaid")
+                end = flow_chart.find("```", start)
+                if end > start:
+                    return flow_chart[start:end].strip()
+            elif "graph TD" in flow_chart:
+                return flow_chart.strip()
+            
+            return flow_chart.strip()
+            
+        except Exception as e:
+            print(f"LLM 调用失败: {e}")
+            return ""
 
 
 def build_biz_graph(semantic_graph_path: str, code_graph_path: str = None) -> Dict:

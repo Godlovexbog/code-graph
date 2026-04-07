@@ -1,7 +1,18 @@
 """业务能力图 HTML 生成器"""
 
 import json
+import os
 from typing import Dict
+
+
+def load_js_file(filename: str) -> str:
+    """加载 JS 文件内容"""
+    js_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'output')
+    js_path = os.path.join(js_dir, filename)
+    if os.path.exists(js_path):
+        with open(js_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    return ""
 
 
 def generate_html(biz_graph_data: Dict, output_path: str):
@@ -12,14 +23,22 @@ def generate_html(biz_graph_data: Dict, output_path: str):
         "edges": biz_graph_data.get('edges', [])
     }, ensure_ascii=False, indent=2)
     
+    # 加载本地 JS 文件
+    echarts_js = load_js_file('echarts.min.js')
+    mermaid_js = load_js_file('mermaid.min.js')
+    
     html = '''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Business Capability Graph</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+''' + echarts_js + '''
+</script>
+<script>
+''' + mermaid_js + '''
+</script>
 <script>
 mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
 
@@ -85,6 +104,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 #detail .mermaid-chart{background:#0d1117;padding:8px;border-radius:4px;min-height:100px}
 #detail .mermaid-render{background:#0d1117;padding:8px;border-radius:4px;min-height:150px}
 #detail .mermaid-render svg{max-width:100%;height:auto}
+#detail .fullscreen-btn{float:right;background:none;border:none;font-size:14px;cursor:pointer;color:#8b949e;margin-right:4px}
+#detail .fullscreen-btn:hover{color:#58a6ff}
+#fullscreen-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column}
+#fullscreen-modal.visible{display:flex}
+#fullscreen-modal .modal-content{background:#161b22;padding:20px;border-radius:8px;max-width:95%;max-height:90%;overflow:auto}
+#fullscreen-modal .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+#fullscreen-modal .modal-title{color:#58a6ff;font-size:14px}
+#fullscreen-modal .close-modal{background:none;border:none;font-size:20px;cursor:pointer;color:#8b949e}
+#fullscreen-modal .close-modal:hover{color:#f85149}
 #loading{position:fixed;top:0;left:0;right:0;bottom:0;background:#0d1117;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
 #loading .spinner{width:36px;height:36px;border:3px solid #30363d;border-top-color:#58a6ff;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -112,6 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
   </div>
   <div id="chart"></div>
   <div id="detail"><button class="close-btn" onclick="closeDetail()">&times;</button><div id="detail-content"></div></div>
+<div id="fullscreen-modal"><div class="modal-content"><div class="modal-header"><span class="modal-title"></span><button class="close-modal" onclick="closeFullscreen()">&times;</button></div><div id="fullscreen-content"></div></div></div>
 </div>
 <script>
 var GRAPH_DATA = ''' + data_json + ''';
@@ -292,6 +321,14 @@ function doInit() {
         });
     });
 
+    document.querySelectorAll('.fullscreen-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var title = this.dataset.title || 'Flow Chart';
+            var content = decodeURIComponent(this.dataset.content || '');
+            openFullscreen(title, content);
+        });
+    });
+
     function updateChart() {
         var visibleLevels = Object.keys(levelConfig).filter(function(k) { return levelVisibility[k]; });
         var visibleEdges = Object.keys(edgeTypeConfig).filter(function(k) { return edgeVisibility[k]; });
@@ -360,7 +397,9 @@ function doInit() {
             html += '<div class="detail-section"><h4>包路径</h4><p>' + node.package + '</p></div>';
         }
         if (node.flow_chart) {
-            html += '<div class="detail-section"><h4>流程图</h4><pre class="mermaid">' + node.flow_chart + '</pre></div>';
+            var flowChartTitle = (node.name || 'Flow Chart').replace(/"/g, '&quot;');
+            var flowChartContent = '<pre class="mermaid">' + node.flow_chart.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+            html += '<div class="detail-section"><h4>流程图 <button class="fullscreen-btn" data-title="' + flowChartTitle + '" data-content="' + encodeURIComponent(flowChartContent) + '">⛶ 全屏</button></h4><pre class="mermaid">' + node.flow_chart + '</pre></div>';
         }
         if (node.contains && node.contains.length > 0) {
             html += '<div class="detail-section"><h4>包含</h4>';
@@ -396,6 +435,37 @@ function doInit() {
 
     window.closeDetail = function() {
         document.getElementById('detail').classList.remove('visible');
+    };
+
+    window.openFullscreen = function(title, content) {
+        var modal = document.getElementById('fullscreen-modal');
+        var modalTitle = modal.querySelector('.modal-title');
+        var fullContent = document.getElementById('fullscreen-content');
+        
+        modalTitle.textContent = title;
+        fullContent.innerHTML = content;
+        modal.classList.add('visible');
+        
+        if (typeof mermaid !== 'undefined') {
+            setTimeout(function() {
+                fullContent.querySelectorAll('pre.mermaid').forEach(function(pre) {
+                    var graphText = pre.textContent;
+                    var div = document.createElement('div');
+                    div.className = 'mermaid-render';
+                    pre.parentNode.replaceChild(div, pre);
+                    
+                    mermaid.render('mermaid-' + Math.random().toString(36).substr(2, 9), graphText).then(function(result) {
+                        div.innerHTML = result.svg;
+                    }).catch(function(err) {
+                        div.innerHTML = '<pre style="color:red">' + err.message + '</pre><pre>' + graphText + '</pre>';
+                    });
+                });
+            }, 100);
+        }
+    };
+
+    window.closeFullscreen = function() {
+        document.getElementById('fullscreen-modal').classList.remove('visible');
     };
 
     window.searchNode = function() {

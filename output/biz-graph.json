@@ -3,10 +3,10 @@
   "nodes": [
     {
       "id": "L6-001",
-      "name": "RpTradePaymentOrder",
+      "name": "TradeStatusEnum",
       "level": 6,
       "type": "class",
-      "description": "RpTradePaymentOrder",
+      "description": "TradeStatusEnum",
       "tags": [],
       "source": {},
       "contains": [],
@@ -17,16 +17,16 @@
     },
     {
       "id": "L6-002",
-      "name": "F2FPayResultVo",
+      "name": "RpUserPayConfig",
       "level": 6,
       "type": "class",
-      "description": "F2FPayResultVo",
+      "description": "RpUserPayConfig",
       "tags": [],
       "source": {},
       "contains": [],
       "references": [],
       "calls": [],
-      "class_type": "VO",
+      "class_type": "Entity",
       "package": ""
     },
     {
@@ -45,90 +45,6 @@
     },
     {
       "id": "L6-004",
-      "name": "List",
-      "level": 6,
-      "type": "class",
-      "description": "List",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-005",
-      "name": "RpAccount",
-      "level": 6,
-      "type": "class",
-      "description": "RpAccount",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-006",
-      "name": "Object",
-      "level": 6,
-      "type": "class",
-      "description": "Object",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-007",
-      "name": "RpUserInfo",
-      "level": 6,
-      "type": "class",
-      "description": "RpUserInfo",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-008",
-      "name": "ModelMap",
-      "level": 6,
-      "type": "class",
-      "description": "ModelMap",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-009",
-      "name": "Date",
-      "level": 6,
-      "type": "class",
-      "description": "Date",
-      "tags": [],
-      "source": {},
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "class_type": "Entity",
-      "package": ""
-    },
-    {
-      "id": "L6-010",
       "name": "F2FPayRequestBo",
       "level": 6,
       "type": "class",
@@ -142,7 +58,21 @@
       "package": ""
     },
     {
-      "id": "L6-011",
+      "id": "L6-005",
+      "name": "List",
+      "level": 6,
+      "type": "class",
+      "description": "List",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-006",
       "name": "PayTypeEnum",
       "level": 6,
       "type": "class",
@@ -156,11 +86,11 @@
       "package": ""
     },
     {
-      "id": "L6-012",
-      "name": "TradeStatusEnum",
+      "id": "L6-007",
+      "name": "ModelMap",
       "level": 6,
       "type": "class",
-      "description": "TradeStatusEnum",
+      "description": "ModelMap",
       "tags": [],
       "source": {},
       "contains": [],
@@ -170,7 +100,63 @@
       "package": ""
     },
     {
-      "id": "L6-013",
+      "id": "L6-008",
+      "name": "Date",
+      "level": 6,
+      "type": "class",
+      "description": "Date",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-009",
+      "name": "Object",
+      "level": 6,
+      "type": "class",
+      "description": "Object",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-010",
+      "name": "RpAccount",
+      "level": 6,
+      "type": "class",
+      "description": "RpAccount",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-011",
+      "name": "RpTradePaymentOrder",
+      "level": 6,
+      "type": "class",
+      "description": "RpTradePaymentOrder",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "Entity",
+      "package": ""
+    },
+    {
+      "id": "L6-012",
       "name": "RpTradePaymentRecord",
       "level": 6,
       "type": "class",
@@ -184,11 +170,25 @@
       "package": ""
     },
     {
-      "id": "L6-014",
-      "name": "RpUserPayConfig",
+      "id": "L6-013",
+      "name": "F2FPayResultVo",
       "level": 6,
       "type": "class",
-      "description": "RpUserPayConfig",
+      "description": "F2FPayResultVo",
+      "tags": [],
+      "source": {},
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "class_type": "VO",
+      "package": ""
+    },
+    {
+      "id": "L6-014",
+      "name": "RpUserInfo",
+      "level": 6,
+      "type": "class",
+      "description": "RpUserInfo",
       "tags": [],
       "source": {},
       "contains": [],
@@ -198,7 +198,923 @@
       "package": ""
     },
     {
+      "id": "L4-001",
+      "name": "MerchantApiUtil.getSign",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.utils.MerchantApiUtil#getSign",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.MerchantApiUtil#getSign"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-011"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
       "id": "L5-001",
+      "name": "必须提供有效的通知URL地址才能发送通知",
+      "level": 5,
+      "type": "rule",
+      "description": "必须提供有效的通知URL地址才能发送通知",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyService",
+        "method": "notifySend"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "必须提供有效的通知URL地址才能发送通知",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-002",
+      "name": "商户订单号和商户号是必传参数，用于标识通...",
+      "level": 5,
+      "type": "rule",
+      "description": "商户订单号和商户号是必传参数，用于标识通知的具体业务对象",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyService",
+        "method": "notifySend"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "商户订单号和商户号是必传参数，用于标识通知的具体业务对象",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-003",
+      "name": "通知发送失败时需要进行重试机制以确保通知...",
+      "level": 5,
+      "type": "rule",
+      "description": "通知发送失败时需要进行重试机制以确保通知到达",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyService",
+        "method": "notifySend"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "通知发送失败时需要进行重试机制以确保通知到达",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-002",
+      "name": "RpNotifyService.notifySend",
+      "level": 4,
+      "type": "activity",
+      "description": "向指定的商户通知URL发送异步通知消息，用于支付系统中订单状态变更后的回调通知",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyService",
+        "method": "notifySend",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\RpNotifyService.java"
+      },
+      "contains": [
+        "L5-001",
+        "L5-002",
+        "L5-003"
+      ],
+      "references": [],
+      "calls": [],
+      "flow": "接收通知URL、商户订单号和商户号三个参数，通过HTTP请求向指定的通知地址发送包含订单信息的异步通知，完成支付结果的回调通知处理",
+      "flow_chart": "graph TD\n    A[开始] --> B[接收参数: notifyUrl, merchantOrderNo, merchantNo]\n    B --> C[构建通知数据包]\n    C --> D[发送HTTP POST请求到通知URL]\n    D --> E[结束通知发送]\n    E --> F[完成]",
+      "input": [
+        {
+          "param": "notifyUrl",
+          "type": "String",
+          "meaning": "商户提供的异步通知接收地址"
+        },
+        {
+          "param": "merchantOrderNo",
+          "type": "String",
+          "meaning": "商户系统的订单号，用于标识具体订单"
+        },
+        {
+          "param": "merchantNo",
+          "type": "String",
+          "meaning": "商户编号，用于标识发送通知的目标商户"
+        }
+      ],
+      "output": {
+        "type": "void",
+        "meaning": "无返回值，表示通知发送操作已执行"
+      }
+    },
+    {
+      "id": "L5-004",
+      "name": "商户编号不能为空",
+      "level": 5,
+      "type": "rule",
+      "description": "商户编号不能为空",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentOrderDaoImpl",
+        "method": "selectByMerchantNoAndMerchantOrderNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "商户编号不能为空",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-005",
+      "name": "商户订单号不能为空",
+      "level": 5,
+      "type": "rule",
+      "description": "商户订单号不能为空",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentOrderDaoImpl",
+        "method": "selectByMerchantNoAndMerchantOrderNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "商户订单号不能为空",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-006",
+      "name": "必须存在对应的交易支付订单记录才能查询成...",
+      "level": 5,
+      "type": "rule",
+      "description": "必须存在对应的交易支付订单记录才能查询成功",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentOrderDaoImpl",
+        "method": "selectByMerchantNoAndMerchantOrderNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "必须存在对应的交易支付订单记录才能查询成功",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L4-003",
+      "name": "RpTradePaymentOrderDaoImpl.selectByMerchantNoAndMerchantOrderNo",
+      "level": 4,
+      "type": "activity",
+      "description": "根据商户编号和商户订单号查询交易支付订单信息",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentOrderDaoImpl",
+        "method": "selectByMerchantNoAndMerchantOrderNo",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\dao\\impl\\RpTradePaymentOrderDaoImpl.java"
+      },
+      "contains": [
+        "L5-004",
+        "L5-005",
+        "L5-006"
+      ],
+      "references": [
+        "L6-011"
+      ],
+      "calls": [
+        "L4-007"
+      ],
+      "flow": "接收商户编号和商户订单号两个参数，构建参数映射表，调用父类的getBy方法执行数据库查询操作，返回对应的交易支付订单记录",
+      "flow_chart": "graph TD\n    A[开始] --> B[接收merchantNo和merchantOrderNo参数]\n    B --> C[创建参数映射表paramMap]\n    C --> D[paramMap添加merchantNo]\n    D --> E[paramMap添加merchantOrderNo]\n    E --> F[调用super.getBy(paramMap)]\n    F --> G[返回RpTradePaymentOrder对象]\n    G --> H[结束]",
+      "input": [
+        {
+          "param": "merchantNo",
+          "type": "String",
+          "meaning": "商户编号，用于标识具体的商户"
+        },
+        {
+          "param": "merchantOrderNo",
+          "type": "String",
+          "meaning": "商户订单号，商户系统中的唯一订单标识"
+        }
+      ],
+      "output": {
+        "type": "RpTradePaymentOrder",
+        "meaning": "交易支付订单实体对象，包含订单的详细支付信息"
+      }
+    },
+    {
+      "id": "L5-007",
+      "name": "交易流水号必须是唯一的，不能重复",
+      "level": 5,
+      "type": "rule",
+      "description": "交易流水号必须是唯一的，不能重复",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "BuildNoService",
+        "method": "buildTrxNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "交易流水号必须是唯一的，不能重复",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-008",
+      "name": "交易流水号应具有一定的格式规范，便于识别...",
+      "level": 5,
+      "type": "rule",
+      "description": "交易流水号应具有一定的格式规范，便于识别和管理",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "BuildNoService",
+        "method": "buildTrxNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "交易流水号应具有一定的格式规范，便于识别和管理",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-004",
+      "name": "BuildNoService.buildTrxNo",
+      "level": 4,
+      "type": "activity",
+      "description": "构建交易流水号的方法，用于生成唯一的交易编号",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "BuildNoService",
+        "method": "buildTrxNo",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\BuildNoService.java"
+      },
+      "contains": [
+        "L5-007",
+        "L5-008"
+      ],
+      "references": [],
+      "calls": [],
+      "flow": "该方法不接受任何参数，通过内部逻辑生成一个唯一的交易流水号并返回",
+      "flow_chart": "graph TD\n    A[开始] --> B[调用buildTrxNo方法]\n    B --> C[生成唯一交易流水号]\n    C --> D[返回交易流水号]\n    D --> E[结束]",
+      "input": [],
+      "output": {
+        "type": "String",
+        "meaning": "生成的交易流水号，通常作为唯一标识符用于跟踪和记录交易"
+      }
+    },
+    {
+      "id": "L5-009",
+      "name": "必须配置正确的消息队列名称MqConfi...",
+      "level": 5,
+      "type": "rule",
+      "description": "必须配置正确的消息队列名称MqConfig.ORDER_NOTIFY_QUEUE",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyServiceImpl",
+        "method": "orderSend"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "必须配置正确的消息队列名称MqConfig.ORDER_NOTIFY_QUEUE",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-010",
+      "name": "消息以文本格式传输银行订单号",
+      "level": 5,
+      "type": "rule",
+      "description": "消息以文本格式传输银行订单号",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyServiceImpl",
+        "method": "orderSend"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "消息以文本格式传输银行订单号",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-011",
+      "name": "采用异步方式发送消息，不阻塞当前线程",
+      "level": 5,
+      "type": "rule",
+      "description": "采用异步方式发送消息，不阻塞当前线程",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyServiceImpl",
+        "method": "orderSend"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "采用异步方式发送消息，不阻塞当前线程",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-005",
+      "name": "RpNotifyServiceImpl.orderSend",
+      "level": 4,
+      "type": "activity",
+      "description": "通过消息队列发送订单通知，将银行订单号作为消息内容推送到订单通知队列中",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpNotifyServiceImpl",
+        "method": "orderSend",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\impl\\RpNotifyServiceImpl.java"
+      },
+      "contains": [
+        "L5-009",
+        "L5-010",
+        "L5-011"
+      ],
+      "references": [],
+      "calls": [],
+      "flow": "接收银行订单号参数 -> 设置JMS模板默认目标为订单通知队列 -> 创建消息创建器 -> 通过会话创建文本消息 -> 发送消息到队列",
+      "flow_chart": "graph TD\n    A[开始] --> B[接收bankOrderNo参数]\n    B --> C[设置JMS队列目标为ORDER_NOTIFY_QUEUE]\n    C --> D[创建MessageCreator匿名内部类]\n    D --> E[通过Session创建文本消息]\n    E --> F[发送orderNo作为消息内容]\n    F --> G[结束]",
+      "input": [
+        {
+          "param": "bankOrderNo",
+          "type": "String",
+          "meaning": "银行订单号，用于标识需要通知的订单"
+        }
+      ],
+      "output": {
+        "type": "void",
+        "meaning": "无返回值，异步发送消息到队列"
+      }
+    },
+    {
+      "id": "L4-006",
+      "name": "RpUserPayInfoServiceImpl.getByUserNo",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.user.service.impl.RpUserPayInfoServiceImpl#getByUserNo",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.user.service.impl.RpUserPayInfoServiceImpl#getByUserNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-007",
+      "name": "BaseDaoImpl.getBy",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.common.core.dao.impl.BaseDaoImpl#getBy",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.common.core.dao.impl.BaseDaoImpl#getBy"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-008",
+      "name": "WeixinConfigUtil.readConfig",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.trade.utils.WeixinConfigUtil#readConfig",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.WeixinConfigUtil#readConfig"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-009",
+      "name": "WeiXinPayUtil.getSign",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-027",
+        "L4-011"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L5-012",
+      "name": "订单状态初始化为等待支付(WAITING...",
+      "level": 5,
+      "type": "rule",
+      "description": "订单状态初始化为等待支付(WAITING_PAYMENT)",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "sealF2FRpTradePaymentOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "订单状态初始化为等待支付(WAITING_PAYMENT)",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-013",
+      "name": "订单过期时间设置为当前时间",
+      "level": 5,
+      "type": "rule",
+      "description": "订单过期时间设置为当前时间",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "sealF2FRpTradePaymentOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "订单过期时间设置为当前时间",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-014",
+      "name": "资金流入方向来源于用户支付配置",
+      "level": 5,
+      "type": "rule",
+      "description": "资金流入方向来源于用户支付配置",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "sealF2FRpTradePaymentOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "资金流入方向来源于用户支付配置",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-015",
+      "name": "订单有效期默认设置为0",
+      "level": 5,
+      "type": "rule",
+      "description": "订单有效期默认设置为0",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "sealF2FRpTradePaymentOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "订单有效期默认设置为0",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-016",
+      "name": "下单日期和时间需要进行格式转换解析",
+      "level": 5,
+      "type": "rule",
+      "description": "下单日期和时间需要进行格式转换解析",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "sealF2FRpTradePaymentOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "下单日期和时间需要进行格式转换解析",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-010",
+      "name": "RpTradePaymentManagerServiceImpl.sealF2FRpTradePaymentOrder",
+      "level": 4,
+      "type": "activity",
+      "description": "构建F2F（面对面）支付交易订单实体，将支付请求数据、用户信息和支付方式等组装成完整的交易支付订单对象",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "sealF2FRpTradePaymentOrder",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
+      },
+      "contains": [
+        "L5-012",
+        "L5-013",
+        "L5-014",
+        "L5-015",
+        "L5-016"
+      ],
+      "references": [
+        "L6-004",
+        "L6-014",
+        "L6-003",
+        "L6-002",
+        "L6-011"
+      ],
+      "calls": [
+        "L4-046"
+      ],
+      "flow": "创建新的交易支付订单实例 -> 从支付请求对象中提取并设置商品信息、订单信息、时间信息 -> 从用户信息中设置商户信息 -> 设置支付通道和支付方式信息 -> 设置订单状态为等待支付 -> 设置资金流入类型和备注信息 -> 返回组装完成的交易订单",
+      "flow_chart": "graph TD\n    A[开始] --> B[创建RpTradePaymentOrder实例]\n    B --> C[设置商品名称和订单基础信息]\n    C --> D[设置商户信息]\n    D --> E[解析并设置订单时间和日期]\n    E --> F[设置订单IP和URL相关信息]\n    F --> G[设置支付通道和支付方式信息]\n    G --> H[设置订单状态为等待支付]\n    H --> I[设置资金流入类型和备注]\n    I --> J[返回组装完成的订单]\n    J --> K[结束]",
+      "input": [
+        {
+          "param": "rpUserPayConfig",
+          "type": "RpUserPayConfig",
+          "meaning": "用户支付配置信息，包含资金流入方向等配置"
+        },
+        {
+          "param": "f2FPayRequestBo",
+          "type": "F2FPayRequestBo",
+          "meaning": "F2F支付请求业务对象，包含商品名称、订单号、订单价格、下单时间等订单信息"
+        },
+        {
+          "param": "rpUserInfo",
+          "type": "RpUserInfo",
+          "meaning": "商户用户信息，包含用户名和用户编号"
+        },
+        {
+          "param": "rpPayWay",
+          "type": "RpPayWay",
+          "meaning": "支付方式信息，包含支付通道编码、名称、支付类型等"
+        }
+      ],
+      "output": {
+        "type": "RpTradePaymentOrder",
+        "meaning": "F2F交易支付订单对象，包含完整的订单信息用于后续支付处理"
+      }
+    },
+    {
+      "id": "L4-011",
+      "name": "MD5Util.encode",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.utils.MD5Util#encode",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.MD5Util#encode"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-020"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-012",
+      "name": "RpUserPayConfigService.getByPayKey",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-013",
+      "name": "RpPayWayService.getByPayWayTypeCode",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L5-017",
+      "name": "商户支付配置必须存在，否则抛出配置错误异...",
+      "level": 5,
+      "type": "rule",
+      "description": "商户支付配置必须存在，否则抛出配置错误异常",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getMerchantNotifyUrl"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "商户支付配置必须存在，否则抛出配置错误异常",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-018",
+      "name": "通知URL必须包含所有必要的支付参数以供...",
+      "level": 5,
+      "type": "rule",
+      "description": "通知URL必须包含所有必要的支付参数以供商户验证",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getMerchantNotifyUrl"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "通知URL必须包含所有必要的支付参数以供商户验证",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-019",
+      "name": "通知URL需要进行数字签名以确保数据完整...",
+      "level": 5,
+      "type": "rule",
+      "description": "通知URL需要进行数字签名以确保数据完整性和安全性",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getMerchantNotifyUrl"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "通知URL需要进行数字签名以确保数据完整性和安全性",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L5-020",
+      "name": "参数中必须包含交易状态信息以便商户处理不...",
+      "level": 5,
+      "type": "rule",
+      "description": "参数中必须包含交易状态信息以便商户处理不同状态的订单",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getMerchantNotifyUrl"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "参数中必须包含交易状态信息以便商户处理不同状态的订单",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L4-014",
+      "name": "RpTradePaymentManagerServiceImpl.getMerchantNotifyUrl",
+      "level": 4,
+      "type": "activity",
+      "description": "根据支付记录、支付订单和交易状态等信息构建商户通知URL，用于向商户系统发送支付结果通知",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getMerchantNotifyUrl",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
+      },
+      "contains": [
+        "L5-017",
+        "L5-018",
+        "L5-019",
+        "L5-020"
+      ],
+      "references": [
+        "L6-012",
+        "L6-001",
+        "L6-011"
+      ],
+      "calls": [
+        "L4-045",
+        "L4-040",
+        "L4-001"
+      ],
+      "flow": "获取商户支付配置 → 验证配置存在性 → 构建参数映射表 → 添加支付相关参数（支付KEY、商品名、订单号、金额、支付方式等）→ 格式化订单日期时间 → 生成参数字符串 → 计算签名 → 拼接完整通知URL",
+      "flow_chart": "graph TD\n    A[开始] --> B[获取商户支付配置]\n    B --> C{配置是否存在}\n    C -->|否| D[抛出异常: 用户支付配置有误]\n    C -->|是| E[创建参数映射表]\n    E --> F[添加支付KEY]\n    F --> G[添加商品名称、订单编号、订单金额]\n    G --> H[添加支付方式编码、交易状态]\n    H --> I[格式化订单日期时间]\n    I --> J[添加备注、流水号]\n    J --> K[生成参数字符串]\n    K --> L[计算签名]\n    L --> M[拼接完整通知URL]\n    M --> N[返回通知URL]",
+      "input": [
+        {
+          "param": "rpTradePaymentRecord",
+          "type": "RpTradePaymentRecord",
+          "meaning": "支付记录实体，包含商户号、商品名称、订单编号、订单金额、支付方式等支付相关信息"
+        },
+        {
+          "param": "rpTradePaymentOrder",
+          "type": "RpTradePaymentOrder",
+          "meaning": "支付订单实体，包含订单日期和订单时间等订单创建相关信息"
+        },
+        {
+          "param": "sourceUrl",
+          "type": "String",
+          "meaning": "原始通知URL地址，作为构建完整通知URL的基础路径"
+        },
+        {
+          "param": "tradeStatusEnum",
+          "type": "TradeStatusEnum",
+          "meaning": "交易状态枚举，表示当前支付交易的最终状态"
+        }
+      ],
+      "output": {
+        "type": "String",
+        "meaning": "构建完成的带签名的商户通知URL，包含所有必要参数和数字签名"
+      }
+    },
+    {
+      "id": "L5-021",
+      "name": "需要处理BindingResult中的所...",
+      "level": 5,
+      "type": "rule",
+      "description": "需要处理BindingResult中的所有验证错误",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "getErrorResponse"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "需要处理BindingResult中的所有验证错误",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-022",
+      "name": "错误消息之间使用逗号分隔",
+      "level": 5,
+      "type": "rule",
+      "description": "错误消息之间使用逗号分隔",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "getErrorResponse"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "错误消息之间使用逗号分隔",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-023",
+      "name": "最终结果要去除末尾多余的逗号",
+      "level": 5,
+      "type": "rule",
+      "description": "最终结果要去除末尾多余的逗号",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "getErrorResponse"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "最终结果要去除末尾多余的逗号",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-015",
+      "name": "CnpPayService.getErrorResponse",
+      "level": 4,
+      "type": "activity",
+      "description": "根据绑定结果获取错误响应信息，将所有验证错误消息拼接成逗号分隔的字符串返回",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "getErrorResponse",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java"
+      },
+      "contains": [
+        "L5-021",
+        "L5-022",
+        "L5-023"
+      ],
+      "references": [],
+      "calls": [],
+      "flow": "遍历绑定结果中的所有错误对象，提取默认错误消息并用逗号连接，最后去除末尾多余逗号后返回完整错误信息字符串",
+      "flow_chart": "graph TD\n    A[开始] --> B[创建StringBuffer]\n    B --> C[遍历bindingResult的所有错误]\n    C --> D[获取每个错误的默认消息]\n    D --> E[追加到StringBuffer并添加逗号]\n    E --> F[检查是否还有更多错误]\n    F -->|是| C\n    F -->|否| G[删除末尾逗号]\n    G --> H[返回错误信息字符串]\n    H --> I[结束]",
+      "input": [
+        {
+          "param": "bindingResult",
+          "type": "BindingResult",
+          "meaning": "数据绑定和验证结果对象，包含验证错误信息"
+        }
+      ],
+      "output": {
+        "type": "String",
+        "meaning": "包含所有错误消息的逗号分隔字符串"
+      }
+    },
+    {
+      "id": "L4-016",
+      "name": "MerchantApiUtil.isRightSign",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.utils.MerchantApiUtil#isRightSign",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.MerchantApiUtil#isRightSign"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-001"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L5-024",
       "name": "入账金额必须为正数且不能为零",
       "level": 5,
       "type": "rule",
@@ -217,7 +1133,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-002",
+      "id": "L5-025",
       "name": "目标账户必须存在且处于可用状态",
       "level": 5,
       "type": "rule",
@@ -236,7 +1152,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-003",
+      "id": "L5-026",
       "name": "同一请求号不能重复处理避免重复入账",
       "level": 5,
       "type": "rule",
@@ -255,7 +1171,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-004",
+      "id": "L5-027",
       "name": "入账操作需要保证数据一致性和事务完整性",
       "level": 5,
       "type": "rule",
@@ -274,7 +1190,7 @@
       "source_code": ""
     },
     {
-      "id": "L4-001",
+      "id": "L4-017",
       "name": "RpAccountTransactionService.creditToAccount",
       "level": 4,
       "type": "activity",
@@ -287,13 +1203,13 @@
         "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\account\\service\\RpAccountTransactionService.java"
       },
       "contains": [
-        "L5-001",
-        "L5-002",
-        "L5-003",
-        "L5-004"
+        "L5-024",
+        "L5-025",
+        "L5-026",
+        "L5-027"
       ],
       "references": [
-        "L6-005"
+        "L6-010"
       ],
       "calls": [],
       "flow": "根据用户编号查询账户信息 -> 验证账户状态和入账金额有效性 -> 执行贷方入账操作 -> 更新账户余额 -> 记录交易流水 -> 返回更新后的账户信息",
@@ -331,290 +1247,66 @@
       }
     },
     {
-      "id": "L5-005",
-      "name": "必须提供有效的通知URL地址才能发送通知",
-      "level": 5,
-      "type": "rule",
-      "description": "必须提供有效的通知URL地址才能发送通知",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "notifySend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "必须提供有效的通知URL地址才能发送通知",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-006",
-      "name": "商户订单号和商户号是必传参数，用于标识通...",
-      "level": 5,
-      "type": "rule",
-      "description": "商户订单号和商户号是必传参数，用于标识通知的具体业务对象",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "notifySend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "商户订单号和商户号是必传参数，用于标识通知的具体业务对象",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-007",
-      "name": "通知发送失败时需要进行重试机制以确保通知...",
-      "level": 5,
-      "type": "rule",
-      "description": "通知发送失败时需要进行重试机制以确保通知到达",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "notifySend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "通知发送失败时需要进行重试机制以确保通知到达",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-002",
-      "name": "RpNotifyService.notifySend",
+      "id": "L4-018",
+      "name": "RpUserPayInfoService.getByUserNo",
       "level": 4,
       "type": "activity",
-      "description": "向指定的商户通知URL发送异步通知消息，用于支付系统中订单状态变更后的回调通知",
+      "description": "方法 com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo",
       "tags": [],
       "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "notifySend",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\RpNotifyService.java"
-      },
-      "contains": [
-        "L5-005",
-        "L5-006",
-        "L5-007"
-      ],
-      "references": [],
-      "calls": [],
-      "flow": "接收通知URL、商户订单号和商户号三个参数，通过HTTP请求向指定的通知地址发送包含订单信息的异步通知，完成支付结果的回调通知处理",
-      "flow_chart": "graph TD\n    A[开始] --> B[接收参数: notifyUrl, merchantOrderNo, merchantNo]\n    B --> C[构建通知数据包]\n    C --> D[发送HTTP POST请求到通知URL]\n    D --> E[结束通知发送]\n    E --> F[完成]",
-      "input": [
-        {
-          "param": "notifyUrl",
-          "type": "String",
-          "meaning": "商户提供的异步通知接收地址"
-        },
-        {
-          "param": "merchantOrderNo",
-          "type": "String",
-          "meaning": "商户系统的订单号，用于标识具体订单"
-        },
-        {
-          "param": "merchantNo",
-          "type": "String",
-          "meaning": "商户编号，用于标识发送通知的目标商户"
-        }
-      ],
-      "output": {
-        "type": "void",
-        "meaning": "无返回值，表示通知发送操作已执行"
-      }
-    },
-    {
-      "id": "L5-008",
-      "name": "必须提供有效的银行订单号作为输入参数",
-      "level": 5,
-      "type": "rule",
-      "description": "必须提供有效的银行订单号作为输入参数",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "orderSend"
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "必须提供有效的银行订单号作为输入参数",
-      "rule_type": "validation",
-      "source_code": ""
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
     },
     {
-      "id": "L5-009",
-      "name": "订单通知发送失败时应有相应的重试机制",
-      "level": 5,
-      "type": "rule",
-      "description": "订单通知发送失败时应有相应的重试机制",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "orderSend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "订单通知发送失败时应有相应的重试机制",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-010",
-      "name": "需要确保通知消息的准确性和完整性",
-      "level": 5,
-      "type": "rule",
-      "description": "需要确保通知消息的准确性和完整性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "orderSend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "需要确保通知消息的准确性和完整性",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-003",
-      "name": "RpNotifyService.orderSend",
+      "id": "L4-019",
+      "name": "MD5Util.byteToHexChar",
       "level": 4,
       "type": "activity",
-      "description": "根据银行订单号触发订单通知发送，用于向相关系统或服务推送订单状态变更信息",
+      "description": "方法 com.roncoo.pay.utils.MD5Util#byteToHexChar",
       "tags": [],
       "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyService",
-        "method": "orderSend",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\RpNotifyService.java"
-      },
-      "contains": [
-        "L5-008",
-        "L5-009",
-        "L5-010"
-      ],
-      "references": [],
-      "calls": [],
-      "flow": "接收银行订单号参数 -> 查询订单相关信息 -> 构建通知消息 -> 发送订单状态通知 -> 完成通知发送流程",
-      "flow_chart": "graph TD\n    A[开始] --> B[接收bankOrderNo参数]\n    B --> C[查询订单信息]\n    C --> D[构建通知消息]\n    D --> E[发送订单通知]\n    E --> F[结束]\n    style A fill:#e1f5fe\n    style F fill:#e8f5e8",
-      "input": [
-        {
-          "param": "bankOrderNo",
-          "type": "String",
-          "meaning": "银行订单号，用于唯一标识需要发送通知的银行交易订单"
-        }
-      ],
-      "output": {
-        "type": "void",
-        "meaning": "无返回值，方法执行完成后即完成订单通知发送操作"
-      }
-    },
-    {
-      "id": "L5-011",
-      "name": "必须配置正确的消息队列名称MqConfi...",
-      "level": 5,
-      "type": "rule",
-      "description": "必须配置正确的消息队列名称MqConfig.ORDER_NOTIFY_QUEUE",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyServiceImpl",
-        "method": "orderSend"
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.MD5Util#byteToHexChar"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "必须配置正确的消息队列名称MqConfig.ORDER_NOTIFY_QUEUE",
-      "rule_type": "validation",
-      "source_code": ""
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
     },
     {
-      "id": "L5-012",
-      "name": "消息以文本格式传输银行订单号",
-      "level": 5,
-      "type": "rule",
-      "description": "消息以文本格式传输银行订单号",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyServiceImpl",
-        "method": "orderSend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "消息以文本格式传输银行订单号",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-013",
-      "name": "采用异步方式发送消息，不阻塞当前线程",
-      "level": 5,
-      "type": "rule",
-      "description": "采用异步方式发送消息，不阻塞当前线程",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyServiceImpl",
-        "method": "orderSend"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "采用异步方式发送消息，不阻塞当前线程",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-004",
-      "name": "RpNotifyServiceImpl.orderSend",
+      "id": "L4-020",
+      "name": "MD5Util.byteArrayToHexString",
       "level": 4,
       "type": "activity",
-      "description": "通过消息队列发送订单通知，将银行订单号作为消息内容推送到订单通知队列中",
+      "description": "方法 com.roncoo.pay.utils.MD5Util#byteArrayToHexString",
       "tags": [],
       "source": {
-        "origin": "semantic-graph",
-        "class": "RpNotifyServiceImpl",
-        "method": "orderSend",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\impl\\RpNotifyServiceImpl.java"
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.MD5Util#byteArrayToHexString"
       },
-      "contains": [
-        "L5-011",
-        "L5-012",
-        "L5-013"
-      ],
+      "contains": [],
       "references": [],
-      "calls": [],
-      "flow": "接收银行订单号参数 -> 设置JMS模板默认目标为订单通知队列 -> 创建消息创建器 -> 通过会话创建文本消息 -> 发送消息到队列",
-      "flow_chart": "graph TD\n    A[开始] --> B[接收bankOrderNo参数]\n    B --> C[设置JMS队列目标为ORDER_NOTIFY_QUEUE]\n    C --> D[创建MessageCreator匿名内部类]\n    D --> E[通过Session创建文本消息]\n    E --> F[发送orderNo作为消息内容]\n    F --> G[结束]",
-      "input": [
-        {
-          "param": "bankOrderNo",
-          "type": "String",
-          "meaning": "银行订单号，用于标识需要通知的订单"
-        }
+      "calls": [
+        "L4-019"
       ],
-      "output": {
-        "type": "void",
-        "meaning": "无返回值，异步发送消息到队列"
-      }
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
     },
     {
-      "id": "L5-014",
+      "id": "L5-028",
       "name": "商户编号不能为空",
       "level": 5,
       "type": "rule",
@@ -633,7 +1325,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-015",
+      "id": "L5-029",
       "name": "商户订单号不能为空",
       "level": 5,
       "type": "rule",
@@ -652,7 +1344,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-016",
+      "id": "L5-030",
       "name": "必须存在对应的交易支付订单记录",
       "level": 5,
       "type": "rule",
@@ -671,7 +1363,7 @@
       "source_code": ""
     },
     {
-      "id": "L4-005",
+      "id": "L4-021",
       "name": "RpTradePaymentOrderDao.selectByMerchantNoAndMerchantOrderNo",
       "level": 4,
       "type": "activity",
@@ -684,12 +1376,12 @@
         "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\dao\\RpTradePaymentOrderDao.java"
       },
       "contains": [
-        "L5-014",
-        "L5-015",
-        "L5-016"
+        "L5-028",
+        "L5-029",
+        "L5-030"
       ],
       "references": [
-        "L6-001"
+        "L6-011"
       ],
       "calls": [],
       "flow": "接收商户编号和商户订单号作为查询条件，在数据库中查找对应的交易支付订单记录并返回",
@@ -712,535 +1404,299 @@
       }
     },
     {
-      "id": "L5-017",
-      "name": "商户编号不能为空",
-      "level": 5,
-      "type": "rule",
-      "description": "商户编号不能为空",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentOrderDaoImpl",
-        "method": "selectByMerchantNoAndMerchantOrderNo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "商户编号不能为空",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-018",
-      "name": "商户订单号不能为空",
-      "level": 5,
-      "type": "rule",
-      "description": "商户订单号不能为空",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentOrderDaoImpl",
-        "method": "selectByMerchantNoAndMerchantOrderNo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "商户订单号不能为空",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-019",
-      "name": "必须存在对应的交易支付订单记录才能查询成...",
-      "level": 5,
-      "type": "rule",
-      "description": "必须存在对应的交易支付订单记录才能查询成功",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentOrderDaoImpl",
-        "method": "selectByMerchantNoAndMerchantOrderNo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "必须存在对应的交易支付订单记录才能查询成功",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L4-006",
-      "name": "RpTradePaymentOrderDaoImpl.selectByMerchantNoAndMerchantOrderNo",
+      "id": "L4-022",
+      "name": "NetworkUtil.getIpAddress",
       "level": 4,
       "type": "activity",
-      "description": "根据商户编号和商户订单号查询交易支付订单信息",
+      "description": "方法 com.roncoo.pay.utils.NetworkUtil#getIpAddress",
       "tags": [],
       "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentOrderDaoImpl",
-        "method": "selectByMerchantNoAndMerchantOrderNo",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\dao\\impl\\RpTradePaymentOrderDaoImpl.java"
-      },
-      "contains": [
-        "L5-017",
-        "L5-018",
-        "L5-019"
-      ],
-      "references": [
-        "L6-001"
-      ],
-      "calls": [],
-      "flow": "接收商户编号和商户订单号两个参数，构建参数映射表，调用父类的getBy方法执行数据库查询操作，返回对应的交易支付订单记录",
-      "flow_chart": "graph TD\n    A[开始] --> B[接收merchantNo和merchantOrderNo参数]\n    B --> C[创建参数映射表paramMap]\n    C --> D[paramMap添加merchantNo]\n    D --> E[paramMap添加merchantOrderNo]\n    E --> F[调用super.getBy(paramMap)]\n    F --> G[返回RpTradePaymentOrder对象]\n    G --> H[结束]",
-      "input": [
-        {
-          "param": "merchantNo",
-          "type": "String",
-          "meaning": "商户编号，用于标识具体的商户"
-        },
-        {
-          "param": "merchantOrderNo",
-          "type": "String",
-          "meaning": "商户订单号，商户系统中的唯一订单标识"
-        }
-      ],
-      "output": {
-        "type": "RpTradePaymentOrder",
-        "meaning": "交易支付订单实体对象，包含订单的详细支付信息"
-      }
-    },
-    {
-      "id": "L5-020",
-      "name": "必须提供有效的用户支付配置信息",
-      "level": 5,
-      "type": "rule",
-      "description": "必须提供有效的用户支付配置信息",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerService",
-        "method": "f2fPay"
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.NetworkUtil#getIpAddress"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "必须提供有效的用户支付配置信息",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-021",
-      "name": "支付请求参数必须完整且符合业务规范",
-      "level": 5,
-      "type": "rule",
-      "description": "支付请求参数必须完整且符合业务规范",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerService",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "支付请求参数必须完整且符合业务规范",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-022",
-      "name": "需要验证支付金额的合法性",
-      "level": 5,
-      "type": "rule",
-      "description": "需要验证支付金额的合法性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerService",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "需要验证支付金额的合法性",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-023",
-      "name": "需确保支付渠道可用性",
-      "level": 5,
-      "type": "rule",
-      "description": "需确保支付渠道可用性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerService",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "需确保支付渠道可用性",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-007",
-      "name": "RpTradePaymentManagerService.f2fPay",
-      "level": 4,
-      "type": "activity",
-      "description": "面对面支付处理方法，用于处理用户通过扫码等方式进行的面对面支付交易",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerService",
-        "method": "f2fPay",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\RpTradePaymentManagerService.java"
-      },
-      "contains": [
-        "L5-020",
-        "L5-021",
-        "L5-022",
-        "L5-023"
-      ],
-      "references": [
-        "L6-002",
-        "L6-010",
-        "L6-014"
-      ],
-      "calls": [],
-      "flow": "接收用户支付配置和支付请求参数，执行面对面支付处理逻辑，返回支付结果",
-      "flow_chart": "graph TD\n    A[开始] --> B[接收支付配置和支付请求]\n    B --> C[执行面对面支付处理]\n    C --> D[返回支付结果]\n    D --> E[结束]",
-      "input": [
-        {
-          "param": "rpUserPayConfig",
-          "type": "RpUserPayConfig",
-          "meaning": "用户支付配置信息，包含用户的支付渠道、商户信息等配置参数"
-        },
-        {
-          "param": "f2FPayRequestBo",
-          "type": "F2FPayRequestBo",
-          "meaning": "面对面支付请求业务对象，包含订单金额、商品信息、支付方式等支付请求数据"
-        }
-      ],
-      "output": {
-        "type": "F2FPayResultVo",
-        "meaning": "面对面支付结果值对象，包含支付状态、交易流水号、支付结果等信息"
-      }
-    },
-    {
-      "id": "L5-024",
-      "name": "仅支持F2F_PAY和MICRO_PAY...",
-      "level": 5,
-      "type": "rule",
-      "description": "仅支持F2F_PAY和MICRO_PAY两种支付类型",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "仅支持F2F_PAY和MICRO_PAY两种支付类型",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-025",
-      "name": "必须验证用户支付配置的有效性",
-      "level": 5,
-      "type": "rule",
-      "description": "必须验证用户支付配置的有效性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "必须验证用户支付配置的有效性",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-026",
-      "name": "订单号不能重复，若订单已存在需验证金额一...",
-      "level": 5,
-      "type": "rule",
-      "description": "订单号不能重复，若订单已存在需验证金额一致性和支付状态",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "订单号不能重复，若订单已存在需验证金额一致性和支付状态",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-027",
-      "name": "已支付成功的订单不允许重复支付",
-      "level": 5,
-      "type": "rule",
-      "description": "已支付成功的订单不允许重复支付",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "已支付成功的订单不允许重复支付",
-      "rule_type": "uniqueness",
-      "source_code": ""
-    },
-    {
-      "id": "L5-028",
-      "name": "需要根据商户号和支付方式获取对应的支付费...",
-      "level": 5,
-      "type": "rule",
-      "description": "需要根据商户号和支付方式获取对应的支付费率",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "f2fPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "需要根据商户号和支付方式获取对应的支付费率",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-008",
-      "name": "RpTradePaymentManagerServiceImpl.f2fPay",
-      "level": 4,
-      "type": "activity",
-      "description": "面对面支付处理方法，用于处理扫码支付或刷卡支付等面对面支付场景的业务逻辑",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "f2fPay",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
-      },
-      "contains": [
-        "L5-024",
-        "L5-025",
-        "L5-026",
-        "L5-027",
-        "L5-028"
-      ],
-      "references": [
-        "L6-002",
-        "L6-010",
-        "L6-014"
-      ],
-      "calls": [
-        "L4-005",
-        "L4-013",
-        "L4-009"
-      ],
-      "flow": "验证支付类型是否为面对面支付或刷卡支付 -> 获取支付费率配置 -> 验证商户信息 -> 检查订单是否存在（不存在则创建新订单，存在则验证订单金额和状态） -> 返回支付结果",
-      "flow_chart": "graph TD\n    A[开始] --> B[验证支付类型]\n    B --> C{支付类型是否为F2F_PAY或MICRO_PAY}\n    C -->|否| D[抛出交易类型错误异常]\n    C -->|是| E[获取支付费率配置]\n    E --> F[验证商户信息]\n    F --> G[检查订单是否存在]\n    G --> H{订单是否存在}\n    H -->|否| I[创建新订单并保存]\n    H -->|是| J{订单金额是否一致}\n    I --> K[返回支付结果]\n    J -->|否| L[抛出订单错误异常]\n    J -->|是| M{订单是否已支付成功}\n    M -->|是| N[抛出重复支付异常]\n    M -->|否| K\n    D --> O[结束]\n    L --> O\n    N --> O\n    K --> O",
-      "input": [
-        {
-          "param": "rpUserPayConfig",
-          "type": "RpUserPayConfig",
-          "meaning": "用户支付配置信息，包含商户号、支付密钥等配置"
-        },
-        {
-          "param": "f2FPayRequestBo",
-          "type": "F2FPayRequestBo",
-          "meaning": "面对面支付请求业务对象，包含支付类型、订单号、订单价格、授权码等支付信息"
-        }
-      ],
-      "output": {
-        "type": "F2FPayResultVo",
-        "meaning": "面对面支付结果值对象，包含支付处理结果和相关支付信息"
-      }
-    },
-    {
-      "id": "L5-029",
-      "name": "支持微信刷卡支付(MICRO_PAY)和...",
-      "level": 5,
-      "type": "rule",
-      "description": "支持微信刷卡支付(MICRO_PAY)和支付宝当面付(F2F_PAY)两种模式",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getF2FPayResultVo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "支持微信刷卡支付(MICRO_PAY)和支付宝当面付(F2F_PAY)两种模式",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-030",
-      "name": "必须验证商户支付配置信息的有效性",
-      "level": 5,
-      "type": "rule",
-      "description": "必须验证商户支付配置信息的有效性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getF2FPayResultVo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "必须验证商户支付配置信息的有效性",
-      "rule_type": "validation",
-      "source_code": ""
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
     },
     {
       "id": "L5-031",
-      "name": "微信支付需要进行验签验证返回结果的真实性",
+      "name": "必须先通过参数验证才能获取用户支付配置",
       "level": 5,
       "type": "rule",
-      "description": "微信支付需要进行验签验证返回结果的真实性",
+      "description": "必须先通过参数验证才能获取用户支付配置",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getF2FPayResultVo"
+        "class": "F2FPayController",
+        "method": "initPay"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "微信支付需要进行验签验证返回结果的真实性",
+      "content": "必须先通过参数验证才能获取用户支付配置",
       "rule_type": "validation",
       "source_code": ""
     },
     {
       "id": "L5-032",
-      "name": "支付结果不确定时需要启动轮询机制确认最终...",
+      "name": "支付操作需要使用验证后的支付配置和请求参...",
       "level": 5,
       "type": "rule",
-      "description": "支付结果不确定时需要启动轮询机制确认最终结果",
+      "description": "支付操作需要使用验证后的支付配置和请求参数",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getF2FPayResultVo"
+        "class": "F2FPayController",
+        "method": "initPay"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "支付结果不确定时需要启动轮询机制确认最终结果",
-      "rule_type": "business",
+      "content": "支付操作需要使用验证后的支付配置和请求参数",
+      "rule_type": "validation",
       "source_code": ""
     },
     {
       "id": "L5-033",
-      "name": "返回结果必须包含签名验证以确保数据完整性",
+      "name": "成功支付后需要跳转到支付确认页面供用户确...",
       "level": 5,
       "type": "rule",
-      "description": "返回结果必须包含签名验证以确保数据完整性",
+      "description": "成功支付后需要跳转到支付确认页面供用户确认",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getF2FPayResultVo"
+        "class": "F2FPayController",
+        "method": "initPay"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "返回结果必须包含签名验证以确保数据完整性",
+      "content": "成功支付后需要跳转到支付确认页面供用户确认",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-034",
+      "name": "发生业务异常或系统异常时统一跳转到异常页...",
+      "level": 5,
+      "type": "rule",
+      "description": "发生业务异常或系统异常时统一跳转到异常页面显示错误信息",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "F2FPayController",
+        "method": "initPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "发生业务异常或系统异常时统一跳转到异常页面显示错误信息",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-023",
+      "name": "F2FPayController.initPay",
+      "level": 4,
+      "type": "activity",
+      "description": "处理面对面支付（条码支付）的初始化请求，验证支付参数并执行支付操作",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "F2FPayController",
+        "method": "initPay",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\controller\\F2FPayController.java"
+      },
+      "contains": [
+        "L5-031",
+        "L5-032",
+        "L5-033",
+        "L5-034"
+      ],
+      "references": [
+        "L6-004",
+        "L6-007"
+      ],
+      "calls": [
+        "L4-032",
+        "L4-031"
+      ],
+      "flow": "接收面对面支付请求 -> 验证支付参数并获取用户支付配置 -> 执行条码支付操作 -> 将支付结果存入模型 -> 返回相应视图页面",
+      "flow_chart": "graph TD\n    A[开始-接收支付请求] --> B[验证参数并获取支付配置]\n    B --> C{参数验证成功?}\n    C -->|是| D[执行条码支付操作]\n    C -->|否| E[捕获业务异常]\n    D --> F{支付成功?}\n    F -->|是| G[将支付结果存入ModelMap]\n    F -->|否| E\n    G --> H[返回支付确认页面]\n    E --> I[设置错误信息到ModelMap]\n    E --> J[返回异常页面]\n    I --> J\n    \n    style A fill:#e1f5fe\n    style H fill:#e8f5e8\n    style J fill:#fff3e0",
+      "input": [
+        {
+          "param": "f2FPayRequestBo",
+          "type": "F2FPayRequestBo",
+          "meaning": "面对面支付请求业务对象，包含支付相关参数信息"
+        },
+        {
+          "param": "bindingResult",
+          "type": "BindingResult",
+          "meaning": "参数绑定验证结果，用于检查请求参数是否符合要求"
+        },
+        {
+          "param": "httpServletRequest",
+          "type": "HttpServletRequest",
+          "meaning": "HTTP请求对象，提供请求上下文信息"
+        },
+        {
+          "param": "modelMap",
+          "type": "ModelMap",
+          "meaning": "模型数据容器，用于向前端传递响应数据"
+        }
+      ],
+      "output": {
+        "type": "String",
+        "meaning": "返回视图路径，成功时跳转到支付确认页面，失败时跳转到异常页面"
+      }
+    },
+    {
+      "id": "L5-035",
+      "name": "只有安全等级为MD5_IP模式时才执行I...",
+      "level": 5,
+      "type": "rule",
+      "description": "只有安全等级为MD5_IP模式时才执行IP校验",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkIp"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "只有安全等级为MD5_IP模式时才执行IP校验",
       "rule_type": "security",
       "source_code": ""
     },
     {
-      "id": "L4-009",
-      "name": "RpTradePaymentManagerServiceImpl.getF2FPayResultVo",
-      "level": 4,
-      "type": "activity",
-      "description": "获取面对面支付结果对象，处理微信和支付宝的扫码支付业务逻辑，包括支付请求发送、结果处理和签名验证",
+      "id": "L5-036",
+      "name": "请求IP不能为空，否则视为参数错误",
+      "level": 5,
+      "type": "rule",
+      "description": "请求IP不能为空，否则视为参数错误",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getF2FPayResultVo",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
+        "class": "CnpPayService",
+        "method": "checkIp"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "请求IP不能为空，否则视为参数错误",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L5-037",
+      "name": "请求IP必须存在于商户服务器IP白名单中",
+      "level": 5,
+      "type": "rule",
+      "description": "请求IP必须存在于商户服务器IP白名单中",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkIp"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "请求IP必须存在于商户服务器IP白名单中",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L5-038",
+      "name": "IP校验失败时抛出非法IP请求异常",
+      "level": 5,
+      "type": "rule",
+      "description": "IP校验失败时抛出非法IP请求异常",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkIp"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "IP校验失败时抛出非法IP请求异常",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L5-039",
+      "name": "IP获取过程中发生IO异常时转换为业务异...",
+      "level": 5,
+      "type": "rule",
+      "description": "IP获取过程中发生IO异常时转换为业务异常",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkIp"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "IP获取过程中发生IO异常时转换为业务异常",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L4-024",
+      "name": "CnpPayService.checkIp",
+      "level": 4,
+      "type": "activity",
+      "description": "支付服务IP地址安全校验方法，用于验证请求来源IP是否在商户服务器IP白名单中，确保支付请求的安全性",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkIp",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java"
       },
       "contains": [
-        "L5-029",
-        "L5-030",
-        "L5-031",
-        "L5-032",
-        "L5-033"
+        "L5-035",
+        "L5-036",
+        "L5-037",
+        "L5-038",
+        "L5-039"
       ],
       "references": [
-        "L6-003",
-        "L6-001",
-        "L6-002",
-        "L6-004"
+        "L6-002"
       ],
       "calls": [
-        "L4-014",
-        "L4-003",
-        "L4-010",
-        "L4-012"
+        "L4-022",
+        "L4-027"
       ],
-      "flow": "根据支付方式确定支付类型 -> 更新订单信息 -> 创建支付流水记录 -> 根据不同支付渠道（微信/支付宝）执行相应支付逻辑 -> 处理支付结果（成功/失败/待轮询）-> 构建返回结果对象并进行签名",
-      "flow_chart": "graph TD\n    A[开始] --> B[解析支付方式确定PayType]\n    B --> C[更新订单支付类型信息]\n    C --> D[创建支付流水记录]\n    D --> E{判断支付方式}\n    E -->|微信支付| F[获取微信支付配置]\n    E -->|支付宝支付| G[获取支付宝支付配置]\n    F --> H[调用微信micropay接口]\n    H --> I[处理微信返回结果]\n    I --> J{结果验证}\n    J -->|验签成功| K{业务结果检查}\n    J -->|验签失败| L[标记支付失败]\n    K -->|SUCCESS| M[完成成功订单]\n    K -->|FAIL| N[完成失败订单]\n    K -->|其他| O[启动轮询机制]\n    G --> P[调用支付宝tradePay接口]\n    P --> Q[启动轮询机制]\n    M --> R[构建返回结果对象]\n    N --> R\n    O --> R\n    Q --> R\n    R --> S[生成签名]\n    S --> T[返回F2FPayResultVo]",
+      "flow": "首先检查支付配置的安全等级是否为MD5_IP模式，如果不是则直接返回；然后从HTTP请求中提取客户端IP地址并进行非空校验；接着将提取的IP与商户服务器IP白名单进行匹配校验，如果IP不在白名单中则抛出非法IP请求异常；最后捕获IP获取过程中的IO异常并转换为业务异常",
+      "flow_chart": "graph TD\n    A[开始] --> B{安全等级是否为MD5_IP}\n    B -->|否| C[直接返回]\n    B -->|是| D[获取请求IP地址]\n    D --> E{IP地址是否为空}\n    E -->|是| F[抛出获取IP错误异常]\n    E -->|否| G[获取商户服务器IP白名单]\n    G --> H{请求IP是否在白名单中}\n    H -->|否| I[抛出非法IP请求异常]\n    H -->|是| J[校验通过]\n    K[捕获IO异常] --> L[抛出IP异常业务异常]\n    F --> K\n    I --> K\n    J --> M[结束]",
       "input": [
         {
-          "param": "rpTradePaymentOrder",
-          "type": "RpTradePaymentOrder",
-          "meaning": "交易支付订单信息"
+          "param": "rpUserPayConfig",
+          "type": "RpUserPayConfig",
+          "meaning": "用户支付配置信息，包含安全等级和商户服务器IP白名单"
         },
         {
-          "param": "payWay",
-          "type": "RpPayWay",
-          "meaning": "支付方式配置信息"
-        },
-        {
-          "param": "payKey",
-          "type": "String",
-          "meaning": "支付密钥标识"
-        },
-        {
-          "param": "merchantPaySecret",
-          "type": "String",
-          "meaning": "商户支付密钥用于签名"
-        },
-        {
-          "param": "authCode",
-          "type": "String",
-          "meaning": "支付授权码（扫码支付）"
-        },
-        {
-          "param": "roncooPayGoodsDetailses",
-          "type": "List",
-          "meaning": "商品详情列表"
+          "param": "httpServletRequest",
+          "type": "HttpServletRequest",
+          "meaning": "HTTP请求对象，用于获取客户端请求IP地址"
         }
       ],
       "output": {
-        "type": "F2FPayResultVo",
-        "meaning": "面对面支付结果视图对象，包含支付状态、订单信息和签名等"
+        "type": "void",
+        "meaning": "无返回值，校验失败时抛出业务异常"
       }
     },
     {
-      "id": "L5-034",
+      "id": "L5-040",
       "name": "支付成功时必须更新交易记录的支付时间、银...",
       "level": 5,
       "type": "rule",
@@ -1259,7 +1715,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-035",
+      "id": "L5-041",
       "name": "资金流入类型为平台收款时需要执行账户入账...",
       "level": 5,
       "type": "rule",
@@ -1278,7 +1734,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-036",
+      "id": "L5-042",
       "name": "F2F支付类型需要特殊处理通知逻辑",
       "level": 5,
       "type": "rule",
@@ -1297,7 +1753,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-037",
+      "id": "L5-043",
       "name": "所有成功的支付都需要向商户发送支付成功通...",
       "level": 5,
       "type": "rule",
@@ -1316,7 +1772,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-038",
+      "id": "L5-044",
       "name": "交易记录和交易订单的状态必须保持一致",
       "level": 5,
       "type": "rule",
@@ -1335,7 +1791,7 @@
       "source_code": ""
     },
     {
-      "id": "L4-010",
+      "id": "L4-025",
       "name": "RpTradePaymentManagerServiceImpl.completeSuccessOrder",
       "level": 4,
       "type": "activity",
@@ -1348,20 +1804,20 @@
         "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
       },
       "contains": [
-        "L5-034",
-        "L5-035",
-        "L5-036",
-        "L5-037",
-        "L5-038"
+        "L5-040",
+        "L5-041",
+        "L5-042",
+        "L5-043",
+        "L5-044"
       ],
       "references": [
-        "L6-009",
-        "L6-013"
+        "L6-012",
+        "L6-008"
       ],
       "calls": [
-        "L4-005",
-        "L4-001",
-        "L4-011",
+        "L4-021",
+        "L4-017",
+        "L4-014",
         "L4-002"
       ],
       "flow": "设置支付成功时间、银行流水号、银行返回消息和交易状态为成功→更新交易支付记录→查询并更新对应的交易支付订单状态为成功→判断资金流入类型，如为平台收款则进行账户入账处理→根据支付类型确定是否需要向商户发送通知→获取通知URL并发送成功通知给商户",
@@ -1394,391 +1850,160 @@
       }
     },
     {
-      "id": "L5-039",
-      "name": "商户支付配置必须存在，否则抛出配置错误异...",
-      "level": 5,
-      "type": "rule",
-      "description": "商户支付配置必须存在，否则抛出配置错误异常",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getMerchantNotifyUrl"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "商户支付配置必须存在，否则抛出配置错误异常",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-040",
-      "name": "通知URL必须包含所有必要的支付参数以供...",
-      "level": 5,
-      "type": "rule",
-      "description": "通知URL必须包含所有必要的支付参数以供商户验证",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getMerchantNotifyUrl"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "通知URL必须包含所有必要的支付参数以供商户验证",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-041",
-      "name": "通知URL需要进行数字签名以确保数据完整...",
-      "level": 5,
-      "type": "rule",
-      "description": "通知URL需要进行数字签名以确保数据完整性和安全性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getMerchantNotifyUrl"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "通知URL需要进行数字签名以确保数据完整性和安全性",
-      "rule_type": "security",
-      "source_code": ""
-    },
-    {
-      "id": "L5-042",
-      "name": "参数中必须包含交易状态信息以便商户处理不...",
-      "level": 5,
-      "type": "rule",
-      "description": "参数中必须包含交易状态信息以便商户处理不同状态的订单",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getMerchantNotifyUrl"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "参数中必须包含交易状态信息以便商户处理不同状态的订单",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L4-011",
-      "name": "RpTradePaymentManagerServiceImpl.getMerchantNotifyUrl",
-      "level": 4,
-      "type": "activity",
-      "description": "根据支付记录、支付订单和交易状态等信息构建商户通知URL，用于向商户系统发送支付结果通知",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "getMerchantNotifyUrl",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
-      },
-      "contains": [
-        "L5-039",
-        "L5-040",
-        "L5-041",
-        "L5-042"
-      ],
-      "references": [
-        "L6-012",
-        "L6-001",
-        "L6-013"
-      ],
-      "calls": [],
-      "flow": "获取商户支付配置 → 验证配置存在性 → 构建参数映射表 → 添加支付相关参数（支付KEY、商品名、订单号、金额、支付方式等）→ 格式化订单日期时间 → 生成参数字符串 → 计算签名 → 拼接完整通知URL",
-      "flow_chart": "graph TD\n    A[开始] --> B[获取商户支付配置]\n    B --> C{配置是否存在}\n    C -->|否| D[抛出异常: 用户支付配置有误]\n    C -->|是| E[创建参数映射表]\n    E --> F[添加支付KEY]\n    F --> G[添加商品名称、订单编号、订单金额]\n    G --> H[添加支付方式编码、交易状态]\n    H --> I[格式化订单日期时间]\n    I --> J[添加备注、流水号]\n    J --> K[生成参数字符串]\n    K --> L[计算签名]\n    L --> M[拼接完整通知URL]\n    M --> N[返回通知URL]",
-      "input": [
-        {
-          "param": "rpTradePaymentRecord",
-          "type": "RpTradePaymentRecord",
-          "meaning": "支付记录实体，包含商户号、商品名称、订单编号、订单金额、支付方式等支付相关信息"
-        },
-        {
-          "param": "rpTradePaymentOrder",
-          "type": "RpTradePaymentOrder",
-          "meaning": "支付订单实体，包含订单日期和订单时间等订单创建相关信息"
-        },
-        {
-          "param": "sourceUrl",
-          "type": "String",
-          "meaning": "原始通知URL地址，作为构建完整通知URL的基础路径"
-        },
-        {
-          "param": "tradeStatusEnum",
-          "type": "TradeStatusEnum",
-          "meaning": "交易状态枚举，表示当前支付交易的最终状态"
-        }
-      ],
-      "output": {
-        "type": "String",
-        "meaning": "构建完成的带签名的商户通知URL，包含所有必要参数和数字签名"
-      }
-    },
-    {
-      "id": "L5-043",
-      "name": "支付记录和对应的支付订单都需要更新为失败...",
-      "level": 5,
-      "type": "rule",
-      "description": "支付记录和对应的支付订单都需要更新为失败状态",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "completeFailOrder"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "支付记录和对应的支付订单都需要更新为失败状态",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-044",
-      "name": "需要保存银行返回的失败信息到支付记录中",
-      "level": 5,
-      "type": "rule",
-      "description": "需要保存银行返回的失败信息到支付记录中",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "completeFailOrder"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "需要保存银行返回的失败信息到支付记录中",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
       "id": "L5-045",
-      "name": "失败后需要主动通知商户交易结果",
+      "name": "必须提供有效的银行订单号作为输入参数",
       "level": 5,
       "type": "rule",
-      "description": "失败后需要主动通知商户交易结果",
+      "description": "必须提供有效的银行订单号作为输入参数",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "completeFailOrder"
+        "class": "RpNotifyService",
+        "method": "orderSend"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "失败后需要主动通知商户交易结果",
-      "rule_type": "business",
+      "content": "必须提供有效的银行订单号作为输入参数",
+      "rule_type": "validation",
       "source_code": ""
-    },
-    {
-      "id": "L4-012",
-      "name": "RpTradePaymentManagerServiceImpl.completeFailOrder",
-      "level": 4,
-      "type": "activity",
-      "description": "完成失败订单处理，更新支付记录和订单状态为失败，并发送商户通知",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "completeFailOrder",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
-      },
-      "contains": [
-        "L5-043",
-        "L5-044",
-        "L5-045"
-      ],
-      "references": [
-        "L6-013"
-      ],
-      "calls": [
-        "L4-005",
-        "L4-011",
-        "L4-002"
-      ],
-      "flow": "设置支付记录的银行返回消息和失败状态并更新到数据库 -> 查询对应的支付订单 -> 更新订单状态为失败 -> 获取商户通知URL -> 发送失败通知给商户",
-      "flow_chart": "graph TD\n    A[开始] --> B[设置银行返回消息]\n    B --> C[设置支付记录状态为失败]\n    C --> D[更新支付记录到数据库]\n    D --> E[查询对应支付订单]\n    E --> F[设置订单状态为失败]\n    F --> G[更新订单到数据库]\n    G --> H[获取商户通知URL]\n    H --> I[发送失败通知给商户]\n    I --> J[结束]",
-      "input": [
-        {
-          "param": "rpTradePaymentRecord",
-          "type": "RpTradePaymentRecord",
-          "meaning": "支付记录对象，包含交易相关信息"
-        },
-        {
-          "param": "bankReturnMsg",
-          "type": "String",
-          "meaning": "银行返回的错误信息或失败原因"
-        }
-      ],
-      "output": {
-        "type": "void",
-        "meaning": "无返回值，直接更新数据库记录并发送通知"
-      }
     },
     {
       "id": "L5-046",
-      "name": "订单状态初始化为等待支付(WAITING...",
+      "name": "订单通知发送失败时应有相应的重试机制",
       "level": 5,
       "type": "rule",
-      "description": "订单状态初始化为等待支付(WAITING_PAYMENT)",
+      "description": "订单通知发送失败时应有相应的重试机制",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "sealF2FRpTradePaymentOrder"
+        "class": "RpNotifyService",
+        "method": "orderSend"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "订单状态初始化为等待支付(WAITING_PAYMENT)",
+      "content": "订单通知发送失败时应有相应的重试机制",
       "rule_type": "business",
       "source_code": ""
     },
     {
       "id": "L5-047",
-      "name": "订单过期时间设置为当前时间",
+      "name": "需要确保通知消息的准确性和完整性",
       "level": 5,
       "type": "rule",
-      "description": "订单过期时间设置为当前时间",
+      "description": "需要确保通知消息的准确性和完整性",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "sealF2FRpTradePaymentOrder"
+        "class": "RpNotifyService",
+        "method": "orderSend"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "订单过期时间设置为当前时间",
+      "content": "需要确保通知消息的准确性和完整性",
       "rule_type": "business",
       "source_code": ""
     },
     {
-      "id": "L5-048",
-      "name": "资金流入方向来源于用户支付配置",
-      "level": 5,
-      "type": "rule",
-      "description": "资金流入方向来源于用户支付配置",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "sealF2FRpTradePaymentOrder"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "资金流入方向来源于用户支付配置",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-049",
-      "name": "订单有效期默认设置为0",
-      "level": 5,
-      "type": "rule",
-      "description": "订单有效期默认设置为0",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "sealF2FRpTradePaymentOrder"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "订单有效期默认设置为0",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-050",
-      "name": "下单日期和时间需要进行格式转换解析",
-      "level": 5,
-      "type": "rule",
-      "description": "下单日期和时间需要进行格式转换解析",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "sealF2FRpTradePaymentOrder"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "下单日期和时间需要进行格式转换解析",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-013",
-      "name": "RpTradePaymentManagerServiceImpl.sealF2FRpTradePaymentOrder",
+      "id": "L4-026",
+      "name": "RpNotifyService.orderSend",
       "level": 4,
       "type": "activity",
-      "description": "构建F2F（面对面）支付交易订单实体，将支付请求数据、用户信息和支付方式等组装成完整的交易支付订单对象",
+      "description": "根据银行订单号触发订单通知发送，用于向相关系统或服务推送订单状态变更信息",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "RpTradePaymentManagerServiceImpl",
-        "method": "sealF2FRpTradePaymentOrder",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
+        "class": "RpNotifyService",
+        "method": "orderSend",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\notify\\service\\RpNotifyService.java"
       },
       "contains": [
+        "L5-045",
         "L5-046",
-        "L5-047",
-        "L5-048",
-        "L5-049",
-        "L5-050"
+        "L5-047"
       ],
-      "references": [
-        "L6-003",
-        "L6-010",
-        "L6-001",
-        "L6-007",
-        "L6-014"
-      ],
+      "references": [],
       "calls": [],
-      "flow": "创建新的交易支付订单实例 -> 从支付请求对象中提取并设置商品信息、订单信息、时间信息 -> 从用户信息中设置商户信息 -> 设置支付通道和支付方式信息 -> 设置订单状态为等待支付 -> 设置资金流入类型和备注信息 -> 返回组装完成的交易订单",
-      "flow_chart": "graph TD\n    A[开始] --> B[创建RpTradePaymentOrder实例]\n    B --> C[设置商品名称和订单基础信息]\n    C --> D[设置商户信息]\n    D --> E[解析并设置订单时间和日期]\n    E --> F[设置订单IP和URL相关信息]\n    F --> G[设置支付通道和支付方式信息]\n    G --> H[设置订单状态为等待支付]\n    H --> I[设置资金流入类型和备注]\n    I --> J[返回组装完成的订单]\n    J --> K[结束]",
+      "flow": "接收银行订单号参数 -> 查询订单相关信息 -> 构建通知消息 -> 发送订单状态通知 -> 完成通知发送流程",
+      "flow_chart": "graph TD\n    A[开始] --> B[接收bankOrderNo参数]\n    B --> C[查询订单信息]\n    C --> D[构建通知消息]\n    D --> E[发送订单通知]\n    E --> F[结束]\n    style A fill:#e1f5fe\n    style F fill:#e8f5e8",
       "input": [
         {
-          "param": "rpUserPayConfig",
-          "type": "RpUserPayConfig",
-          "meaning": "用户支付配置信息，包含资金流入方向等配置"
-        },
-        {
-          "param": "f2FPayRequestBo",
-          "type": "F2FPayRequestBo",
-          "meaning": "F2F支付请求业务对象，包含商品名称、订单号、订单价格、下单时间等订单信息"
-        },
-        {
-          "param": "rpUserInfo",
-          "type": "RpUserInfo",
-          "meaning": "商户用户信息，包含用户名和用户编号"
-        },
-        {
-          "param": "rpPayWay",
-          "type": "RpPayWay",
-          "meaning": "支付方式信息，包含支付通道编码、名称、支付类型等"
+          "param": "bankOrderNo",
+          "type": "String",
+          "meaning": "银行订单号，用于唯一标识需要发送通知的银行交易订单"
         }
       ],
       "output": {
-        "type": "RpTradePaymentOrder",
-        "meaning": "F2F交易支付订单对象，包含完整的订单信息用于后续支付处理"
+        "type": "void",
+        "meaning": "无返回值，方法执行完成后即完成订单通知发送操作"
       }
     },
     {
-      "id": "L5-051",
+      "id": "L4-027",
+      "name": "StringUtil.isEmpty",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.common.core.utils.StringUtil#isEmpty",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.common.core.utils.StringUtil#isEmpty"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-028",
+      "name": "WeiXinPayUtil.appletPay",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#appletPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-038",
+        "L4-009",
+        "L4-042",
+        "L4-029"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-029",
+      "name": "WeiXinPayUtils.httpXmlRequest",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.trade.utils.WeiXinPayUtils#httpXmlRequest",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.WeiXinPayUtils#httpXmlRequest"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L5-048",
       "name": "交易类型固定设置为支出(EXPENSE)...",
       "level": 5,
       "type": "rule",
@@ -1797,7 +2022,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-052",
+      "id": "L5-049",
       "name": "订单状态初始化为等待支付(WAITING...",
       "level": 5,
       "type": "rule",
@@ -1816,7 +2041,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-053",
+      "id": "L5-050",
       "name": "当资金流入方向为平台收款时，需要根据费率...",
       "level": 5,
       "type": "rule",
@@ -1835,7 +2060,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-054",
+      "id": "L5-051",
       "name": "平台收入 = 订单金额 × 费率 ÷ 1...",
       "level": 5,
       "type": "rule",
@@ -1854,7 +2079,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-055",
+      "id": "L5-052",
       "name": "平台利润 = 平台收入 - 平台成本",
       "level": 5,
       "type": "rule",
@@ -1873,7 +2098,7 @@
       "source_code": ""
     },
     {
-      "id": "L4-014",
+      "id": "L4-030",
       "name": "RpTradePaymentManagerServiceImpl.sealRpTradePaymentRecord",
       "level": 4,
       "type": "activity",
@@ -1886,19 +2111,20 @@
         "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
       },
       "contains": [
+        "L5-048",
+        "L5-049",
+        "L5-050",
         "L5-051",
-        "L5-052",
-        "L5-053",
-        "L5-054",
-        "L5-055"
+        "L5-052"
       ],
       "references": [
-        "L6-011",
-        "L6-013"
+        "L6-012",
+        "L6-006"
       ],
       "calls": [
-        "L4-015",
-        "L4-016"
+        "L4-004",
+        "L4-036",
+        "L4-008"
       ],
       "flow": "创建支付记录实体 -> 设置基础订单信息 -> 生成支付流水号和银行订单号 -> 设置支付方式和交易类型 -> 初始化订单状态为等待支付 -> 根据资金流向计算平台收益 -> 设置扩展字段和返回结果",
       "flow_chart": "graph TD\n    A[开始] --> B[创建RpTradePaymentRecord实体]\n    B --> C[设置基础订单信息-产品名称、订单号等]\n    C --> D[生成支付流水号和银行订单号]\n    D --> E[设置商户信息、支付方式、交易类型]\n    E --> F[设置订单金额和等待支付状态]\n    F --> G{判断资金流入方向}\n    G -->|平台收款| H[计算平台收入、成本、利润]\n    G -->|非平台收款| I[跳过计算]\n    H --> J[设置费率和平台财务数据]\n    I --> K[设置备注和扩展字段]\n    J --> L[返回完整支付记录对象]\n    K --> L",
@@ -2005,72 +2231,470 @@
       }
     },
     {
-      "id": "L5-056",
-      "name": "交易流水号必须是唯一的，不能重复",
+      "id": "L5-053",
+      "name": "必须提供有效的用户支付配置信息",
       "level": 5,
       "type": "rule",
-      "description": "交易流水号必须是唯一的，不能重复",
+      "description": "必须提供有效的用户支付配置信息",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "BuildNoService",
-        "method": "buildTrxNo"
+        "class": "RpTradePaymentManagerService",
+        "method": "f2fPay"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "交易流水号必须是唯一的，不能重复",
+      "content": "必须提供有效的用户支付配置信息",
       "rule_type": "validation",
       "source_code": ""
     },
     {
-      "id": "L5-057",
-      "name": "交易流水号应具有一定的格式规范，便于识别...",
+      "id": "L5-054",
+      "name": "支付请求参数必须完整且符合业务规范",
       "level": 5,
       "type": "rule",
-      "description": "交易流水号应具有一定的格式规范，便于识别和管理",
+      "description": "支付请求参数必须完整且符合业务规范",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "BuildNoService",
-        "method": "buildTrxNo"
+        "class": "RpTradePaymentManagerService",
+        "method": "f2fPay"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "交易流水号应具有一定的格式规范，便于识别和管理",
+      "content": "支付请求参数必须完整且符合业务规范",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-055",
+      "name": "需要验证支付金额的合法性",
+      "level": 5,
+      "type": "rule",
+      "description": "需要验证支付金额的合法性",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerService",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "需要验证支付金额的合法性",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-056",
+      "name": "需确保支付渠道可用性",
+      "level": 5,
+      "type": "rule",
+      "description": "需确保支付渠道可用性",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerService",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "需确保支付渠道可用性",
       "rule_type": "business",
       "source_code": ""
     },
     {
-      "id": "L4-015",
-      "name": "BuildNoService.buildTrxNo",
+      "id": "L4-031",
+      "name": "RpTradePaymentManagerService.f2fPay",
       "level": 4,
       "type": "activity",
-      "description": "构建交易流水号的方法，用于生成唯一的交易编号",
+      "description": "面对面支付处理方法，用于处理用户通过扫码等方式进行的面对面支付交易",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "BuildNoService",
-        "method": "buildTrxNo",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\BuildNoService.java"
+        "class": "RpTradePaymentManagerService",
+        "method": "f2fPay",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\RpTradePaymentManagerService.java"
       },
       "contains": [
-        "L5-056",
-        "L5-057"
+        "L5-053",
+        "L5-054",
+        "L5-055",
+        "L5-056"
       ],
-      "references": [],
+      "references": [
+        "L6-002",
+        "L6-004",
+        "L6-013"
+      ],
       "calls": [],
-      "flow": "该方法不接受任何参数，通过内部逻辑生成一个唯一的交易流水号并返回",
-      "flow_chart": "graph TD\n    A[开始] --> B[调用buildTrxNo方法]\n    B --> C[生成唯一交易流水号]\n    C --> D[返回交易流水号]\n    D --> E[结束]",
-      "input": [],
+      "flow": "接收用户支付配置和支付请求参数，执行面对面支付处理逻辑，返回支付结果",
+      "flow_chart": "graph TD\n    A[开始] --> B[接收支付配置和支付请求]\n    B --> C[执行面对面支付处理]\n    C --> D[返回支付结果]\n    D --> E[结束]",
+      "input": [
+        {
+          "param": "rpUserPayConfig",
+          "type": "RpUserPayConfig",
+          "meaning": "用户支付配置信息，包含用户的支付渠道、商户信息等配置参数"
+        },
+        {
+          "param": "f2FPayRequestBo",
+          "type": "F2FPayRequestBo",
+          "meaning": "面对面支付请求业务对象，包含订单金额、商品信息、支付方式等支付请求数据"
+        }
+      ],
       "output": {
-        "type": "String",
-        "meaning": "生成的交易流水号，通常作为唯一标识符用于跟踪和记录交易"
+        "type": "F2FPayResultVo",
+        "meaning": "面对面支付结果值对象，包含支付状态、交易流水号、支付结果等信息"
       }
     },
     {
+      "id": "L5-057",
+      "name": "必须先通过参数完整性校验才能继续处理",
+      "level": 5,
+      "type": "rule",
+      "description": "必须先通过参数完整性校验才能继续处理",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkParamAndGetUserPayConfig"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "必须先通过参数完整性校验才能继续处理",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
       "id": "L5-058",
+      "name": "payKey对应的商户支付配置必须存在，...",
+      "level": 5,
+      "type": "rule",
+      "description": "payKey对应的商户支付配置必须存在，否则交易无效",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkParamAndGetUserPayConfig"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "payKey对应的商户支付配置必须存在，否则交易无效",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-059",
+      "name": "请求IP必须在商户配置的IP白名单内",
+      "level": 5,
+      "type": "rule",
+      "description": "请求IP必须在商户配置的IP白名单内",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkParamAndGetUserPayConfig"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "请求IP必须在商户配置的IP白名单内",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L5-060",
+      "name": "请求参数中的签名必须与商户密钥计算得出的...",
+      "level": 5,
+      "type": "rule",
+      "description": "请求参数中的签名必须与商户密钥计算得出的签名一致",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkParamAndGetUserPayConfig"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "请求参数中的签名必须与商户密钥计算得出的签名一致",
+      "rule_type": "security",
+      "source_code": ""
+    },
+    {
+      "id": "L5-061",
+      "name": "所有校验步骤都必须通过才能返回有效的支付...",
+      "level": 5,
+      "type": "rule",
+      "description": "所有校验步骤都必须通过才能返回有效的支付配置信息",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkParamAndGetUserPayConfig"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "所有校验步骤都必须通过才能返回有效的支付配置信息",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L4-032",
+      "name": "CnpPayService.checkParamAndGetUserPayConfig",
+      "level": 4,
+      "type": "activity",
+      "description": "支付服务参数校验并获取用户支付配置信息的方法，负责校验请求参数的完整性、验证商户合法性、进行IP地址校验和签名验证",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "CnpPayService",
+        "method": "checkParamAndGetUserPayConfig",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java"
+      },
+      "contains": [
+        "L5-057",
+        "L5-058",
+        "L5-059",
+        "L5-060",
+        "L5-061"
+      ],
+      "references": [
+        "L6-009",
+        "L6-002"
+      ],
+      "calls": [
+        "L4-015",
+        "L4-012",
+        "L4-024",
+        "L4-016"
+      ],
+      "flow": "首先对输入参数进行校验，如果校验失败则抛出异常；然后从参数中提取payKey查询对应的商户支付配置；接着进行IP白名单校验；最后验证签名的正确性，全部通过后返回商户支付配置信息",
+      "flow_chart": "graph TD\n    A[开始] --> B[校验输入参数]\n    B --> C{参数校验是否有误}\n    C -->|是| D[获取错误信息]\n    D --> E[记录日志并抛出参数错误异常]\n    C -->|否| F[解析参数对象为Map]\n    F --> G[提取payKey]\n    G --> H[根据payKey查询商户支付配置]\n    H --> I{商户配置是否存在}\n    I -->|否| J[记录日志并抛出商户不存在异常]\n    I -->|是| K[进行IP校验]\n    K --> L[提取签名参数]\n    L --> M[验证签名正确性]\n    M --> N{签名验证是否通过}\n    N -->|否| O[记录日志并抛出签名异常]\n    N -->|是| P[返回商户支付配置]\n    E --> Q[结束]\n    J --> Q\n    O --> Q\n    P --> Q",
+      "input": [
+        {
+          "param": "object",
+          "type": "Object",
+          "meaning": "包含支付相关参数的对象，如payKey、sign等"
+        },
+        {
+          "param": "bindingResult",
+          "type": "BindingResult",
+          "meaning": "参数绑定结果，用于存储参数校验错误信息"
+        },
+        {
+          "param": "httpServletRequest",
+          "type": "HttpServletRequest",
+          "meaning": "HTTP请求对象，用于获取客户端IP进行IP校验"
+        }
+      ],
+      "output": {
+        "type": "RpUserPayConfig",
+        "meaning": "返回有效的用户支付配置信息，包含商户的支付密钥等配置"
+      }
+    },
+    {
+      "id": "L5-062",
+      "name": "用户必须处于激活状态才能被查询到",
+      "level": 5,
+      "type": "rule",
+      "description": "用户必须处于激活状态才能被查询到",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpUserInfoServiceImpl",
+        "method": "getDataByMerchentNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "用户必须处于激活状态才能被查询到",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-063",
+      "name": "商户编号作为用户标识进行查询",
+      "level": 5,
+      "type": "rule",
+      "description": "商户编号作为用户标识进行查询",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpUserInfoServiceImpl",
+        "method": "getDataByMerchentNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "商户编号作为用户标识进行查询",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-033",
+      "name": "RpUserInfoServiceImpl.getDataByMerchentNo",
+      "level": 4,
+      "type": "activity",
+      "description": "根据商户编号获取用户信息数据",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpUserInfoServiceImpl",
+        "method": "getDataByMerchentNo",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\impl\\RpUserInfoServiceImpl.java"
+      },
+      "contains": [
+        "L5-062",
+        "L5-063"
+      ],
+      "references": [
+        "L6-014"
+      ],
+      "calls": [],
+      "flow": "创建参数映射表，将商户编号作为userNo参数，添加激活状态条件，调用数据访问层查询用户信息并返回结果",
+      "flow_chart": "graph TD\n    A[开始] --> B[创建参数映射表]\n    B --> C[设置userNo为商户编号]\n    C --> D[设置状态为激活]\n    D --> E[调用DAO查询]\n    E --> F[返回用户信息]\n    F --> G[结束]",
+      "input": [
+        {
+          "param": "merchantNo",
+          "type": "String",
+          "meaning": "商户编号"
+        }
+      ],
+      "output": {
+        "type": "RpUserInfo",
+        "meaning": "用户信息实体对象"
+      }
+    },
+    {
+      "id": "L5-064",
+      "name": "支付记录和对应的支付订单都需要更新为失败...",
+      "level": 5,
+      "type": "rule",
+      "description": "支付记录和对应的支付订单都需要更新为失败状态",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "completeFailOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "支付记录和对应的支付订单都需要更新为失败状态",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-065",
+      "name": "需要保存银行返回的失败信息到支付记录中",
+      "level": 5,
+      "type": "rule",
+      "description": "需要保存银行返回的失败信息到支付记录中",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "completeFailOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "需要保存银行返回的失败信息到支付记录中",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-066",
+      "name": "失败后需要主动通知商户交易结果",
+      "level": 5,
+      "type": "rule",
+      "description": "失败后需要主动通知商户交易结果",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "completeFailOrder"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "失败后需要主动通知商户交易结果",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-034",
+      "name": "RpTradePaymentManagerServiceImpl.completeFailOrder",
+      "level": 4,
+      "type": "activity",
+      "description": "完成失败订单处理，更新支付记录和订单状态为失败，并发送商户通知",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "completeFailOrder",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
+      },
+      "contains": [
+        "L5-064",
+        "L5-065",
+        "L5-066"
+      ],
+      "references": [
+        "L6-012"
+      ],
+      "calls": [
+        "L4-021",
+        "L4-014",
+        "L4-002"
+      ],
+      "flow": "设置支付记录的银行返回消息和失败状态并更新到数据库 -> 查询对应的支付订单 -> 更新订单状态为失败 -> 获取商户通知URL -> 发送失败通知给商户",
+      "flow_chart": "graph TD\n    A[开始] --> B[设置银行返回消息]\n    B --> C[设置支付记录状态为失败]\n    C --> D[更新支付记录到数据库]\n    D --> E[查询对应支付订单]\n    E --> F[设置订单状态为失败]\n    F --> G[更新订单到数据库]\n    G --> H[获取商户通知URL]\n    H --> I[发送失败通知给商户]\n    I --> J[结束]",
+      "input": [
+        {
+          "param": "rpTradePaymentRecord",
+          "type": "RpTradePaymentRecord",
+          "meaning": "支付记录对象，包含交易相关信息"
+        },
+        {
+          "param": "bankReturnMsg",
+          "type": "String",
+          "meaning": "银行返回的错误信息或失败原因"
+        }
+      ],
+      "output": {
+        "type": "void",
+        "meaning": "无返回值，直接更新数据库记录并发送通知"
+      }
+    },
+    {
+      "id": "L4-035",
+      "name": "RpUserPayConfigServiceImpl.getByPayKey",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.user.service.impl.RpUserPayConfigServiceImpl#getByPayKey",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.user.service.impl.RpUserPayConfigServiceImpl#getByPayKey"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L5-067",
       "name": "生成的订单号必须是唯一的",
       "level": 5,
       "type": "rule",
@@ -2089,7 +2713,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-059",
+      "id": "L5-068",
       "name": "订单号格式需要符合银行系统规范",
       "level": 5,
       "type": "rule",
@@ -2108,7 +2732,7 @@
       "source_code": ""
     },
     {
-      "id": "L4-016",
+      "id": "L4-036",
       "name": "BuildNoService.buildBankOrderNo",
       "level": 4,
       "type": "activity",
@@ -2121,8 +2745,8 @@
         "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\BuildNoService.java"
       },
       "contains": [
-        "L5-058",
-        "L5-059"
+        "L5-067",
+        "L5-068"
       ],
       "references": [],
       "calls": [],
@@ -2135,7 +2759,210 @@
       }
     },
     {
-      "id": "L5-060",
+      "id": "L5-069",
+      "name": "仅支持F2F_PAY和MICRO_PAY...",
+      "level": 5,
+      "type": "rule",
+      "description": "仅支持F2F_PAY和MICRO_PAY两种支付类型",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "仅支持F2F_PAY和MICRO_PAY两种支付类型",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L5-070",
+      "name": "必须验证用户支付配置的有效性",
+      "level": 5,
+      "type": "rule",
+      "description": "必须验证用户支付配置的有效性",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "必须验证用户支付配置的有效性",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-071",
+      "name": "订单号不能重复，若订单已存在需验证金额一...",
+      "level": 5,
+      "type": "rule",
+      "description": "订单号不能重复，若订单已存在需验证金额一致性和支付状态",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "订单号不能重复，若订单已存在需验证金额一致性和支付状态",
+      "rule_type": "validation",
+      "source_code": ""
+    },
+    {
+      "id": "L5-072",
+      "name": "已支付成功的订单不允许重复支付",
+      "level": 5,
+      "type": "rule",
+      "description": "已支付成功的订单不允许重复支付",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "已支付成功的订单不允许重复支付",
+      "rule_type": "uniqueness",
+      "source_code": ""
+    },
+    {
+      "id": "L5-073",
+      "name": "需要根据商户号和支付方式获取对应的支付费...",
+      "level": 5,
+      "type": "rule",
+      "description": "需要根据商户号和支付方式获取对应的支付费率",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "f2fPay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "content": "需要根据商户号和支付方式获取对应的支付费率",
+      "rule_type": "business",
+      "source_code": ""
+    },
+    {
+      "id": "L4-037",
+      "name": "RpTradePaymentManagerServiceImpl.f2fPay",
+      "level": 4,
+      "type": "activity",
+      "description": "面对面支付处理方法，用于处理扫码支付或刷卡支付等面对面支付场景的业务逻辑",
+      "tags": [],
+      "source": {
+        "origin": "semantic-graph",
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "f2fPay",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
+      },
+      "contains": [
+        "L5-069",
+        "L5-070",
+        "L5-071",
+        "L5-072",
+        "L5-073"
+      ],
+      "references": [
+        "L6-002",
+        "L6-004",
+        "L6-013"
+      ],
+      "calls": [
+        "L4-013",
+        "L4-039",
+        "L4-021",
+        "L4-010",
+        "L4-043"
+      ],
+      "flow": "验证支付类型是否为面对面支付或刷卡支付 -> 获取支付费率配置 -> 验证商户信息 -> 检查订单是否存在（不存在则创建新订单，存在则验证订单金额和状态） -> 返回支付结果",
+      "flow_chart": "graph TD\n    A[开始] --> B[验证支付类型]\n    B --> C{支付类型是否为F2F_PAY或MICRO_PAY}\n    C -->|否| D[抛出交易类型错误异常]\n    C -->|是| E[获取支付费率配置]\n    E --> F[验证商户信息]\n    F --> G[检查订单是否存在]\n    G --> H{订单是否存在}\n    H -->|否| I[创建新订单并保存]\n    H -->|是| J{订单金额是否一致}\n    I --> K[返回支付结果]\n    J -->|否| L[抛出订单错误异常]\n    J -->|是| M{订单是否已支付成功}\n    M -->|是| N[抛出重复支付异常]\n    M -->|否| K\n    D --> O[结束]\n    L --> O\n    N --> O\n    K --> O",
+      "input": [
+        {
+          "param": "rpUserPayConfig",
+          "type": "RpUserPayConfig",
+          "meaning": "用户支付配置信息，包含商户号、支付密钥等配置"
+        },
+        {
+          "param": "f2FPayRequestBo",
+          "type": "F2FPayRequestBo",
+          "meaning": "面对面支付请求业务对象，包含支付类型、订单号、订单价格、授权码等支付信息"
+        }
+      ],
+      "output": {
+        "type": "F2FPayResultVo",
+        "meaning": "面对面支付结果值对象，包含支付处理结果和相关支付信息"
+      }
+    },
+    {
+      "id": "L4-038",
+      "name": "WeiXinPayUtil.getnonceStr",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getnonceStr",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getnonceStr"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-039",
+      "name": "RpUserInfoService.getDataByMerchentNo",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-040",
+      "name": "MerchantApiUtil.getParamStr",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.utils.MerchantApiUtil#getParamStr",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.utils.MerchantApiUtil#getParamStr"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L5-074",
       "name": "只查询状态为激活(Active)的支付方...",
       "level": 5,
       "type": "rule",
@@ -2154,7 +2981,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-061",
+      "id": "L5-075",
       "name": "通过支付产品编码、支付方式编码、支付类型...",
       "level": 5,
       "type": "rule",
@@ -2173,7 +3000,7 @@
       "source_code": ""
     },
     {
-      "id": "L5-062",
+      "id": "L5-076",
       "name": "必须同时满足三个编码条件才能返回对应的支...",
       "level": 5,
       "type": "rule",
@@ -2192,7 +3019,7 @@
       "source_code": ""
     },
     {
-      "id": "L4-017",
+      "id": "L4-041",
       "name": "RpPayWayServiceImpl.getByPayWayTypeCode",
       "level": 4,
       "type": "activity",
@@ -2205,9 +3032,9 @@
         "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\impl\\RpPayWayServiceImpl.java"
       },
       "contains": [
-        "L5-060",
-        "L5-061",
-        "L5-062"
+        "L5-074",
+        "L5-075",
+        "L5-076"
       ],
       "references": [
         "L6-003"
@@ -2238,1037 +3065,959 @@
       }
     },
     {
-      "id": "L5-063",
-      "name": "用户必须处于激活状态才能被查询到",
-      "level": 5,
-      "type": "rule",
-      "description": "用户必须处于激活状态才能被查询到",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpUserInfoServiceImpl",
-        "method": "getDataByMerchentNo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "用户必须处于激活状态才能被查询到",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-064",
-      "name": "商户编号作为用户标识进行查询",
-      "level": 5,
-      "type": "rule",
-      "description": "商户编号作为用户标识进行查询",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "RpUserInfoServiceImpl",
-        "method": "getDataByMerchentNo"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "商户编号作为用户标识进行查询",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-018",
-      "name": "RpUserInfoServiceImpl.getDataByMerchentNo",
+      "id": "L4-042",
+      "name": "WeiXinPayUtil.mapToXml",
       "level": 4,
       "type": "activity",
-      "description": "根据商户编号获取用户信息数据",
+      "description": "方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml",
       "tags": [],
       "source": {
-        "origin": "semantic-graph",
-        "class": "RpUserInfoServiceImpl",
-        "method": "getDataByMerchentNo",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\user\\service\\impl\\RpUserInfoServiceImpl.java"
-      },
-      "contains": [
-        "L5-063",
-        "L5-064"
-      ],
-      "references": [
-        "L6-007"
-      ],
-      "calls": [],
-      "flow": "创建参数映射表，将商户编号作为userNo参数，添加激活状态条件，调用数据访问层查询用户信息并返回结果",
-      "flow_chart": "graph TD\n    A[开始] --> B[创建参数映射表]\n    B --> C[设置userNo为商户编号]\n    C --> D[设置状态为激活]\n    D --> E[调用DAO查询]\n    E --> F[返回用户信息]\n    F --> G[结束]",
-      "input": [
-        {
-          "param": "merchantNo",
-          "type": "String",
-          "meaning": "商户编号"
-        }
-      ],
-      "output": {
-        "type": "RpUserInfo",
-        "meaning": "用户信息实体对象"
-      }
-    },
-    {
-      "id": "L5-065",
-      "name": "必须先通过参数验证才能获取用户支付配置",
-      "level": 5,
-      "type": "rule",
-      "description": "必须先通过参数验证才能获取用户支付配置",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "F2FPayController",
-        "method": "initPay"
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml"
       },
       "contains": [],
       "references": [],
-      "calls": [],
-      "content": "必须先通过参数验证才能获取用户支付配置",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-066",
-      "name": "支付操作需要使用验证后的支付配置和请求参...",
-      "level": 5,
-      "type": "rule",
-      "description": "支付操作需要使用验证后的支付配置和请求参数",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "F2FPayController",
-        "method": "initPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "支付操作需要使用验证后的支付配置和请求参数",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-067",
-      "name": "成功支付后需要跳转到支付确认页面供用户确...",
-      "level": 5,
-      "type": "rule",
-      "description": "成功支付后需要跳转到支付确认页面供用户确认",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "F2FPayController",
-        "method": "initPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "成功支付后需要跳转到支付确认页面供用户确认",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L5-068",
-      "name": "发生业务异常或系统异常时统一跳转到异常页...",
-      "level": 5,
-      "type": "rule",
-      "description": "发生业务异常或系统异常时统一跳转到异常页面显示错误信息",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "F2FPayController",
-        "method": "initPay"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "发生业务异常或系统异常时统一跳转到异常页面显示错误信息",
-      "rule_type": "business",
-      "source_code": ""
-    },
-    {
-      "id": "L4-019",
-      "name": "F2FPayController.initPay",
-      "level": 4,
-      "type": "activity",
-      "description": "处理面对面支付（条码支付）的初始化请求，验证支付参数并执行支付操作",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "F2FPayController",
-        "method": "initPay",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\controller\\F2FPayController.java"
-      },
-      "contains": [
-        "L5-065",
-        "L5-066",
-        "L5-067",
-        "L5-068"
-      ],
-      "references": [
-        "L6-010",
-        "L6-008"
-      ],
       "calls": [
-        "L4-021",
-        "L4-007"
+        "L4-027"
       ],
-      "flow": "接收面对面支付请求 -> 验证支付参数并获取用户支付配置 -> 执行条码支付操作 -> 将支付结果存入模型 -> 返回相应视图页面",
-      "flow_chart": "graph TD\n    A[开始-接收支付请求] --> B[验证参数并获取支付配置]\n    B --> C{参数验证成功?}\n    C -->|是| D[执行条码支付操作]\n    C -->|否| E[捕获业务异常]\n    D --> F{支付成功?}\n    F -->|是| G[将支付结果存入ModelMap]\n    F -->|否| E\n    G --> H[返回支付确认页面]\n    E --> I[设置错误信息到ModelMap]\n    E --> J[返回异常页面]\n    I --> J\n    \n    style A fill:#e1f5fe\n    style H fill:#e8f5e8\n    style J fill:#fff3e0",
-      "input": [
-        {
-          "param": "f2FPayRequestBo",
-          "type": "F2FPayRequestBo",
-          "meaning": "面对面支付请求业务对象，包含支付相关参数信息"
-        },
-        {
-          "param": "bindingResult",
-          "type": "BindingResult",
-          "meaning": "参数绑定验证结果，用于检查请求参数是否符合要求"
-        },
-        {
-          "param": "httpServletRequest",
-          "type": "HttpServletRequest",
-          "meaning": "HTTP请求对象，提供请求上下文信息"
-        },
-        {
-          "param": "modelMap",
-          "type": "ModelMap",
-          "meaning": "模型数据容器，用于向前端传递响应数据"
-        }
-      ],
-      "output": {
-        "type": "String",
-        "meaning": "返回视图路径，成功时跳转到支付确认页面，失败时跳转到异常页面"
-      }
-    },
-    {
-      "id": "L5-069",
-      "name": "只有安全等级为MD5_IP模式时才执行I...",
-      "level": 5,
-      "type": "rule",
-      "description": "只有安全等级为MD5_IP模式时才执行IP校验",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkIp"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "只有安全等级为MD5_IP模式时才执行IP校验",
-      "rule_type": "security",
-      "source_code": ""
-    },
-    {
-      "id": "L5-070",
-      "name": "请求IP不能为空，否则视为参数错误",
-      "level": 5,
-      "type": "rule",
-      "description": "请求IP不能为空，否则视为参数错误",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkIp"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "请求IP不能为空，否则视为参数错误",
-      "rule_type": "security",
-      "source_code": ""
-    },
-    {
-      "id": "L5-071",
-      "name": "请求IP必须存在于商户服务器IP白名单中",
-      "level": 5,
-      "type": "rule",
-      "description": "请求IP必须存在于商户服务器IP白名单中",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkIp"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "请求IP必须存在于商户服务器IP白名单中",
-      "rule_type": "security",
-      "source_code": ""
-    },
-    {
-      "id": "L5-072",
-      "name": "IP校验失败时抛出非法IP请求异常",
-      "level": 5,
-      "type": "rule",
-      "description": "IP校验失败时抛出非法IP请求异常",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkIp"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "IP校验失败时抛出非法IP请求异常",
-      "rule_type": "security",
-      "source_code": ""
-    },
-    {
-      "id": "L5-073",
-      "name": "IP获取过程中发生IO异常时转换为业务异...",
-      "level": 5,
-      "type": "rule",
-      "description": "IP获取过程中发生IO异常时转换为业务异常",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkIp"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "IP获取过程中发生IO异常时转换为业务异常",
-      "rule_type": "security",
-      "source_code": ""
-    },
-    {
-      "id": "L4-020",
-      "name": "CnpPayService.checkIp",
-      "level": 4,
-      "type": "activity",
-      "description": "支付服务IP地址安全校验方法，用于验证请求来源IP是否在商户服务器IP白名单中，确保支付请求的安全性",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkIp",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java"
-      },
-      "contains": [
-        "L5-069",
-        "L5-070",
-        "L5-071",
-        "L5-072",
-        "L5-073"
-      ],
-      "references": [
-        "L6-014"
-      ],
-      "calls": [],
-      "flow": "首先检查支付配置的安全等级是否为MD5_IP模式，如果不是则直接返回；然后从HTTP请求中提取客户端IP地址并进行非空校验；接着将提取的IP与商户服务器IP白名单进行匹配校验，如果IP不在白名单中则抛出非法IP请求异常；最后捕获IP获取过程中的IO异常并转换为业务异常",
-      "flow_chart": "graph TD\n    A[开始] --> B{安全等级是否为MD5_IP}\n    B -->|否| C[直接返回]\n    B -->|是| D[获取请求IP地址]\n    D --> E{IP地址是否为空}\n    E -->|是| F[抛出获取IP错误异常]\n    E -->|否| G[获取商户服务器IP白名单]\n    G --> H{请求IP是否在白名单中}\n    H -->|否| I[抛出非法IP请求异常]\n    H -->|是| J[校验通过]\n    K[捕获IO异常] --> L[抛出IP异常业务异常]\n    F --> K\n    I --> K\n    J --> M[结束]",
-      "input": [
-        {
-          "param": "rpUserPayConfig",
-          "type": "RpUserPayConfig",
-          "meaning": "用户支付配置信息，包含安全等级和商户服务器IP白名单"
-        },
-        {
-          "param": "httpServletRequest",
-          "type": "HttpServletRequest",
-          "meaning": "HTTP请求对象，用于获取客户端请求IP地址"
-        }
-      ],
-      "output": {
-        "type": "void",
-        "meaning": "无返回值，校验失败时抛出业务异常"
-      }
-    },
-    {
-      "id": "L5-074",
-      "name": "必须先通过参数完整性校验才能继续处理",
-      "level": 5,
-      "type": "rule",
-      "description": "必须先通过参数完整性校验才能继续处理",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkParamAndGetUserPayConfig"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "必须先通过参数完整性校验才能继续处理",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-075",
-      "name": "payKey对应的商户支付配置必须存在，...",
-      "level": 5,
-      "type": "rule",
-      "description": "payKey对应的商户支付配置必须存在，否则交易无效",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkParamAndGetUserPayConfig"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "payKey对应的商户支付配置必须存在，否则交易无效",
-      "rule_type": "validation",
-      "source_code": ""
-    },
-    {
-      "id": "L5-076",
-      "name": "请求IP必须在商户配置的IP白名单内",
-      "level": 5,
-      "type": "rule",
-      "description": "请求IP必须在商户配置的IP白名单内",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkParamAndGetUserPayConfig"
-      },
-      "contains": [],
-      "references": [],
-      "calls": [],
-      "content": "请求IP必须在商户配置的IP白名单内",
-      "rule_type": "security",
-      "source_code": ""
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
     },
     {
       "id": "L5-077",
-      "name": "请求参数中的签名必须与商户密钥计算得出的...",
+      "name": "支持微信刷卡支付(MICRO_PAY)和...",
       "level": 5,
       "type": "rule",
-      "description": "请求参数中的签名必须与商户密钥计算得出的签名一致",
+      "description": "支持微信刷卡支付(MICRO_PAY)和支付宝当面付(F2F_PAY)两种模式",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkParamAndGetUserPayConfig"
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getF2FPayResultVo"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "请求参数中的签名必须与商户密钥计算得出的签名一致",
-      "rule_type": "security",
+      "content": "支持微信刷卡支付(MICRO_PAY)和支付宝当面付(F2F_PAY)两种模式",
+      "rule_type": "business",
       "source_code": ""
     },
     {
       "id": "L5-078",
-      "name": "所有校验步骤都必须通过才能返回有效的支付...",
+      "name": "必须验证商户支付配置信息的有效性",
       "level": 5,
       "type": "rule",
-      "description": "所有校验步骤都必须通过才能返回有效的支付配置信息",
+      "description": "必须验证商户支付配置信息的有效性",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkParamAndGetUserPayConfig"
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getF2FPayResultVo"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "所有校验步骤都必须通过才能返回有效的支付配置信息",
+      "content": "必须验证商户支付配置信息的有效性",
       "rule_type": "validation",
       "source_code": ""
     },
     {
-      "id": "L4-021",
-      "name": "CnpPayService.checkParamAndGetUserPayConfig",
-      "level": 4,
-      "type": "activity",
-      "description": "支付服务参数校验并获取用户支付配置信息的方法，负责校验请求参数的完整性、验证商户合法性、进行IP地址校验和签名验证",
-      "tags": [],
-      "source": {
-        "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "checkParamAndGetUserPayConfig",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java"
-      },
-      "contains": [
-        "L5-074",
-        "L5-075",
-        "L5-076",
-        "L5-077",
-        "L5-078"
-      ],
-      "references": [
-        "L6-006",
-        "L6-014"
-      ],
-      "calls": [
-        "L4-022",
-        "L4-020"
-      ],
-      "flow": "首先对输入参数进行校验，如果校验失败则抛出异常；然后从参数中提取payKey查询对应的商户支付配置；接着进行IP白名单校验；最后验证签名的正确性，全部通过后返回商户支付配置信息",
-      "flow_chart": "graph TD\n    A[开始] --> B[校验输入参数]\n    B --> C{参数校验是否有误}\n    C -->|是| D[获取错误信息]\n    D --> E[记录日志并抛出参数错误异常]\n    C -->|否| F[解析参数对象为Map]\n    F --> G[提取payKey]\n    G --> H[根据payKey查询商户支付配置]\n    H --> I{商户配置是否存在}\n    I -->|否| J[记录日志并抛出商户不存在异常]\n    I -->|是| K[进行IP校验]\n    K --> L[提取签名参数]\n    L --> M[验证签名正确性]\n    M --> N{签名验证是否通过}\n    N -->|否| O[记录日志并抛出签名异常]\n    N -->|是| P[返回商户支付配置]\n    E --> Q[结束]\n    J --> Q\n    O --> Q\n    P --> Q",
-      "input": [
-        {
-          "param": "object",
-          "type": "Object",
-          "meaning": "包含支付相关参数的对象，如payKey、sign等"
-        },
-        {
-          "param": "bindingResult",
-          "type": "BindingResult",
-          "meaning": "参数绑定结果，用于存储参数校验错误信息"
-        },
-        {
-          "param": "httpServletRequest",
-          "type": "HttpServletRequest",
-          "meaning": "HTTP请求对象，用于获取客户端IP进行IP校验"
-        }
-      ],
-      "output": {
-        "type": "RpUserPayConfig",
-        "meaning": "返回有效的用户支付配置信息，包含商户的支付密钥等配置"
-      }
-    },
-    {
       "id": "L5-079",
-      "name": "需要处理BindingResult中的所...",
+      "name": "微信支付需要进行验签验证返回结果的真实性",
       "level": 5,
       "type": "rule",
-      "description": "需要处理BindingResult中的所有验证错误",
+      "description": "微信支付需要进行验签验证返回结果的真实性",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "getErrorResponse"
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getF2FPayResultVo"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "需要处理BindingResult中的所有验证错误",
+      "content": "微信支付需要进行验签验证返回结果的真实性",
       "rule_type": "validation",
       "source_code": ""
     },
     {
       "id": "L5-080",
-      "name": "错误消息之间使用逗号分隔",
+      "name": "支付结果不确定时需要启动轮询机制确认最终...",
       "level": 5,
       "type": "rule",
-      "description": "错误消息之间使用逗号分隔",
+      "description": "支付结果不确定时需要启动轮询机制确认最终结果",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "getErrorResponse"
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getF2FPayResultVo"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "错误消息之间使用逗号分隔",
+      "content": "支付结果不确定时需要启动轮询机制确认最终结果",
       "rule_type": "business",
       "source_code": ""
     },
     {
       "id": "L5-081",
-      "name": "最终结果要去除末尾多余的逗号",
+      "name": "返回结果必须包含签名验证以确保数据完整性",
       "level": 5,
       "type": "rule",
-      "description": "最终结果要去除末尾多余的逗号",
+      "description": "返回结果必须包含签名验证以确保数据完整性",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "getErrorResponse"
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getF2FPayResultVo"
       },
       "contains": [],
       "references": [],
       "calls": [],
-      "content": "最终结果要去除末尾多余的逗号",
-      "rule_type": "business",
+      "content": "返回结果必须包含签名验证以确保数据完整性",
+      "rule_type": "security",
       "source_code": ""
     },
     {
-      "id": "L4-022",
-      "name": "CnpPayService.getErrorResponse",
+      "id": "L4-043",
+      "name": "RpTradePaymentManagerServiceImpl.getF2FPayResultVo",
       "level": 4,
       "type": "activity",
-      "description": "根据绑定结果获取错误响应信息，将所有验证错误消息拼接成逗号分隔的字符串返回",
+      "description": "获取面对面支付结果对象，处理微信和支付宝的扫码支付业务逻辑，包括支付请求发送、结果处理和签名验证",
       "tags": [],
       "source": {
         "origin": "semantic-graph",
-        "class": "CnpPayService",
-        "method": "getErrorResponse",
-        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-web-gateway\\src\\main\\java\\com\\roncoo\\pay\\service\\CnpPayService.java"
+        "class": "RpTradePaymentManagerServiceImpl",
+        "method": "getF2FPayResultVo",
+        "file": "F:\\code\\java\\roncoo-pay\\roncoo-pay-service\\src\\main\\java\\com\\roncoo\\pay\\trade\\service\\impl\\RpTradePaymentManagerServiceImpl.java"
       },
       "contains": [
+        "L5-077",
+        "L5-078",
         "L5-079",
         "L5-080",
         "L5-081"
       ],
-      "references": [],
-      "calls": [],
-      "flow": "遍历绑定结果中的所有错误对象，提取默认错误消息并用逗号连接，最后去除末尾多余逗号后返回完整错误信息字符串",
-      "flow_chart": "graph TD\n    A[开始] --> B[创建StringBuffer]\n    B --> C[遍历bindingResult的所有错误]\n    C --> D[获取每个错误的默认消息]\n    D --> E[追加到StringBuffer并添加逗号]\n    E --> F[检查是否还有更多错误]\n    F -->|是| C\n    F -->|否| G[删除末尾逗号]\n    G --> H[返回错误信息字符串]\n    H --> I[结束]",
+      "references": [
+        "L6-013",
+        "L6-003",
+        "L6-011",
+        "L6-005"
+      ],
+      "calls": [
+        "L4-030",
+        "L4-018",
+        "L4-044",
+        "L4-026",
+        "L4-025",
+        "L4-027",
+        "L4-034",
+        "L4-001"
+      ],
+      "flow": "根据支付方式确定支付类型 -> 更新订单信息 -> 创建支付流水记录 -> 根据不同支付渠道（微信/支付宝）执行相应支付逻辑 -> 处理支付结果（成功/失败/待轮询）-> 构建返回结果对象并进行签名",
+      "flow_chart": "graph TD\n    A[开始] --> B[解析支付方式确定PayType]\n    B --> C[更新订单支付类型信息]\n    C --> D[创建支付流水记录]\n    D --> E{判断支付方式}\n    E -->|微信支付| F[获取微信支付配置]\n    E -->|支付宝支付| G[获取支付宝支付配置]\n    F --> H[调用微信micropay接口]\n    H --> I[处理微信返回结果]\n    I --> J{结果验证}\n    J -->|验签成功| K{业务结果检查}\n    J -->|验签失败| L[标记支付失败]\n    K -->|SUCCESS| M[完成成功订单]\n    K -->|FAIL| N[完成失败订单]\n    K -->|其他| O[启动轮询机制]\n    G --> P[调用支付宝tradePay接口]\n    P --> Q[启动轮询机制]\n    M --> R[构建返回结果对象]\n    N --> R\n    O --> R\n    Q --> R\n    R --> S[生成签名]\n    S --> T[返回F2FPayResultVo]",
       "input": [
         {
-          "param": "bindingResult",
-          "type": "BindingResult",
-          "meaning": "数据绑定和验证结果对象，包含验证错误信息"
+          "param": "rpTradePaymentOrder",
+          "type": "RpTradePaymentOrder",
+          "meaning": "交易支付订单信息"
+        },
+        {
+          "param": "payWay",
+          "type": "RpPayWay",
+          "meaning": "支付方式配置信息"
+        },
+        {
+          "param": "payKey",
+          "type": "String",
+          "meaning": "支付密钥标识"
+        },
+        {
+          "param": "merchantPaySecret",
+          "type": "String",
+          "meaning": "商户支付密钥用于签名"
+        },
+        {
+          "param": "authCode",
+          "type": "String",
+          "meaning": "支付授权码（扫码支付）"
+        },
+        {
+          "param": "roncooPayGoodsDetailses",
+          "type": "List",
+          "meaning": "商品详情列表"
         }
       ],
       "output": {
-        "type": "String",
-        "meaning": "包含所有错误消息的逗号分隔字符串"
+        "type": "F2FPayResultVo",
+        "meaning": "面对面支付结果视图对象，包含支付状态、订单信息和签名等"
       }
     },
     {
+      "id": "L4-044",
+      "name": "WeiXinPayUtil.micropay",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-038",
+        "L4-009",
+        "L4-042",
+        "L4-029"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-045",
+      "name": "DateUtils.formatDate",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.common.core.utils.DateUtils#formatDate",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.common.core.utils.DateUtils#formatDate"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
+      "id": "L4-046",
+      "name": "DateUtils.parseDate",
+      "level": 4,
+      "type": "activity",
+      "description": "方法 com.roncoo.pay.common.core.utils.DateUtils#parseDate",
+      "tags": [],
+      "source": {
+        "origin": "edge-derived",
+        "method_id": "com.roncoo.pay.common.core.utils.DateUtils#parseDate"
+      },
+      "contains": [],
+      "references": [],
+      "calls": [
+        "L4-046"
+      ],
+      "flow": "",
+      "flow_chart": "",
+      "input": [],
+      "output": {}
+    },
+    {
       "id": "L3-001",
-      "name": "F2FPayController.initPay",
+      "name": "L3-F2FPayController.initPay",
       "level": 3,
       "type": "process",
       "description": "入口方法 F2FPayController.initPay 的完整业务流程",
       "tags": [],
       "source": {},
       "contains": [
-        "L4-019",
+        "L4-023",
+        "L4-031",
+        "L4-032",
+        "L4-037",
+        "L4-016",
+        "L4-015",
+        "L4-012",
+        "L4-024",
+        "L4-043",
+        "L4-013",
+        "L4-039",
         "L4-021",
-        "L4-007",
+        "L4-010",
+        "L4-001",
+        "L4-035",
+        "L4-027",
         "L4-022",
+        "L4-030",
+        "L4-018",
+        "L4-044",
+        "L4-026",
+        "L4-025",
+        "L4-034",
+        "L4-041",
+        "L4-033",
+        "L4-003",
+        "L4-046",
+        "L4-011",
+        "L4-008",
+        "L4-004",
+        "L4-036",
+        "L4-006",
+        "L4-009",
+        "L4-038",
+        "L4-042",
+        "L4-029",
+        "L4-005",
+        "L4-002",
+        "L4-017",
+        "L4-014",
+        "L4-007",
         "L4-020",
-        "L5-077",
-        "L5-065",
-        "L5-075",
-        "L5-067",
-        "L5-066",
-        "L5-076",
-        "L5-081",
-        "L5-023",
-        "L5-071",
-        "L5-080",
-        "L5-070",
-        "L5-068",
-        "L5-078",
-        "L5-074",
-        "L5-022",
-        "L5-069",
-        "L5-073",
-        "L5-020",
-        "L5-079",
-        "L5-072",
-        "L5-021"
+        "L4-045",
+        "L4-040",
+        "L4-019"
       ],
       "references": [
-        "L6-002",
-        "L6-008",
-        "L6-006",
+        "L6-004",
+        "L6-014",
+        "L6-003",
         "L6-010",
-        "L6-014"
+        "L6-001",
+        "L6-008",
+        "L6-007",
+        "L6-012",
+        "L6-002",
+        "L6-013",
+        "L6-009",
+        "L6-005",
+        "L6-011",
+        "L6-006"
       ],
       "calls": [],
-      "flow_chart": "graph TD\n    subgraph 第1步: RpTradePaymentManagerService.f2fPay\n    开始\n    执行面对面支付处理\n    返回支付结果\n    结束\n    end\n    subgraph 第2步: F2FPayController.initPay\n    开始-接收支付请求\n    执行条码支付操作\n    捕获业务异常\n    将支付结果存入ModelMap\n    返回支付确认页面\n    设置错误信息到ModelMap\n    返回异常页面\n    end\n    subgraph 第3步: CnpPayService.checkIp\n    开始\n    直接返回\n    获取请求IP地址\n    抛出获取IP错误异常\n    获取商户服务器IP白名单\n    抛出非法IP请求异常\n    校验通过\n    捕获IO异常\n    结束\n    end\n    subgraph 第4步: CnpPayService.checkParamAndGetUserPayConfig\n    开始\n    获取错误信息\n    记录日志并抛出参数错误异常\n    解析参数对象为Map\n    提取payKey\n    根据payKey查询商户支付配置\n    记录日志并抛出商户不存在异常\n    进行IP校验\n    提取签名参数\n    验证签名正确性\n    记录日志并抛出签名异常\n    返回商户支付配置\n    结束\n    end\n    subgraph 第5步: CnpPayService.getErrorResponse\n    开始\n    遍历bindingResult的所有错误\n    获取每个错误的默认消息\n    追加到StringBuffer并添加逗号\n    检查是否还有更多错误\n    删除末尾逗号\n    返回错误信息字符串\n    结束\n    end\n    A[开始]\n    L1[第1步]\n    A --> L1\n    L2[第2步]\n    L1 --> L2\n    L3[第3步]\n    L2 --> L3\n    L4[第4步]\n    L3 --> L4\n    L5[第5步]\n    L4 --> L5\n    L5 --> Z[结束]"
+      "flow_chart": "graph TD\n    A[开始 - 接收面对面支付请求] --> B[验证支付参数并获取用户支付配置]\n    B --> C{参数校验是否成功}\n    C -->|否| D[捕获业务异常 - 参数错误]\n    C -->|是| E[解析参数对象为Map]\n    E --> F[提取payKey]\n    F --> G[根据payKey查询商户支付配置]\n    G --> H{商户配置是否存在}\n    H -->|否| I[记录日志并抛出商户不存在异常]\n    H -->|是| J[进行IP校验]\n    J --> K{安全等级是否为MD5_IP}\n    K -->|否| L[直接通过IP校验]\n    K -->|是| M[获取请求IP地址]\n    M --> N{IP地址是否为空}\n    N -->|是| O[抛出获取IP错误异常]\n    N -->|否| P[获取商户服务器IP白名单]\n    P --> Q{请求IP是否在白名单中}\n    Q -->|否| R[抛出非法IP请求异常]\n    Q -->|是| S[提取签名参数]\n    S --> T[验证签名正确性]\n    T --> U{签名验证是否通过}\n    U -->|否| V[记录日志并抛出签名异常]\n    U -->|是| W[返回商户支付配置]\n    \n    D --> X[设置错误信息到ModelMap]\n    I --> X\n    O --> AA[捕获IO异常]\n    R --> AA\n    V --> AA\n    AA --> AB[抛出IP异常业务异常]\n    X --> AC[返回异常页面]\n    AB --> AC\n    \n    W --> AD[执行面对面支付操作]\n    AD --> AE[验证支付类型是否为F2F_PAY或MICRO_PAY]\n    AE --> AF{支付类型是否为F2F_PAY或MICRO_PAY}\n    AF -->|否| AG[抛出交易类型错误异常]\n    AG --> AH[结束异常流程]\n    \n    AF -->|是| AI[获取支付费率配置]\n    AI --> AJ[验证商户信息]\n    AJ --> AK[检查订单是否存在]\n    AK --> AL{订单是否存在}\n    AL -->|否| AM[创建新订单并保存]\n    AL -->|是| AN{订单金额是否一致}\n    AN -->|否| AO[抛出订单错误异常]\n    AO --> AP[结束订单错误]\n    AN -->|是| AQ{订单是否已支付成功}\n    AQ -->|是| AR[抛出重复支付异常]\n    AR --> AS[结束重复支付]\n    AQ -->|否| AT[解析支付方式确定PayType]\n    \n    AM --> AT\n    AT --> AU[更新订单支付类型信息]\n    AU --> AV[创建支付流水记录]\n    AV --> AW{判断支付方式}\n    AW -->|微信支付| AX[获取微信支付配置]\n    AW -->|支付宝支付| AY[获取支付宝支付配置]\n    AX --> AZ[调用微信micropay接口]\n    AY --> BA[调用支付宝tradePay接口]\n    AZ --> BB[处理微信返回结果]\n    BB --> BC{结果验证}\n    BC -->|验签成功| BD{业务结果检查}\n    BC -->|验签失败| BE[标记支付失败]\n    BE --> BF[完成失败订单处理]\n    BD -->|SUCCESS| BG[完成成功订单处理]\n    BD -->|FAIL| BF\n    BD -->|其他| BH[启动轮询机制]\n    BA --> BH\n    BG --> BI[构建返回结果对象]\n    BF --> BI\n    BH --> BI\n    BI --> BJ[生成签名]\n    BJ --> BK[返回F2FPayResultVo]\n    BK --> BL[将支付结果存入ModelMap]\n    BL --> BM[返回支付确认页面]\n    BM --> BN[结束正常流程]\n    \n    AP --> BN\n    AS --> BN\n    AH --> BN\n    AC --> BN\n    \n    BG --> BO[设置支付成功时间、银行流水号等信息]\n    BO --> BP[更新交易支付记录]\n    BP --> BQ[查询对应交易支付订单]\n    BQ --> BR[更新订单状态为成功]\n    BR --> BS{判断资金流入类型}\n    BS -->|平台收款| BT[执行账户入账处理]\n    BS -->|非平台收款| BU[跳过入账处理]\n    BT --> BV{判断支付类型}\n    BU --> BV\n    BV -->|F2F支付| BW[获取通知URL并发送成功通知]\n    BV -->|其他支付| BX[获取通知URL并发送成功通知]\n    BW --> BY[通知服务-向商户发送成功通知]\n    BX --> BY\n    BY --> BZ[结束成功订单处理]\n    \n    BF --> CA[设置银行返回消息]\n    CA --> CB[设置支付记录状态为失败]\n    CB --> CC[更新支付记录到数据库]\n    CC --> CD[查询对应支付订单]\n    CD --> CE[设置订单状态为失败]\n    CE --> CF[更新订单到数据库]\n    CF --> CG[获取商户通知URL]\n    CG --> CH[发送失败通知给商户]\n    CH --> CI[通知服务-向商户发送失败通知]\n    CI --> CJ[结束失败订单处理]\n    \n    BT --> CK[向指定用户账户进行贷方入账操作]\n    CK --> CL[根据用户编号查询账户信息]\n    CL --> CM[验证账户状态和入账金额有效性]\n    CM --> CN{验证通过?}\n    CN -->|是| CO[执行贷方入账操作]\n    CN -->|否| CP[抛出业务异常]\n    CO --> CP\n    CP --> CQ[记录交易流水信息]\n    CQ --> CR[返回更新后的账户对象]\n    \n    BY --> CS[通过消息队列发送订单通知]\n    CS --> CT[设置JMS队列目标为ORDER_NOTIFY_QUEUE]\n    CT --> CU[创建MessageCreator匿名内部类]\n    CU --> CV[通过Session创建文本消息]\n    CV --> CW[发送orderNo作为消息内容]\n    CW --> CX[结束队列通知]\n    \n    style A fill:#e1f5fe\n    style BN fill:#e8f5e8\n    style CJ fill:#e8f5e8\n    style CQ fill:#e8f5e8\n    style CX fill:#e8f5e8\n    style D fill:#ffcdd2\n    style I fill:#ffcdd2\n    style O fill:#ffcdd2\n    style R fill:#ffcdd2\n    style V fill:#ffcdd2\n    style AG fill:#ffcdd2\n    style AO fill:#ffcdd2\n    style AR fill:#ffcdd2"
     }
   ],
   "edges": [
     {
-      "from": "L4-001",
+      "from": "L4-002",
       "to": "L5-001",
       "type": "contains"
     },
     {
-      "from": "L4-001",
+      "from": "L4-002",
       "to": "L5-002",
       "type": "contains"
     },
     {
-      "from": "L4-001",
+      "from": "L4-002",
       "to": "L5-003",
       "type": "contains"
     },
     {
-      "from": "L4-001",
+      "from": "L4-003",
       "to": "L5-004",
       "type": "contains"
     },
     {
-      "from": "L4-002",
+      "from": "L4-003",
       "to": "L5-005",
       "type": "contains"
     },
     {
-      "from": "L4-002",
+      "from": "L4-003",
       "to": "L5-006",
       "type": "contains"
     },
     {
-      "from": "L4-002",
+      "from": "L4-004",
       "to": "L5-007",
       "type": "contains"
     },
     {
-      "from": "L4-003",
+      "from": "L4-004",
       "to": "L5-008",
       "type": "contains"
     },
     {
-      "from": "L4-003",
+      "from": "L4-005",
       "to": "L5-009",
       "type": "contains"
     },
     {
-      "from": "L4-003",
+      "from": "L4-005",
       "to": "L5-010",
       "type": "contains"
     },
     {
-      "from": "L4-004",
+      "from": "L4-005",
       "to": "L5-011",
       "type": "contains"
     },
     {
-      "from": "L4-004",
+      "from": "L4-010",
       "to": "L5-012",
       "type": "contains"
     },
     {
-      "from": "L4-004",
+      "from": "L4-010",
       "to": "L5-013",
       "type": "contains"
     },
     {
-      "from": "L4-005",
+      "from": "L4-010",
       "to": "L5-014",
       "type": "contains"
     },
     {
-      "from": "L4-005",
+      "from": "L4-010",
       "to": "L5-015",
       "type": "contains"
     },
     {
-      "from": "L4-005",
+      "from": "L4-010",
       "to": "L5-016",
       "type": "contains"
     },
     {
-      "from": "L4-006",
+      "from": "L4-014",
       "to": "L5-017",
       "type": "contains"
     },
     {
-      "from": "L4-006",
+      "from": "L4-014",
       "to": "L5-018",
       "type": "contains"
     },
     {
-      "from": "L4-006",
+      "from": "L4-014",
       "to": "L5-019",
       "type": "contains"
     },
     {
-      "from": "L4-007",
+      "from": "L4-014",
       "to": "L5-020",
       "type": "contains"
     },
     {
-      "from": "L4-007",
+      "from": "L4-015",
       "to": "L5-021",
       "type": "contains"
     },
     {
-      "from": "L4-007",
+      "from": "L4-015",
       "to": "L5-022",
       "type": "contains"
     },
     {
-      "from": "L4-007",
+      "from": "L4-015",
       "to": "L5-023",
       "type": "contains"
     },
     {
-      "from": "L4-008",
+      "from": "L4-017",
       "to": "L5-024",
       "type": "contains"
     },
     {
-      "from": "L4-008",
+      "from": "L4-017",
       "to": "L5-025",
       "type": "contains"
     },
     {
-      "from": "L4-008",
+      "from": "L4-017",
       "to": "L5-026",
       "type": "contains"
     },
     {
-      "from": "L4-008",
+      "from": "L4-017",
       "to": "L5-027",
       "type": "contains"
     },
     {
-      "from": "L4-008",
+      "from": "L4-021",
       "to": "L5-028",
       "type": "contains"
     },
     {
-      "from": "L4-009",
+      "from": "L4-021",
       "to": "L5-029",
       "type": "contains"
     },
     {
-      "from": "L4-009",
+      "from": "L4-021",
       "to": "L5-030",
       "type": "contains"
     },
     {
-      "from": "L4-009",
+      "from": "L4-023",
       "to": "L5-031",
       "type": "contains"
     },
     {
-      "from": "L4-009",
+      "from": "L4-023",
       "to": "L5-032",
       "type": "contains"
     },
     {
-      "from": "L4-009",
+      "from": "L4-023",
       "to": "L5-033",
       "type": "contains"
     },
     {
-      "from": "L4-010",
+      "from": "L4-023",
       "to": "L5-034",
       "type": "contains"
     },
     {
-      "from": "L4-010",
+      "from": "L4-024",
       "to": "L5-035",
       "type": "contains"
     },
     {
-      "from": "L4-010",
+      "from": "L4-024",
       "to": "L5-036",
       "type": "contains"
     },
     {
-      "from": "L4-010",
+      "from": "L4-024",
       "to": "L5-037",
       "type": "contains"
     },
     {
-      "from": "L4-010",
+      "from": "L4-024",
       "to": "L5-038",
       "type": "contains"
     },
     {
-      "from": "L4-011",
+      "from": "L4-024",
       "to": "L5-039",
       "type": "contains"
     },
     {
-      "from": "L4-011",
+      "from": "L4-025",
       "to": "L5-040",
       "type": "contains"
     },
     {
-      "from": "L4-011",
+      "from": "L4-025",
       "to": "L5-041",
       "type": "contains"
     },
     {
-      "from": "L4-011",
+      "from": "L4-025",
       "to": "L5-042",
       "type": "contains"
     },
     {
-      "from": "L4-012",
+      "from": "L4-025",
       "to": "L5-043",
       "type": "contains"
     },
     {
-      "from": "L4-012",
+      "from": "L4-025",
       "to": "L5-044",
       "type": "contains"
     },
     {
-      "from": "L4-012",
+      "from": "L4-026",
       "to": "L5-045",
       "type": "contains"
     },
     {
-      "from": "L4-013",
+      "from": "L4-026",
       "to": "L5-046",
       "type": "contains"
     },
     {
-      "from": "L4-013",
+      "from": "L4-026",
       "to": "L5-047",
       "type": "contains"
     },
     {
-      "from": "L4-013",
+      "from": "L4-030",
       "to": "L5-048",
       "type": "contains"
     },
     {
-      "from": "L4-013",
+      "from": "L4-030",
       "to": "L5-049",
       "type": "contains"
     },
     {
-      "from": "L4-013",
+      "from": "L4-030",
       "to": "L5-050",
       "type": "contains"
     },
     {
-      "from": "L4-014",
+      "from": "L4-030",
       "to": "L5-051",
       "type": "contains"
     },
     {
-      "from": "L4-014",
+      "from": "L4-030",
       "to": "L5-052",
       "type": "contains"
     },
     {
-      "from": "L4-014",
+      "from": "L4-031",
       "to": "L5-053",
       "type": "contains"
     },
     {
-      "from": "L4-014",
+      "from": "L4-031",
       "to": "L5-054",
       "type": "contains"
     },
     {
-      "from": "L4-014",
+      "from": "L4-031",
       "to": "L5-055",
       "type": "contains"
     },
     {
-      "from": "L4-015",
+      "from": "L4-031",
       "to": "L5-056",
       "type": "contains"
     },
     {
-      "from": "L4-015",
+      "from": "L4-032",
       "to": "L5-057",
       "type": "contains"
     },
     {
-      "from": "L4-016",
+      "from": "L4-032",
       "to": "L5-058",
       "type": "contains"
     },
     {
-      "from": "L4-016",
+      "from": "L4-032",
       "to": "L5-059",
       "type": "contains"
     },
     {
-      "from": "L4-017",
+      "from": "L4-032",
       "to": "L5-060",
       "type": "contains"
     },
     {
-      "from": "L4-017",
+      "from": "L4-032",
       "to": "L5-061",
       "type": "contains"
     },
     {
-      "from": "L4-017",
+      "from": "L4-033",
       "to": "L5-062",
       "type": "contains"
     },
     {
-      "from": "L4-018",
+      "from": "L4-033",
       "to": "L5-063",
       "type": "contains"
     },
     {
-      "from": "L4-018",
+      "from": "L4-034",
       "to": "L5-064",
       "type": "contains"
     },
     {
-      "from": "L4-019",
+      "from": "L4-034",
       "to": "L5-065",
       "type": "contains"
     },
     {
-      "from": "L4-019",
+      "from": "L4-034",
       "to": "L5-066",
       "type": "contains"
     },
     {
-      "from": "L4-019",
+      "from": "L4-036",
       "to": "L5-067",
       "type": "contains"
     },
     {
-      "from": "L4-019",
+      "from": "L4-036",
       "to": "L5-068",
       "type": "contains"
     },
     {
-      "from": "L4-020",
+      "from": "L4-037",
       "to": "L5-069",
       "type": "contains"
     },
     {
-      "from": "L4-020",
+      "from": "L4-037",
       "to": "L5-070",
       "type": "contains"
     },
     {
-      "from": "L4-020",
+      "from": "L4-037",
       "to": "L5-071",
       "type": "contains"
     },
     {
-      "from": "L4-020",
+      "from": "L4-037",
       "to": "L5-072",
       "type": "contains"
     },
     {
-      "from": "L4-020",
+      "from": "L4-037",
       "to": "L5-073",
       "type": "contains"
     },
     {
-      "from": "L4-021",
+      "from": "L4-041",
       "to": "L5-074",
       "type": "contains"
     },
     {
-      "from": "L4-021",
+      "from": "L4-041",
       "to": "L5-075",
       "type": "contains"
     },
     {
-      "from": "L4-021",
+      "from": "L4-041",
       "to": "L5-076",
       "type": "contains"
     },
     {
-      "from": "L4-021",
+      "from": "L4-043",
       "to": "L5-077",
       "type": "contains"
     },
     {
-      "from": "L4-021",
+      "from": "L4-043",
       "to": "L5-078",
       "type": "contains"
     },
     {
-      "from": "L4-022",
+      "from": "L4-043",
       "to": "L5-079",
       "type": "contains"
     },
     {
-      "from": "L4-022",
+      "from": "L4-043",
       "to": "L5-080",
       "type": "contains"
     },
     {
-      "from": "L4-022",
+      "from": "L4-043",
       "to": "L5-081",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-023",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-031",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-032",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-037",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-016",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-015",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-012",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-024",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-043",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-013",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-039",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-021",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-010",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-001",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-035",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-027",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-022",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-030",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-018",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-044",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-026",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-025",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-034",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-041",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-033",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-003",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-046",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-011",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-008",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-004",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-036",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-006",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-009",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-038",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-042",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-029",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-005",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-002",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-017",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-014",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-007",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-020",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-045",
+      "type": "contains"
+    },
+    {
+      "from": "L3-001",
+      "to": "L4-040",
       "type": "contains"
     },
     {
@@ -3277,143 +4026,43 @@
       "type": "contains"
     },
     {
-      "from": "L3-001",
-      "to": "L4-021",
-      "type": "contains"
-    },
-    {
-      "from": "L3-001",
-      "to": "L4-007",
-      "type": "contains"
-    },
-    {
-      "from": "L3-001",
-      "to": "L4-022",
-      "type": "contains"
-    },
-    {
-      "from": "L3-001",
-      "to": "L4-020",
-      "type": "contains"
-    },
-    {
-      "from": "L4-001",
-      "to": "L6-005",
+      "from": "L4-003",
+      "to": "L6-011",
       "type": "references"
     },
     {
-      "from": "L4-005",
-      "to": "L6-001",
-      "type": "references"
-    },
-    {
-      "from": "L4-006",
-      "to": "L6-001",
-      "type": "references"
-    },
-    {
-      "from": "L4-007",
-      "to": "L6-002",
-      "type": "references"
-    },
-    {
-      "from": "L4-007",
-      "to": "L6-010",
-      "type": "references"
-    },
-    {
-      "from": "L4-007",
-      "to": "L6-014",
-      "type": "references"
-    },
-    {
-      "from": "L4-008",
-      "to": "L6-002",
-      "type": "references"
-    },
-    {
-      "from": "L4-008",
-      "to": "L6-010",
-      "type": "references"
-    },
-    {
-      "from": "L4-008",
-      "to": "L6-014",
-      "type": "references"
-    },
-    {
-      "from": "L4-009",
-      "to": "L6-003",
-      "type": "references"
-    },
-    {
-      "from": "L4-009",
-      "to": "L6-001",
-      "type": "references"
-    },
-    {
-      "from": "L4-009",
-      "to": "L6-002",
-      "type": "references"
-    },
-    {
-      "from": "L4-009",
+      "from": "L4-010",
       "to": "L6-004",
       "type": "references"
     },
     {
       "from": "L4-010",
-      "to": "L6-009",
+      "to": "L6-014",
       "type": "references"
     },
     {
       "from": "L4-010",
-      "to": "L6-013",
-      "type": "references"
-    },
-    {
-      "from": "L4-011",
-      "to": "L6-012",
-      "type": "references"
-    },
-    {
-      "from": "L4-011",
-      "to": "L6-001",
-      "type": "references"
-    },
-    {
-      "from": "L4-011",
-      "to": "L6-013",
-      "type": "references"
-    },
-    {
-      "from": "L4-012",
-      "to": "L6-013",
-      "type": "references"
-    },
-    {
-      "from": "L4-013",
       "to": "L6-003",
       "type": "references"
     },
     {
-      "from": "L4-013",
-      "to": "L6-010",
+      "from": "L4-010",
+      "to": "L6-002",
       "type": "references"
     },
     {
-      "from": "L4-013",
+      "from": "L4-010",
+      "to": "L6-011",
+      "type": "references"
+    },
+    {
+      "from": "L4-014",
+      "to": "L6-012",
+      "type": "references"
+    },
+    {
+      "from": "L4-014",
       "to": "L6-001",
-      "type": "references"
-    },
-    {
-      "from": "L4-013",
-      "to": "L6-007",
-      "type": "references"
-    },
-    {
-      "from": "L4-013",
-      "to": "L6-014",
       "type": "references"
     },
     {
@@ -3422,168 +4071,433 @@
       "type": "references"
     },
     {
-      "from": "L4-014",
-      "to": "L6-013",
-      "type": "references"
-    },
-    {
       "from": "L4-017",
-      "to": "L6-003",
-      "type": "references"
-    },
-    {
-      "from": "L4-018",
-      "to": "L6-007",
-      "type": "references"
-    },
-    {
-      "from": "L4-019",
       "to": "L6-010",
       "type": "references"
     },
     {
-      "from": "L4-019",
+      "from": "L4-021",
+      "to": "L6-011",
+      "type": "references"
+    },
+    {
+      "from": "L4-023",
+      "to": "L6-004",
+      "type": "references"
+    },
+    {
+      "from": "L4-023",
+      "to": "L6-007",
+      "type": "references"
+    },
+    {
+      "from": "L4-024",
+      "to": "L6-002",
+      "type": "references"
+    },
+    {
+      "from": "L4-025",
+      "to": "L6-012",
+      "type": "references"
+    },
+    {
+      "from": "L4-025",
       "to": "L6-008",
       "type": "references"
     },
     {
-      "from": "L4-020",
-      "to": "L6-014",
+      "from": "L4-030",
+      "to": "L6-012",
       "type": "references"
     },
     {
-      "from": "L4-021",
+      "from": "L4-030",
       "to": "L6-006",
       "type": "references"
     },
     {
-      "from": "L4-021",
+      "from": "L4-031",
+      "to": "L6-002",
+      "type": "references"
+    },
+    {
+      "from": "L4-031",
+      "to": "L6-004",
+      "type": "references"
+    },
+    {
+      "from": "L4-031",
+      "to": "L6-013",
+      "type": "references"
+    },
+    {
+      "from": "L4-032",
+      "to": "L6-009",
+      "type": "references"
+    },
+    {
+      "from": "L4-032",
+      "to": "L6-002",
+      "type": "references"
+    },
+    {
+      "from": "L4-033",
       "to": "L6-014",
       "type": "references"
     },
     {
-      "from": "L4-019",
-      "to": "L4-021",
+      "from": "L4-034",
+      "to": "L6-012",
+      "type": "references"
+    },
+    {
+      "from": "L4-037",
+      "to": "L6-002",
+      "type": "references"
+    },
+    {
+      "from": "L4-037",
+      "to": "L6-004",
+      "type": "references"
+    },
+    {
+      "from": "L4-037",
+      "to": "L6-013",
+      "type": "references"
+    },
+    {
+      "from": "L4-041",
+      "to": "L6-003",
+      "type": "references"
+    },
+    {
+      "from": "L4-043",
+      "to": "L6-013",
+      "type": "references"
+    },
+    {
+      "from": "L4-043",
+      "to": "L6-003",
+      "type": "references"
+    },
+    {
+      "from": "L4-043",
+      "to": "L6-011",
+      "type": "references"
+    },
+    {
+      "from": "L4-043",
+      "to": "L6-005",
+      "type": "references"
+    },
+    {
+      "from": "L4-023",
+      "to": "L4-032",
       "type": "calls"
     },
     {
-      "from": "L4-019",
-      "to": "L4-007",
+      "from": "L4-023",
+      "to": "L4-031",
       "type": "calls"
     },
     {
-      "from": "L4-021",
+      "from": "L4-001",
+      "to": "L4-011",
+      "type": "calls"
+    },
+    {
+      "from": "L4-032",
+      "to": "L4-015",
+      "type": "calls"
+    },
+    {
+      "from": "L4-032",
+      "to": "L4-012",
+      "type": "calls"
+    },
+    {
+      "from": "L4-032",
+      "to": "L4-024",
+      "type": "calls"
+    },
+    {
+      "from": "L4-032",
+      "to": "L4-016",
+      "type": "calls"
+    },
+    {
+      "from": "L4-024",
       "to": "L4-022",
       "type": "calls"
     },
     {
-      "from": "L4-021",
+      "from": "L4-024",
+      "to": "L4-027",
+      "type": "calls"
+    },
+    {
+      "from": "L4-016",
+      "to": "L4-001",
+      "type": "calls"
+    },
+    {
+      "from": "L4-011",
       "to": "L4-020",
       "type": "calls"
     },
     {
-      "from": "L4-008",
-      "to": "L4-005",
-      "type": "calls"
-    },
-    {
-      "from": "L4-008",
+      "from": "L4-037",
       "to": "L4-013",
       "type": "calls"
     },
     {
-      "from": "L4-008",
+      "from": "L4-037",
+      "to": "L4-039",
+      "type": "calls"
+    },
+    {
+      "from": "L4-037",
+      "to": "L4-021",
+      "type": "calls"
+    },
+    {
+      "from": "L4-037",
+      "to": "L4-010",
+      "type": "calls"
+    },
+    {
+      "from": "L4-037",
+      "to": "L4-043",
+      "type": "calls"
+    },
+    {
+      "from": "L4-020",
+      "to": "L4-019",
+      "type": "calls"
+    },
+    {
+      "from": "L4-010",
+      "to": "L4-046",
+      "type": "calls"
+    },
+    {
+      "from": "L4-010",
+      "to": "L4-046",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-030",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-018",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-044",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-026",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-025",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-027",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-034",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-026",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-034",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-018",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-026",
+      "type": "calls"
+    },
+    {
+      "from": "L4-043",
+      "to": "L4-001",
+      "type": "calls"
+    },
+    {
+      "from": "L4-025",
+      "to": "L4-021",
+      "type": "calls"
+    },
+    {
+      "from": "L4-025",
+      "to": "L4-017",
+      "type": "calls"
+    },
+    {
+      "from": "L4-025",
+      "to": "L4-014",
+      "type": "calls"
+    },
+    {
+      "from": "L4-025",
+      "to": "L4-002",
+      "type": "calls"
+    },
+    {
+      "from": "L4-025",
+      "to": "L4-014",
+      "type": "calls"
+    },
+    {
+      "from": "L4-025",
+      "to": "L4-002",
+      "type": "calls"
+    },
+    {
+      "from": "L4-034",
+      "to": "L4-021",
+      "type": "calls"
+    },
+    {
+      "from": "L4-034",
+      "to": "L4-014",
+      "type": "calls"
+    },
+    {
+      "from": "L4-034",
+      "to": "L4-002",
+      "type": "calls"
+    },
+    {
+      "from": "L4-014",
+      "to": "L4-045",
+      "type": "calls"
+    },
+    {
+      "from": "L4-014",
+      "to": "L4-045",
+      "type": "calls"
+    },
+    {
+      "from": "L4-014",
+      "to": "L4-040",
+      "type": "calls"
+    },
+    {
+      "from": "L4-014",
+      "to": "L4-001",
+      "type": "calls"
+    },
+    {
+      "from": "L4-003",
+      "to": "L4-007",
+      "type": "calls"
+    },
+    {
+      "from": "L4-046",
+      "to": "L4-046",
+      "type": "calls"
+    },
+    {
+      "from": "L4-030",
+      "to": "L4-004",
+      "type": "calls"
+    },
+    {
+      "from": "L4-030",
+      "to": "L4-036",
+      "type": "calls"
+    },
+    {
+      "from": "L4-030",
+      "to": "L4-008",
+      "type": "calls"
+    },
+    {
+      "from": "L4-044",
+      "to": "L4-038",
+      "type": "calls"
+    },
+    {
+      "from": "L4-044",
+      "to": "L4-009",
+      "type": "calls"
+    },
+    {
+      "from": "L4-044",
+      "to": "L4-042",
+      "type": "calls"
+    },
+    {
+      "from": "L4-044",
+      "to": "L4-029",
+      "type": "calls"
+    },
+    {
+      "from": "L4-044",
+      "to": "L4-009",
+      "type": "calls"
+    },
+    {
+      "from": "L4-028",
+      "to": "L4-038",
+      "type": "calls"
+    },
+    {
+      "from": "L4-028",
+      "to": "L4-009",
+      "type": "calls"
+    },
+    {
+      "from": "L4-028",
+      "to": "L4-042",
+      "type": "calls"
+    },
+    {
+      "from": "L4-028",
+      "to": "L4-029",
+      "type": "calls"
+    },
+    {
+      "from": "L4-028",
       "to": "L4-009",
       "type": "calls"
     },
     {
       "from": "L4-009",
-      "to": "L4-014",
+      "to": "L4-027",
       "type": "calls"
     },
     {
       "from": "L4-009",
-      "to": "L4-003",
-      "type": "calls"
-    },
-    {
-      "from": "L4-009",
-      "to": "L4-010",
-      "type": "calls"
-    },
-    {
-      "from": "L4-009",
-      "to": "L4-012",
-      "type": "calls"
-    },
-    {
-      "from": "L4-009",
-      "to": "L4-003",
-      "type": "calls"
-    },
-    {
-      "from": "L4-009",
-      "to": "L4-012",
-      "type": "calls"
-    },
-    {
-      "from": "L4-009",
-      "to": "L4-003",
-      "type": "calls"
-    },
-    {
-      "from": "L4-010",
-      "to": "L4-005",
-      "type": "calls"
-    },
-    {
-      "from": "L4-010",
-      "to": "L4-001",
-      "type": "calls"
-    },
-    {
-      "from": "L4-010",
       "to": "L4-011",
       "type": "calls"
     },
     {
-      "from": "L4-010",
-      "to": "L4-002",
-      "type": "calls"
-    },
-    {
-      "from": "L4-010",
-      "to": "L4-011",
-      "type": "calls"
-    },
-    {
-      "from": "L4-010",
-      "to": "L4-002",
-      "type": "calls"
-    },
-    {
-      "from": "L4-012",
-      "to": "L4-005",
-      "type": "calls"
-    },
-    {
-      "from": "L4-012",
-      "to": "L4-011",
-      "type": "calls"
-    },
-    {
-      "from": "L4-012",
-      "to": "L4-002",
-      "type": "calls"
-    },
-    {
-      "from": "L4-014",
-      "to": "L4-015",
-      "type": "calls"
-    },
-    {
-      "from": "L4-014",
-      "to": "L4-016",
+      "from": "L4-042",
+      "to": "L4-027",
       "type": "calls"
     }
   ]
