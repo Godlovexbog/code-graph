@@ -423,11 +423,10 @@ class BizGraphBuilder:
                 flow_chart = self._generate_l3_flowchart_simple(all_l4_ids)
             
             # L3 新字段
-            # activities: 只有入口 L4
+            # activities: 所有 BFS 可达的 L4
             # rules: 所有 BFS 可达 L4 包含的 L5
             # entities: 所有 BFS 可达的 L6
-            entry_l4_id = self.method_to_l4.get(entry_method, '')
-            activities_list = [entry_l4_id] if entry_l4_id else []
+            activities_list = all_l4_in_bfs
             
             l3 = L3Process(
                 id=l3_id,
