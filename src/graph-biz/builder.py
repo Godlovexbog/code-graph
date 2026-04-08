@@ -31,6 +31,15 @@ class BizGraphBuilder:
         self.method_to_l4: Dict[str, str] = {}
         self.class_name_to_l6: Dict[str, str] = {}
         
+        # 过滤配置
+        self.exclude_class_patterns = [
+            'Exception', 'Error', 'Throwable', 'RuntimeException',
+            'Util', 'Helper', 'Common', 'Constant', 'Config',
+            'VO', 'BO', 'DTO', 'PO', 'DAO', 'Entity', 'Bean',
+            'Request', 'Response', 'Result', 'Base'
+        ]
+        self.always_filter_methods = ['hashCode', 'equals', 'toString', 'clone', 'finalize']
+        
     def load_data(self):
         """加载数据"""
         with open(self.semantic_graph_path, 'r', encoding='utf-8') as f:
@@ -40,6 +49,66 @@ class BizGraphBuilder:
             with open(self.code_graph_path, 'r', encoding='utf-8') as f:
                 self.code_data = json.load(f)
     
+    def _filter_method_ids(self, method_ids: Set[str]) -> Set[str]:
+        """过滤没有业务语义的方法ID"""
+        # 先构建 IMPLEMENTS 映射
+        impl_map = {}  # interface -> impl
+        impl_reverse = {}  # impl -> interface
+        for edge in self.semantic_data.get('edges', []):
+            if edge.get('type') == 'IMPLEMENTS':
+                impl_map[edge.get('from')] = edge.get('to')
+                impl_reverse[edge.get('to')] = edge.get('from')
+        
+        filtered = set()
+        
+        for method_id in method_ids:
+            if '#' not in method_id:
+                continue
+            
+            class_name, method_name = method_id.rsplit('#', 1)
+            
+            # 1. 类级别过滤
+            if any(p in class_name for p in self.exclude_class_patterns):
+                continue
+            
+            # 2. 始终过滤的方法
+            if method_name in self.always_filter_methods:
+                continue
+            
+            # 3. setter 方法过滤
+            if method_name.startswith('set'):
+                continue
+            
+            # 4. 短 getter 过滤
+            if method_name.startswith('get') or method_name.startswith('is'):
+                # 如果是 interface（有实现类），保留
+                if method_id in impl_map:
+                    pass
+                # 如果是实现类（有 interface），也保留
+                elif method_id in impl_reverse:
+                    pass
+                else:
+                    line_count = self._get_method_line_count(method_id)
+                    if line_count <= 3:
+                        continue
+            
+            filtered.add(method_id)
+        
+        print(f"方法过滤: {len(method_ids)} -> {len(filtered)} (过滤掉 {len(method_ids) - len(filtered)})")
+        return filtered
+    
+    def _get_method_line_count(self, method_id: str) -> int:
+        """获取方法行数"""
+        if not self.code_data:
+            return 10  # 默认保留
+        
+        for node in self.code_data.get('nodes', []):
+            if node.get('id') == method_id:
+                line_start = node.get('lineStart', 0)
+                line_end = node.get('lineEnd', 0)
+                return max(1, line_end - line_start + 1)
+        return 10
+    
     def build(self) -> BizGraph:
         """构建业务能力图"""
         if not self.semantic_data:
@@ -48,7 +117,7 @@ class BizGraphBuilder:
         # 1. 构建 L6 (类)
         self._build_l6_nodes()
         
-        # 2. 构建 L4 (活动) 和 L5 (规则) - 不创建 L3
+        # 2. 构建 L4 (活动) 和 L5 (规则)
         self._build_l4_l5_nodes()
         
         # 3. 构建 L3 (流程) - 每个入口方法一个流程
@@ -59,6 +128,9 @@ class BizGraphBuilder:
         
         # 5. 映射调用边 (L4 calls L4)
         self._build_calls_edges()
+        
+        # 6. 后过滤：移除没有业务语义的节点
+        self._filter_disconnected_nodes()
         
         return self.biz_graph
     
@@ -79,54 +151,85 @@ class BizGraphBuilder:
         return f"L6-{self.l6_count:03d}"
     
     def _build_l6_nodes(self):
-        """构建 L6 类节点"""
+        """构建 L6 类节点 - 基于包名和类名模式过滤"""
+        
+        # 获取项目业务包前缀（用于正向筛选）
+        biz_package_prefix = 'com.roncoo.pay'
+        
+        # 排除规则
+        exclude_patterns = [
+            # 包级别排除
+            'java.', 'javax.', 'sun.',
+            'org.apache.commons', 'org.springframework', 'org.slf4j',
+            'com.fasterxml.jackson', 'com.alibaba.fastjson',
+            # 类名后缀排除
+            'Util', 'Helper', 'Factory', 'Common', 'Constant', 'Config',
+            'VO', 'BO', 'DTO', 'PO', 'DAO', 'Bean', 'Entity',
+            # 基本类型包装类
+            'Integer', 'Long', 'Short', 'Double', 'Float', 'Byte', 'Boolean', 'Character',
+            # 集合框架
+            'List', 'Map', 'Set', 'Collection', 'ArrayList', 'HashMap', 'HashSet', 'LinkedList', 'SortedMap', 'SortedSet',
+            # 日期时间
+            'Date', 'Time', 'Timestamp', 'LocalDate', 'LocalDateTime', 'LocalTime',
+            # I/O
+            'InputStream', 'OutputStream', 'Reader', 'Writer', 'BufferedReader', 'BufferedWriter',
+            # 其他工具类
+            'Object', 'Class', 'String', 'StringBuilder', 'StringBuffer',
+            'BigDecimal', 'BigInteger',
+            'Void', 'Iterable', 'Iterator', 'Comparable', 'Serializable',
+            'HttpServletRequest', 'HttpServletResponse', 'HttpSession',
+            'BindingResult', 'Model', 'ModelMap', 'RedirectAttributes',
+        ]
+        
         # 从所有方法的 input/output 类型提取类
         classes: Set[str] = set()
         
         for node in self.semantic_data.get('nodes', []):
             sem = node.get('semantic', {})
-            
-            # 兼容两种格式
             if not sem:
-                sem = {
-                    'input': node.get('input', []),
-                    'output': node.get('output', {})
-                }
+                sem = {'input': node.get('input', []), 'output': node.get('output', {})}
             
-            # input 类型
             for inp in sem.get('input', []):
                 inp_type = inp.get('type', '')
-                if inp_type and inp_type not in ['String', 'BigDecimal', 'int', 'long', 'boolean', 'void', 'Model', 'HttpServletRequest', 'HttpServletResponse', 'BindingResult']:
+                if inp_type:
                     classes.add(inp_type)
             
-            # output 类型
             out = sem.get('output', {})
             out_type = out.get('type', '')
-            if out_type and out_type not in ['String', 'BigDecimal', 'int', 'long', 'boolean', 'void']:
+            if out_type:
                 classes.add(out_type)
             
-            # 也从 parameters 提取类类型
             params = node.get('parameters', [])
             for p in params:
                 ptype = p.get('type', '')
-                if ptype and ptype not in ['String', 'BigDecimal', 'int', 'long', 'boolean', 'void', 'Model', 'HttpServletRequest', 'HttpServletResponse', 'BindingResult']:
+                if ptype:
                     classes.add(ptype)
         
+        # 过滤类
+        def should_keep_class(class_name: str) -> bool:
+            # 如果是业务包内的类，保留
+            if class_name.startswith(biz_package_prefix):
+                return True
+            
+            # 检查是否匹配排除模式
+            for pattern in exclude_patterns:
+                if class_name == pattern or class_name.endswith(pattern) or pattern in class_name:
+                    return False
+            
+            return True
+        
         # 创建 L6 节点
+        kept_count = 0
         for class_name in classes:
-            l6_id = self._generate_l6_id()
-            self.class_name_to_l6[class_name] = l6_id
-            
-            # 简单分类 heuristic
-            class_type = self._guess_class_type(class_name)
-            
-            l6 = L6Class(
-                id=l6_id,
-                name=class_name,
-                class_type=class_type,
-                package=""
-            )
-            self.biz_graph.add_node(l6)
+            if should_keep_class(class_name):
+                l6_id = self._generate_l6_id()
+                self.class_name_to_l6[class_name] = l6_id
+                class_type = self._guess_class_type(class_name)
+                l6 = L6Class(id=l6_id, name=class_name, class_type=class_type, package="")
+                self.biz_graph.add_node(l6)
+                kept_count += 1
+        
+        print(f"L6 类: {len(classes)} -> {kept_count}")
     
     def _guess_class_type(self, class_name: str) -> str:
         """猜测类类型"""
@@ -150,7 +253,7 @@ class BizGraphBuilder:
     def _build_l4_l5_nodes(self):
         """构建 L4 活动节点和 L5 规则节点"""
         
-        # 1. 先收集所有需要创建 L4 的方法
+        # 1. 先收集所有需要创建 L4 的方法（不过滤）
         all_method_ids = set()
         
         # 添加 semantic-graph 中的 METHOD 节点
@@ -164,7 +267,7 @@ class BizGraphBuilder:
                 all_method_ids.add(edge.get('from'))
                 all_method_ids.add(edge.get('to'))
         
-        # 2. 为每个方法创建 L4
+        # 2. 为每个方法创建 L4（不过滤）
         for method_id in all_method_ids:
             if method_id in self.method_to_l4:
                 continue  # 已经创建过了
@@ -180,6 +283,85 @@ class BizGraphBuilder:
                 self._create_l4_from_node(node)
             else:
                 self._create_l4_from_method_id(method_id)
+    
+    def _filter_disconnected_nodes(self):
+        """后过滤：移除没有业务语义的节点 - L4 和 L6"""
+        # 构建 L4 -> L5 映射
+        l4_to_l5 = {}
+        for node in self.biz_graph.nodes:
+            if node.level == 4:
+                l4_to_l5[node.id] = set(node.contains)
+        
+        # 构建调用边映射 (from_l4 -> set of to_l4)
+        l4_calls = {}
+        for edge in self.biz_graph.edges:
+            if edge.get('type') == 'calls':
+                from_l4 = edge.get('from')
+                to_l4 = edge.get('to')
+                if from_l4 not in l4_calls:
+                    l4_calls[from_l4] = set()
+                l4_calls[from_l4].add(to_l4)
+        
+        # BFS 检查后代是否有 L5 规则
+        def has_descendant_rules(l4_id, visited):
+            if l4_id in visited:
+                return False
+            visited.add(l4_id)
+            
+            # 如果自己有关联 L5，返回 True
+            if l4_to_l5.get(l4_id):
+                return True
+            
+            # 检查被调用者的后代
+            for callee in l4_calls.get(l4_id, []):
+                if has_descendant_rules(callee, visited):
+                    return True
+            
+            return False
+        
+        # 找出需要保留的 L4
+        keep_l4 = set()
+        
+        for l4_id in l4_to_l5.keys():
+            # BFS 检查后代是否有关联规则
+            if has_descendant_rules(l4_id, set()):
+                keep_l4.add(l4_id)
+        
+        # 移除不在 keep_l4 中的 L4
+        removed_l4 = 0
+        for node in list(self.biz_graph.nodes):
+            if node.level == 4 and node.id not in keep_l4:
+                self.biz_graph.nodes.remove(node)
+                removed_l4 += 1
+        
+        print(f"L4 过滤: {len(l4_to_l5)} -> {len(keep_l4)} (移除 {removed_l4} 个)")
+        
+        # 过滤 L6: 保留被 L4 引用的
+        referenced_l6 = set()
+        for node in self.biz_graph.nodes:
+            if node.level == 4:
+                refs = node.references
+                if refs:
+                    referenced_l6.update(refs)
+        
+        removed_l6 = 0
+        for node in list(self.biz_graph.nodes):
+            if node.level == 6 and node.id not in referenced_l6:
+                self.biz_graph.nodes.remove(node)
+                removed_l6 += 1
+        
+        print(f"L6 过滤: 移除 {removed_l6} 个无引用的类")
+        removed = 0
+        removed_names = []
+        for node in list(self.biz_graph.nodes):
+            if node.level == 4 and node.id not in keep_l4:
+                removed_names.append(node.name)
+                self.biz_graph.nodes.remove(node)
+                removed += 1
+        
+        print(f"L4 过滤: {len(l4_to_l5)} -> {len(keep_l4)} (移除 {removed} 个)")
+        if removed_names:
+            print(f"移除的 L4: {removed_names}")
     
     def _create_l4_from_node(self, node: Dict):
         """从 semantic-graph 节点创建 L4"""
