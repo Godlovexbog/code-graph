@@ -320,7 +320,7 @@ def main():
     parser = argparse.ArgumentParser(description='语义图构建器')
     parser.add_argument('--graph', '-g', default='F:/code/python/code-graph/output/code-graph.json', help='代码图文件')
     parser.add_argument('--target', '-t', default="com.roncoo.pay.controller.F2FPayController#initPay", help='目标入口方法，如 com.roncoo.pay.controller.F2FPayController#initPay')
-    parser.add_argument('--depth', '-d', type=int, default=5, help='BFS 遍历深度')
+    parser.add_argument('--depth', '-d', type=int, default=20, help='BFS 遍历深度')
     parser.add_argument('--output', '-o', default='F:/code/python/code-graph/output/semantic-graph.json', help='输出文件')
     parser.add_argument('--api-key', help='LLM API Key')
     parser.add_argument('--model', default='qwen3-coder-plus', help='LLM 模型')

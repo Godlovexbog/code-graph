@@ -404,11 +404,11 @@ class BizGraphBuilder:
             all_l4_in_bfs = [self.method_to_l4[m] for m in all_reachable_methods 
                            if m in self.method_to_l4]
             
-            # 收集所有 L4 的 L5 和 L6
+            # 收集所有 L4 的 L5 和 L6 (只收集 BFS 可达的 L4)
             all_l5_ids = set()
             all_l6_ids = set()
             
-            for lid in self.method_to_l4.values():
+            for lid in all_l4_in_bfs:
                 for node in self.biz_graph.nodes:
                     if node.id == lid and node.level == 4:
                         all_l5_ids.update(node.contains)
@@ -420,7 +420,7 @@ class BizGraphBuilder:
             
             if not flow_chart:
                 # 回退到简单版本
-                flow_chart = self._generate_l3_flowchart_simple(all_l4_ids)
+                flow_chart = self._generate_l3_flowchart_simple(all_l4_in_bfs)
             
             # L3 新字段
             # activities: 所有 BFS 可达的 L4

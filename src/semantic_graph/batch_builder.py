@@ -42,15 +42,32 @@ class BatchSemanticGraphBuilder:
         self.all_nodes = []
         self.all_edges = []
         
-    def build_all_entries(self, depth: int = 3, max_entries: int = None):
+        # 加载 semantic-graph.json 获取语义信息
+        semantic_path = graph_file.replace('code-graph.json', 'semantic-graph.json')
+        self.semantic_map = {}
+        if os.path.exists(semantic_path):
+            with open(semantic_path, 'r', encoding='utf-8') as f:
+                sem_data = json.load(f)
+                for n in sem_data.get('nodes', []):
+                    nid = n.get('id')
+                    if nid:
+                        self.semantic_map[nid] = n
+                logger.info(f"加载语义信息: {len(self.semantic_map)} 个节点")
+        
+    def build_all_entries(self, depth: int = 3, max_entries: int = None, single_entry: str = None):
         """为所有入口方法生成语义图"""
         
         # 从 code-graph.json 获取入口点
         with open(self.graph_file, 'r', encoding='utf-8') as f:
             graph_data = json.load(f)
         
-        entry_points = graph_data.get('meta', {}).get('entryPoints', [])
-        logger.info(f"找到 {len(entry_points)} 个入口点")
+        # 如果指定了单一口入口，使用该入口
+        if single_entry:
+            entry_points = [single_entry]
+            logger.info(f"使用指定入口: {single_entry}")
+        else:
+            entry_points = graph_data.get('meta', {}).get('entryPoints', [])
+            logger.info(f"找到 {len(entry_points)} 个入口点")
         
         if max_entries:
             entry_points = entry_points[:max_entries]
@@ -71,6 +88,13 @@ class BatchSemanticGraphBuilder:
                 if n.get('id') == entry:
                     n['isEntry'] = True
                     break
+            
+            # 合并语义信息
+            for n in nodes:
+                nid = n.get('id')
+                if nid in self.semantic_map:
+                    sem = self.semantic_map[nid].get('semantic', {})
+                    n['semantic'] = sem
             
             # 收集节点和边
             for n in nodes:
@@ -161,9 +185,10 @@ class BatchSemanticGraphBuilder:
 def main():
     parser = argparse.ArgumentParser(description='批量语义图构建器')
     parser.add_argument('--graph', '-g', default='F:/code/python/code-graph/output/code-graph.json', help='代码图文件')
-    parser.add_argument('--depth', '-d', type=int, default=3, help='BFS 遍历深度')
+    parser.add_argument('--depth', '-d', type=int, default=20, help='BFS 遍历深度')
     parser.add_argument('--output', '-o', default='F:/code/python/code-graph/output/biz-semantic-graph.json', help='输出文件')
     parser.add_argument('--max-entries', type=int, default=None, help='最大入口数')
+    parser.add_argument('--entry', '-e', default='com.roncoo.pay.controller.F2FPayController#initPay', help='指定入口方法')
     
     args = parser.parse_args()
     
@@ -173,8 +198,8 @@ def main():
     builder = BatchSemanticGraphBuilder(args.graph)
     
     # 构建所有入口的语义图
-    logger.info(f"开始构建语义图，深度: {args.depth}")
-    result = builder.build_all_entries(depth=args.depth, max_entries=args.max_entries)
+    logger.info(f"开始构建语义图，深度: {args.depth}, 入口: {args.entry}")
+    result = builder.build_all_entries(depth=args.depth, max_entries=args.max_entries, single_entry=args.entry)
     
     # 保存
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
