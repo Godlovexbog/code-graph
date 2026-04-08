@@ -1,204 +1,252 @@
 # L3-F2FPayController.initPay
 
 ## 一、业务概述
-处理面对面支付（条码支付）的初始化请求，验证支付参数并执行支付操作，支持微信刷卡支付和支付宝当面付两种模式，确保支付安全性和交易完整性。
+处理面对面支付初始化请求，验证支付参数并执行支付操作，支持微信和支付宝两种支付方式，包含参数验证、签名验证、IP校验、订单处理、支付执行和结果通知等完整流程。
 
 ## 二、活动列表
 | ID | 名称 | 描述 |
-|---|---|---|
-| L4-015 | F2FPayController.initPay | 处理面对面支付（条码支付）的初始化请求，验证支付参数并执行支付操作 |
-| L4-038 | RpTradePaymentManagerService.f2fPay | 面对面支付处理方法，用于处理用户通过扫码等方式进行的面对面支付交易 |
-| L4-018 | CnpPayService.checkParamAndGetUserPayConfig | 支付服务参数校验并获取用户支付配置信息的方法，负责校验请求参数的完整性、验证商户合法性、进行IP地址校验和签名验证 |
-| L4-001 | RpTradePaymentManagerServiceImpl.f2fPay | 面对面支付处理方法，用于处理扫码支付或刷卡支付等面对面支付场景的业务逻辑 |
-| L4-030 | MerchantApiUtil.isRightSign | 方法 com.roncoo.pay.utils.MerchantApiUtil#isRightSign |
-| L4-012 | CnpPayService.getErrorResponse | 根据绑定结果获取错误响应信息，将所有验证错误消息拼接成逗号分隔的字符串返回 |
-| L4-034 | RpUserPayConfigService.getByPayKey | 方法 com.roncoo.pay.user.service.RpUserPayConfigService#getByPayKey |
-| L4-037 | CnpPayService.checkIp | 支付服务IP地址安全校验方法，用于验证请求来源IP是否在商户服务器IP白名单中，确保支付请求的安全性 |
-| L4-017 | RpTradePaymentManagerServiceImpl.getF2FPayResultVo | 获取面对面支付结果对象，处理微信和支付宝的扫码支付业务逻辑，包括支付请求发送、结果处理和签名验证 |
-| L4-016 | RpPayWayService.getByPayWayTypeCode | 方法 com.roncoo.pay.user.service.RpPayWayService#getByPayWayTypeCode |
-| L4-029 | RpUserInfoService.getDataByMerchentNo | 方法 com.roncoo.pay.user.service.RpUserInfoService#getDataByMerchentNo |
-| L4-031 | RpTradePaymentOrderDao.selectByMerchantNoAndMerchantOrderNo | 根据商户编号和商户订单号查询交易支付订单信息 |
-| L4-041 | RpTradePaymentManagerServiceImpl.sealF2FRpTradePaymentOrder | 构建F2F（面对面）支付交易订单实体，将支付请求数据、用户信息和支付方式等组装成完整的交易支付订单对象 |
-| L4-008 | MerchantApiUtil.getSign | 方法 com.roncoo.pay.utils.MerchantApiUtil#getSign |
-| L4-011 | RpUserPayConfigServiceImpl.getByPayKey | 方法 com.roncoo.pay.user.service.impl.RpUserPayConfigServiceImpl#getByPayKey |
-| L4-046 | StringUtil.isEmpty | 方法 com.roncoo.pay.common.core.utils.StringUtil#isEmpty |
-| L4-022 | NetworkUtil.getIpAddress | 方法 com.roncoo.pay.utils.NetworkUtil#getIpAddress |
-| L4-035 | RpTradePaymentManagerServiceImpl.sealRpTradePaymentRecord | 构建和封装交易支付记录实体对象，用于创建支付订单并初始化相关交易信息 |
-| L4-040 | RpUserPayInfoService.getByUserNo | 方法 com.roncoo.pay.user.service.RpUserPayInfoService#getByUserNo |
-| L4-027 | WeiXinPayUtil.micropay | 方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#micropay |
-| L4-009 | RpNotifyService.orderSend | 根据银行订单号触发订单通知发送，用于向相关系统或服务推送订单状态变更信息 |
-| L4-036 | RpTradePaymentManagerServiceImpl.completeSuccessOrder | 完成支付成功的订单处理，更新交易记录和订单状态，并根据资金流入类型进行账户入账处理，最后向商户发送支付成功通知 |
-| L4-005 | RpTradePaymentManagerServiceImpl.completeFailOrder | 完成失败订单处理，更新支付记录和订单状态为失败，并发送商户通知 |
-| L4-021 | RpPayWayServiceImpl.getByPayWayTypeCode | 根据支付产品编码、支付方式编码和支付类型编码查询有效的支付方式信息 |
-| L4-039 | RpUserInfoServiceImpl.getDataByMerchentNo | 根据商户编号获取用户信息数据 |
-| L4-045 | RpTradePaymentOrderDaoImpl.selectByMerchantNoAndMerchantOrderNo | 根据商户编号和商户订单号查询交易支付订单信息 |
-| L4-032 | DateUtils.parseDate | 方法 com.roncoo.pay.common.core.utils.DateUtils#parseDate |
-| L4-019 | MD5Util.encode | 方法 com.roncoo.pay.utils.MD5Util#encode |
-| L4-043 | WeixinConfigUtil.readConfig | 方法 com.roncoo.pay.trade.utils.WeixinConfigUtil#readConfig |
-| L4-002 | BuildNoService.buildTrxNo | 构建交易流水号的方法，用于生成唯一的交易编号 |
-| L4-007 | BuildNoService.buildBankOrderNo | 构建银行订单号的方法，用于生成唯一的银行交易订单编号 |
-| L4-023 | RpUserPayInfoServiceImpl.getByUserNo | 方法 com.roncoo.pay.user.service.impl.RpUserPayInfoServiceImpl#getByUserNo |
-| L4-025 | WeiXinPayUtil.getSign | 方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getSign |
-| L4-006 | WeiXinPayUtil.getnonceStr | 方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#getnonceStr |
-| L4-044 | WeiXinPayUtil.mapToXml | 方法 com.roncoo.pay.trade.utils.weixin.WeiXinPayUtil#mapToXml |
-| L4-042 | WeiXinPayUtils.httpXmlRequest | 方法 com.roncoo.pay.trade.utils.WeiXinPayUtils#httpXmlRequest |
-| L4-020 | RpNotifyServiceImpl.orderSend | 通过消息队列发送订单通知，将银行订单号作为消息内容推送到订单通知队列中 |
-| L4-026 | RpNotifyService.notifySend | 向指定的商户通知URL发送异步通知消息，用于支付系统中订单状态变更后的回调通知 |
-| L4-010 | RpAccountTransactionService.creditToAccount | 向指定用户账户进行贷方入账操作，将指定金额增加到用户账户余额中，并记录相应的交易流水 |
-| L4-014 | RpTradePaymentManagerServiceImpl.getMerchantNotifyUrl | 根据支付记录、支付订单和交易状态等信息构建商户通知URL，用于向商户系统发送支付结果通知 |
-| L4-004 | BaseDaoImpl.getBy | 方法 com.roncoo.pay.common.core.dao.impl.BaseDaoImpl#getBy |
-| L4-003 | MD5Util.byteArrayToHexString | 方法 com.roncoo.pay.utils.MD5Util#byteArrayToHexString |
-| L4-013 | DateUtils.formatDate | 方法 com.roncoo.pay.common.core.utils.DateUtils#formatDate |
-| L4-033 | MerchantApiUtil.getParamStr | 方法 com.roncoo.pay.utils.MerchantApiUtil#getParamStr |
-| L4-024 | MD5Util.byteToHexChar | 方法 com.roncoo.pay.utils.MD5Util#byteToHexChar |
+|---|------|------|
+| L4-501 | F2FPayController.initPay | 处理面对面支付初始化请求，验证支付参数并执行支付操作 |
 
 ## 三、业务流程图
 ```mermaid
 graph TD
-    A[开始 - 接收面对面支付请求] --> B[验证支付参数并获取用户支付配置]
-    B --> C{参数校验是否成功}
-    C -->|否| D[捕获业务异常 - 设置错误信息]
-    C -->|是| E[进行IP白名单校验]
-    E --> F{IP校验是否通过}
-    F -->|否| G[抛出非法IP请求异常]
-    F -->|是| H[验证签名正确性]
-    H --> I{签名验证是否通过}
-    I -->|否| J[抛出签名异常]
-    I -->|是| K[返回商户支付配置]
-    D --> Z[返回异常页面]
-    G --> Z
-    J --> Z
-    I -->|是| L[执行条码支付操作]
-    K --> L
-    L --> M[验证支付类型是否为面对面支付]
-    M --> N{支付类型是否为F2F_PAY或MICRO_PAY}
-    N -->|否| O[抛出交易类型错误异常]
-    N -->|是| P[获取支付费率配置]
-    O --> Z
-    P --> Q[验证商户信息]
-    Q --> R[检查订单是否存在]
-    R --> S{订单是否存在}
-    S -->|否| T[创建新订单并保存]
-    S -->|是| U{订单金额是否一致}
-    T --> V[构建交易支付订单实体]
-    U -->|否| W[抛出订单错误异常]
-    U -->|是| X{订单是否已支付成功}
-    X -->|是| Y[抛出重复支付异常]
-    X -->|否| AA[创建支付流水记录]
-    W --> Z
-    Y --> Z
-    V --> BB[设置基础订单信息和支付方式]
-    AA --> CC{判断支付方式}
-    CC -->|微信支付| DD[获取微信支付配置并调用micropay接口]
-    CC -->|支付宝支付| EE[获取支付宝支付配置并调用tradePay接口]
-    DD --> FF[处理微信返回结果]
-    EE --> GG[启动轮询机制]
-    FF --> HH{结果验证-验签}
-    HH -->|验签失败| II[标记支付失败]
-    HH -->|验签成功| JJ{业务结果检查}
-    JJ -->|SUCCESS| KK[完成成功订单处理]
-    JJ -->|FAIL| LL[完成失败订单处理]
-    JJ -->|其他| MM[启动轮询机制]
-    II --> NN[更新支付记录为失败状态]
-    NN --> OO[发送失败通知给商户]
-    OO --> PP[结束]
-    KK --> QQ[设置支付成功时间、银行流水号等]
-    QQ --> RR[更新交易支付记录]
-    RR --> SS[查询并更新订单状态为成功]
-    SS --> TT{判断资金流入类型}
-    TT -->|平台收款| UU[执行账户入账处理]
-    TT -->|非平台收款| VV[跳过入账处理]
-    UU --> WW{判断支付类型}
-    VV --> WW
-    WW --> XX[获取通知URL并发送成功通知]
-    XX --> YY[触发订单通知发送]
-    YY --> PP
-    LL --> ZZ[设置银行返回消息和失败状态]
-    ZZ --> AAA[查询对应支付订单]
-    AAA --> BBB[更新订单状态为失败]
-    BBB --> CCC[获取商户通知URL]
-    CCC --> DDD[发送失败通知给商户]
-    DDD --> PP
-    BB --> CC
+    A[开始 - F2FPayController.initPay 接收支付请求] --> B[验证参数并获取支付配置]
+    B --> C{参数校验}
+    C -->|参数有误| D[记录错误信息并返回异常页面]
+    C -->|参数正确| E[调用CnpPayService.checkParamAndGetUserPayConfig]
     
-    style A fill:#e1f5fe
-    style PP fill:#e8f5e8
-    style Z fill:#fff3e0
-    style II fill:#ffcdd2
-    style NN fill:#ffcdd2
-    style ZZ fill:#ffcdd2
+    E --> F[校验输入参数完整性]
+    F --> G{参数是否有误}
+    G -->|是| H[记录日志并抛出参数异常]
+    G -->|否| I[解析参数为JSON对象]
+    I --> J[提取支付密钥]
+    J --> K[根据支付密钥查询商户配置]
+    K --> L{商户配置是否存在}
+    L -->|否| M[记录日志并抛出商户不存在异常]
+    L -->|是| N[进行IP校验]
+    N --> O[提取签名参数]
+    O --> P[验证签名有效性]
+    P --> Q{签名是否正确}
+    Q -->|否| R[记录日志并抛出签名异常]
+    Q -->|是| S[返回商户支付配置]
+    
+    S --> T[调用RpTradePaymentManagerService.f2fPay]
+    T --> U[验证支付类型是否为F2F或MICRO_PAY]
+    U --> V{支付类型是否正确}
+    V -->|否| W[抛出请求参数异常]
+    V -->|是| X[获取支付费率配置]
+    X --> Y[验证商户信息]
+    Y --> Z[检查订单是否存在]
+    Z --> AA{订单是否存在}
+    AA -->|否| BB[调用sealF2FRpTradePaymentOrder创建新订单]
+    AA -->|是| CC{订单金额是否一致}
+    CC -->|否| DD[抛出订单错误异常]
+    CC -->|是| EE{订单状态是否已支付成功}
+    EE -->|是| FF[抛出重复支付异常]
+    EE -->|否| GG[调用getF2FPayResultVo处理支付结果]
+    
+    BB --> HH[设置商品名称、订单号、订单金额]
+    HH --> II[设置商户名称、商户编号]
+    II --> JJ[解析订单日期和时间]
+    JJ --> KK[设置订单日期、时间、IP等信息]
+    KK --> LL[设置支付通道和支付方式信息]
+    LL --> MM[设置订单状态为等待支付]
+    MM --> GG
+    
+    GG --> NN{判断支付方式}
+    NN -->|微信支付| OO[设置支付类型MICRO_PAY]
+    NN -->|支付宝支付| PP[设置支付类型F2F_PAY]
+    OO --> QQ[更新订单支付信息]
+    PP --> QQ
+    QQ --> RR[创建支付记录sealRpTradePaymentRecord]
+    RR --> SS[设置基本订单信息-产品名称、订单号]
+    SS --> TT[生成支付流水号和银行订单号]
+    TT --> UU[设置商户信息、支付通道信息]
+    UU --> VV[设置订单金额、IP、回调地址]
+    VV --> WW[设置交易类型、订单来源、支付状态]
+    WW --> XX{判断资金流入方向}
+    XX -->|平台收款| YY[计算平台收入、成本、利润]
+    XX -->|非平台收款| ZZ[跳过财务计算]
+    YY --> AAA[设置扩展字段和备注]
+    ZZ --> AAA
+    AAA --> RR
+    RR --> BBB[保存支付记录到数据库]
+    BBB --> CCC{执行支付请求}
+    CCC -->|微信micropay| DDD[调用微信支付处理]
+    CCC -->|支付宝tradePay| EEE[调用支付宝支付处理]
+    DDD --> FFF[验证签名和结果]
+    EEE --> GGG[发起订单轮询]
+    FFF --> HHH[更新订单状态]
+    GGG --> III[构建返回结果]
+    HHH --> III
+    III --> JJJ[生成签名]
+    JJJ --> KKK[返回F2FPayResultVo]
+    
+    KKK --> LLL[调用completeSuccessOrder或completeFailOrder]
+    LLL --> MMM{支付结果}
+    MMM -->|成功| NNN[调用completeSuccessOrder]
+    MMM -->|失败| OOO[调用completeFailOrder]
+    
+    NNN --> PPP[设置支付成功时间]
+    PPP --> QQQ[更新银行流水号和返回消息]
+    QQQ --> RRR[设置交易状态为SUCCESS]
+    RRR --> SSS[更新交易记录到数据库]
+    SSS --> TTT[查询关联支付订单]
+    TTT --> UUU[更新订单状态为SUCCESS]
+    UUU --> VVV[设置支付平台流水号]
+    VVV --> WWW{判断资金流入类型}
+    WWW -->|PLAT_RECEIVES| XXX[执行账户入账操作RpAccountTransactionService.creditToAccount]
+    WWW -->|非PLAT_RECEIVES| YYY[跳过入账]
+    XXX --> ZZZ[获取通知URL并发送通知]
+    YYY --> ZZZ
+    ZZZ --> AAAA[结束]
+    
+    OOO --> BBBB[设置银行返回信息]
+    BBBB --> CCCC[设置支付记录状态为失败]
+    CCCC --> DDDD[更新支付记录到数据库]
+    DDDD --> EEEE[根据商户号和订单号查询支付订单]
+    EEEE --> FFFF[设置支付订单状态为失败]
+    FFFF --> GGGG[更新支付订单到数据库]
+    GGGG --> HHHH[获取商户通知URL]
+    HHHH --> IIII[发送异步通知给商户]
+    IIII --> AAAA
+    
+    BBB --> BBBB
+    D --> AAAA
+    H --> AAAA
+    M --> AAAA
+    R --> AAAA
+    W --> AAAA
+    DD --> AAAA
+    FF --> AAAA
+    BBB --> AAAA
+    
+    JJJJ[IP校验子流程] --> KKKK[检查安全等级是否为MD5_IP]
+    KKKK --> LLLL{安全等级是否为MD5_IP?}
+    LLLL -->|否| MMMM[直接返回]
+    LLLL -->|是| NNNN[从请求中获取客户端IP]
+    NNNN --> OOOO{IP是否为空?}
+    OOOO -->|是| PPPP[抛出获取IP错误异常]
+    OOOO -->|否| QQQQ[获取商户服务器IP白名单]
+    QQQQ --> RRRR{请求IP是否在白名单中?}
+    RRRR -->|否| SSSS[抛出非法IP请求异常]
+    RRRR -->|是| TTTT[验证成功]
+    
+    MMMM --> BBB
+    PPPP --> BBB
+    SSSS --> BBB
+    TTTT --> BBB
+    
+    UUUU --> VVVV
+    VVVV --> WWWW
+    WWW --> XXX
+    XXX --> ZZZ
+    ZZZ --> AAAA
 ```
 
 ## 四、业务规则汇总
 
 ### 4.1 验证规则
-- payKey对应的商户支付配置必须存在，否则交易无效 (L5-037)
-- 入账金额必须为正数且不能为零 (L5-016)
-- 支付成功时必须更新交易记录的支付时间、银行流水号、银行返回消息和状态 (L5-058)
-- 必须存在对应的交易支付订单记录 (L5-052)
-- 目标账户必须存在且处于可用状态 (L5-017)
-- 需要验证支付金额的合法性 (L5-070)
-- 订单号不能重复，若订单已存在需验证金额一致性和支付状态 (L5-003)
-- 订单通知发送失败时应有相应的重试机制 (L5-014)
-- 发生业务异常或系统异常时统一跳转到异常页面显示错误信息 (L5-030)
-- 商户编号不能为空 (L5-079)
-- 需要处理BindingResult中的所有验证错误 (L5-020)
-- 交易记录和交易订单的状态必须保持一致 (L5-062)
-- 商户支付配置必须存在，否则抛出配置错误异常 (L5-023)
-- 请求IP不能为空，否则视为参数错误 (L5-064)
-- 生成的订单号必须是唯一的 (L5-011)
-- 已支付成功的订单不允许重复支付 (L5-004)
-- 必须提供有效的用户支付配置信息 (L5-068)
-- 必须存在对应的交易支付订单记录才能查询成功 (L5-081)
-- 交易流水号必须是唯一的，不能重复 (L5-006)
-- 支付结果不确定时需要启动轮询机制确认最终结果 (L5-034)
-- 必须验证商户支付配置信息的有效性 (L5-032)
-- 必须提供有效的银行订单号作为输入参数 (L5-013)
-- 支付请求参数必须完整且符合业务规范 (L5-069)
-- 商户编号不能为空 (L5-050)
-- 必须先通过参数验证才能获取用户支付配置 (L5-027)
-- 商户订单号不能为空 (L5-051)
-- 返回结果必须包含签名验证以确保数据完整性 (L5-035)
-- 同一请求号不能重复处理避免重复入账 (L5-018)
-- 只有安全等级为MD5_IP模式时才执行IP校验 (L5-063)
-- 必须先通过参数完整性校验才能继续处理 (L5-036)
-- 微信支付需要进行验签验证返回结果的真实性 (L5-033)
-- 必须同时满足三个编码条件才能返回对应的支付方式信息 (L5-046)
-- 仅支持F2F_PAY和MICRO_PAY两种支付类型 (L5-001)
-- 请求IP必须存在于商户服务器IP白名单中 (L5-065)
-- 所有校验步骤都必须通过才能返回有效的支付配置信息 (L5-040)
-- 需要保存银行返回的失败信息到支付记录中 (L5-009)
-- 请求参数中的签名必须与商户密钥计算得出的签名一致 (L5-039)
-- 交易类型固定设置为支出(EXPENSE)，订单来源固定为用户支出(USER_EXPENSE) (L5-053)
-- IP校验失败时抛出非法IP请求异常 (L5-066)
-- 商户订单号不能为空 (L5-080)
+- L5-006: 支付参数必须完整且符合验证规则
+- L5-010: 参数校验失败时需要返回具体的错误信息
+- L5-013: 返回所有验证失败的错误信息汇总
+- L5-031: 需要校验支付请求参数的完整性
+- L5-033: 必须同时提供有效的商户编号和商户订单号才能进行查询
+- L5-036: 商户订单号和商户号必须匹配已存在的支付记录
+- L5-037: 查询时必须同时匹配支付产品编码、支付方式编码和支付类型编码三个条件
+- L5-041: 商户订单号不能为空
+- L5-042: 必须存在对应的交易支付订单记录
+- L5-044: 必须验证商户支付配置的有效性
+- L5-045: 订单号必须唯一，相同订单号需验证金额一致性
+- L5-046: 已支付成功的订单不能重复支付
+- L5-047: 需要根据商户号和订单号查询并验证订单状态
+- L5-049: 必须能够成功获取到请求的客户端IP地址
+- L5-052: 必须提供有效的银行订单号才能触发通知发送
+- L5-059: 商户必须配置正确的支付信息才能完成支付
+- L5-060: 必须存在有效的用户支付配置，否则抛出异常
+- L5-061: 参数映射表必须包含支付KEY、商品名称、订单编号、订单金额等核心信息
+- L5-064: 入账金额必须大于零
+- L5-065: 用户编号必须存在且有效
+- L5-068: 必须先通过参数验证才能获取支付配置
+- L5-071: 交易流水号必须保证全局唯一性
+- L5-073: 支付记录和对应的支付订单都必须更新为失败状态
+- L5-074: 必须保存银行返回的失败信息到支付记录中
+- L5-040: 商户编号不能为空
+- L5-007: 支付密钥对应的商户必须在系统中存在
+- L5-009: 请求参数的签名必须与商户密钥匹配
 
 ### 4.2 安全规则
-- 需要确保支付渠道可用性 (L5-071)
-- 通知URL必须包含所有必要的支付参数以供商户验证 (L5-024)
-- 参数中必须包含交易状态信息以便商户处理不同状态的订单 (L5-026)
-- 失败后需要主动通知商户交易结果 (L5-010)
-- 需要验证支付金额的合法性 (L5-070)
-- 订单有效期默认设置为0 (L5-077)
-- F2F支付类型需要特殊处理通知逻辑 (L5-060)
-- 资金流入类型为平台收款时需要执行账户入账操作 (L5-059)
-- 订单过期时间设置为当前时间 (L5-075)
-- 商户编号作为用户标识进行查询 (L5-073)
-- 当资金流入方向为平台收款时，需要根据费率计算平台收入、成本和利润 (L5-055)
-- 需要根据商户号和支付方式获取对应的支付费率 (L5-005)
-- 平台收入 = 订单金额 × 费率 ÷ 100，平台成本 = 订单金额 × 微信费率 ÷ 100 (L5-056)
-- 支付操作需要使用验证后的支付配置和请求参数 (L5-028)
-- 请求IP必须在商户配置的IP白名单内 (L5-038)
-- 订单状态初始化为等待支付(WAITING_PAYMENT) (L5-074)
-- 支付记录和对应的支付订单都需要更新为失败状态 (L5-008)
-- 通知URL需要进行数字签名以确保数据完整性和安全性 (L5-025)
-- 用户必须处于激活状态才能被查询到 (L5-072)
-- 成功支付后需要跳转到支付确认页面供用户确认 (L5-029)
-- 必须提供有效的通知URL地址才能发送通知 (L5-047)
-- IP获取过程中发生IO异常时转换为业务异常 (L5-067)
-- 支持微信刷卡支付(MICRO_PAY)和支付宝当面付(F2F_PAY)两种模式 (L5-031)
-- 所有成功的支付都需要向商户发送支付成功通知 (L5-061)
+- L5-008: 请求IP必须在商户配置的允许访问列表中
+- L5-048: 只有当安全等级为MD5_IP时才执行IP校验
+- L5-051: IP不在白名单中的请求会被拒绝并返回非法IP错误
+- L5-058: 返回结果需要进行签名验证以确保数据安全
+- L5-062: 最终URL必须包含签名验证以确保数据安全性
+- L5-050: 请求IP必须存在于商户配置的服务器IP白名单中
 
 ### 4.3 业务规则
-- 交易流水号应具有一定的格式规范，便于识别和管理 (L5-007)
-- 通过支付产品编码
+- L5-001: 只查询状态为激活的用户信息
+- L5-002: 使用商户编号作为用户编号进行查询
+- L5-003: 必须配置正确的消息队列名称MqConfig.ORDER_NOTIFY_QUEUE
+- L5-004: 消息以文本格式传输订单号信息
+- L5-005: 采用异步方式发送通知消息
+- L5-011: 错误消息之间用逗号分隔
+- L5-012: 需要移除末尾多余的逗号
+- L5-014: 订单状态初始化为等待支付状态
+- L5-015: 订单过期时间设置为当前时间
+- L5-016: 需要从字符串格式解析订单日期和时间
+- L5-017: 必须包含完整的商品、商户、支付方式等基础信息
+- L5-018: 银行订单号必须保证全局唯一性
+- L5-019: 订单号应遵循银行系统的编号规范
+- L5-020: 每次调用都应生成新的不重复的订单号
+- L5-021: 只有当资金流入类型为平台收款时才执行账户入账操作
+- L5-022: 需要同时更新交易记录表和支付订单表的状态为成功
+- L5-023: 无论支付类型如何都需要向商户发送支付成功通知
+- L5-024: 账户入账时需要扣除平台收入部分，只入账净额
+- L5-025: 当资金流入方向为平台收款时，需要计算平台收入(订单金额*费率/100)、平台成本(订单金额*微信费率/100)和平台利润(收入-成本)
+- L5-026: 交易状态初始设置为等待支付状态
+- L5-027: 交易类型固定设置为支出类型(EXPENSE)
+- L5-028: 订单来源固定设置为用户支出(USER_EXPENSE)
+- L5-029: 支付流水号和银行订单号通过编号服务自动生成
+- L5-030: 需要验证支付配置的有效性
+- L5-032: 支持主流面对面支付方式如支付宝、微信扫码支付
+- L5-034: 查询结果唯一，根据商户编号和订单号组合确定唯一的交易支付订单
+- L5-035: 必须提供有效的通知URL才能发送通知
+- L5-038: 只返回状态为激活(Active)的支付方式配置
+- L5-039: 该方法是接口的实现方法，提供统一的查询入口
+- L5-043: 仅支持F2F_PAY和MICRO_PAY两种支付类型
+- L5-053: 通知发送失败时应有相应的重试机制
+- L5-054: 需要确保通知消息的准确性和完整性
+- L5-055: 支持微信和支付宝两种面对面支付方式
+- L5-056: 微信支付使用micropay接口，支付宝使用tradePay接口
+- L5-057: 支付结果通过异步通知轮询机制确认最终状态
+- L5-066: 同一请求流水号不能重复入账
+- L5-067: 入账操作需要保持数据一致性
+- L5-069: 支付执行失败时需要记录详细错误信息
+- L5-070: 系统异常和业务异常需要分别处理并返回相应错误页面
+- L5-072: 交易流水号应具备可识别的格式规范
+- L5-075: 需要向商户发送失败通知
+- L5-063: 日期时间需要按照特定格式进行格式化
+
+## 五、关联实体
+
+### 5.1 实体列表
+| ID | 名称 | 类型 |
+|---|------|------|
+| L6-013 | RpAccount | Entity |
+| L6-025 | RpUserInfo | Entity |
+| L6-020 | RpUserPayConfig | Entity |
+| L6-026 | Object | Entity |
+| L6-006 | RpTradePaymentRecord | Entity |
+| L6-009 | F2FPayRequestBo | BO |
+| L6-015 | PayTypeEnum | Entity |
+| L6-014 | F2FPayResultVo | VO |
+| L6-024 | ModelMap | Entity |
+| L6-007 | RpTradePaymentOrder | Entity |
+| L6-010 | List | Entity |
+| L6-004 | Date | Entity |
+| L6-001 | RpPayWay | Entity |
+| L6-019 | TradeStatusEnum | Entity |
+
+## 六、总结
+该业务流程是面对面支付系统的核心功能模块，提供了完整的支付处理能力，包括参数验证、安全校验、订单管理、支付执行和结果通知等关键环节。支持微信和支付宝两大主流支付渠道，具备完善的风控机制和异常处理能力，确保支付过程的安全性和可靠性。通过标准化的接口设计和灵活的配置管理，为商户提供了便捷的支付接入服务，具有重要的商业价值和技术意义。

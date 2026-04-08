@@ -345,7 +345,7 @@ class BizGraphBuilder:
         if not entry_methods:
             return
         
-        call_edges = [e for e in self.semantic_data.get('edges', []) if e.get('type') in ('CALL', 'IMPLEMENTS')]
+        call_edges = [e for e in self.semantic_data.get('edges', []) if e.get('type') in ('CALL', 'IMPLEMENTS', 'OVERRIDE', 'EXTENDS')]
         
         # 构建 method_id -> implementation 的映射
         method_to_impl = {}
@@ -423,10 +423,11 @@ class BizGraphBuilder:
                 flow_chart = self._generate_l3_flowchart_simple(all_l4_in_bfs)
             
             # L3 新字段
-            # activities: 所有 BFS 可达的 L4
+            # activities: 只有入口 L4
             # rules: 所有 BFS 可达 L4 包含的 L5
             # entities: 所有 BFS 可达的 L6
-            activities_list = all_l4_in_bfs
+            entry_l4_id = self.method_to_l4.get(entry_method, '')
+            activities_list = [entry_l4_id] if entry_l4_id else []
             
             l3 = L3Process(
                 id=l3_id,
@@ -573,11 +574,11 @@ class BizGraphBuilder:
                     self.biz_graph.add_edge(l4.id, l6_id, "references")
     
     def _build_calls_edges(self):
-        """建立调用边 (L4 calls L4)"""
+        """建立调用边 (L4 calls L4) - 包括 IMPLEMENTS/OVERRIDE 关系"""
         if not self.code_data:
             return
         
-        call_edges = [e for e in self.code_data.get('edges', []) if e.get('type') == 'CALL']
+        call_edges = [e for e in self.code_data.get('edges', []) if e.get('type') in ('CALL', 'IMPLEMENTS')]
         
         for e in call_edges:
             from_method = e.get('from', '')
